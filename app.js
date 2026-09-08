@@ -4,6 +4,7 @@
   var HLS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.15/hls.min.js';
   var RETRY_INTERVAL_MS = 3500;
   var WATCHDOG_INTERVAL_MS = 5000;
+  var ORDER_STORAGE_KEY = 'radioMicroOrder';
 
   var STATUS = {
     IDLE: 'idle',
@@ -303,24 +304,38 @@
 
   function createCard(station, index) {
     var unavailable = isUnavailable(station);
-    var card = document.createElement('button');
-    card.type = 'button';
+    var card = document.createElement('div');
     card.className = 'station-card' + (unavailable ? ' is-unavailable' : '');
+    card.dataset.name = station.name;
+
+    var handle = document.createElement('div');
+    handle.className = 'drag-handle';
+    handle.setAttribute('aria-hidden', 'true');
+    handle.title = 'Arrastra para reordenar';
+    handle.textContent = '⠿';
+    card.appendChild(handle);
+    attachDragHandle(card, handle);
+
+    var content = document.createElement('button');
+    content.type = 'button';
+    content.className = 'card-content';
 
     var name = document.createElement('div');
     name.className = 'station-name';
     name.textContent = station.name;
-    card.appendChild(name);
+    content.appendChild(name);
 
     var freq = document.createElement('div');
     freq.className = 'station-freq';
     freq.textContent = station.freq;
-    card.appendChild(freq);
+    content.appendChild(freq);
 
     var status = document.createElement('div');
     status.className = 'station-status ' + (unavailable ? 'status-unavailable' : 'status-idle');
     status.textContent = unavailable ? STATUS_LABEL.unavailable : station.freq;
-    card.appendChild(status);
+    content.appendChild(status);
+
+    card.appendChild(content);
 
     if (unavailable) {
       var link = document.createElement('a');
@@ -333,12 +348,11 @@
         e.stopPropagation();
       });
       card.appendChild(link);
-      card.disabled = false;
-      card.addEventListener('click', function () {
+      content.addEventListener('click', function () {
         window.open(station.officialUrl, '_blank', 'noopener,noreferrer');
       });
     } else {
-      card.addEventListener('click', function () {
+      content.addEventListener('click', function () {
         playStation(index);
       });
     }
@@ -355,10 +369,144 @@
     });
   }
 
+  /* --- Reordenar emisoras arrastrando (ratón y táctil) --- */
+
+  function loadSavedOrder() {
+    try {
+      var raw = window.localStorage.getItem(ORDER_STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCurrentOrder() {
+    try {
+      var order = Array.prototype.map.call(
+        grid.querySelectorAll('.station-card'),
+        function (el) { return el.dataset.name; }
+      );
+      window.localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(order));
+    } catch (e) { /* localStorage no disponible; el orden simplemente no persiste */ }
+  }
+
+  function applySavedOrder(rawStations, savedOrder) {
+    if (!savedOrder.length) {
+      return rawStations.slice();
+    }
+    var byName = {};
+    rawStations.forEach(function (s) { byName[s.name] = s; });
+    var used = {};
+    var ordered = [];
+    savedOrder.forEach(function (name) {
+      if (byName[name] && !used[name]) {
+        ordered.push(byName[name]);
+        used[name] = true;
+      }
+    });
+    rawStations.forEach(function (s) {
+      if (!used[s.name]) {
+        ordered.push(s);
+        used[s.name] = true;
+      }
+    });
+    return ordered;
+  }
+
+  function attachDragHandle(card, handle) {
+    var state = null;
+
+    function updateCardPosition(clientX, clientY) {
+      card.style.left = (clientX - state.offsetX) + 'px';
+      card.style.top = (clientY - state.offsetY) + 'px';
+    }
+
+    function moveePlaceholder(clientX, clientY) {
+      var siblings = grid.querySelectorAll('.station-card:not(.dragging)');
+      var target = null;
+      var targetRect = null;
+      var closestDist = Infinity;
+      siblings.forEach(function (sib) {
+        var r = sib.getBoundingClientRect();
+        var cx = r.left + r.width / 2;
+        var cy = r.top + r.height / 2;
+        var dist = Math.hypot(clientX - cx, clientY - cy);
+        if (dist < closestDist) {
+          closestDist = dist;
+          target = sib;
+          targetRect = r;
+        }
+      });
+      if (target) {
+        var before = clientX < targetRect.left + targetRect.width / 2;
+        grid.insertBefore(state.placeholder, before ? target : target.nextSibling);
+      }
+    }
+
+    function onPointerDown(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) {
+        return;
+      }
+      e.preventDefault();
+      var rect = card.getBoundingClientRect();
+      var placeholder = document.createElement('div');
+      placeholder.className = 'drag-placeholder';
+      placeholder.style.width = rect.width + 'px';
+      placeholder.style.height = rect.height + 'px';
+      card.parentNode.insertBefore(placeholder, card);
+
+      state = {
+        pointerId: e.pointerId,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+        placeholder: placeholder
+      };
+
+      card.classList.add('dragging');
+      card.style.position = 'fixed';
+      card.style.width = rect.width + 'px';
+      card.style.height = rect.height + 'px';
+      updateCardPosition(e.clientX, e.clientY);
+
+      try { handle.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
+    }
+
+    function onPointerMove(e) {
+      if (!state || e.pointerId !== state.pointerId) {
+        return;
+      }
+      updateCardPosition(e.clientX, e.clientY);
+      moveePlaceholder(e.clientX, e.clientY);
+    }
+
+    function onPointerEnd(e) {
+      if (!state || e.pointerId !== state.pointerId) {
+        return;
+      }
+      grid.insertBefore(card, state.placeholder);
+      state.placeholder.remove();
+      card.classList.remove('dragging');
+      card.style.position = '';
+      card.style.left = '';
+      card.style.top = '';
+      card.style.width = '';
+      card.style.height = '';
+      try { handle.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
+      state = null;
+      saveCurrentOrder();
+    }
+
+    handle.addEventListener('pointerdown', onPointerDown);
+    handle.addEventListener('pointermove', onPointerMove);
+    handle.addEventListener('pointerup', onPointerEnd);
+    handle.addEventListener('pointercancel', onPointerEnd);
+  }
+
   fetch('stations.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      stations = data;
+      stations = applySavedOrder(data, loadSavedOrder());
       renderGrid();
     })
     .catch(function () {
