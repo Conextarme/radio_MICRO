@@ -434,7 +434,8 @@ main {
   50% { opacity: 0.6; }
 }
 
-.status-reconnecting {
+.status-reconnecting,
+.status-blocked {
   color: var(--neon-yellow);
   text-shadow: 0 0 6px rgba(249, 227, 71, 0.7);
   animation: live-blink 0.9s ease-in-out infinite;

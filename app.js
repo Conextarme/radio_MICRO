@@ -9,6 +9,7 @@
   var LEGACY_TOP3_KEY = 'radioMicroTop3';
   var VOLUME_STORAGE_KEY = 'radioMicroVolume';
   var DEFAULT_ORDER = ['Los 40 Classic', 'Cadena 100'];
+  var RECONNECT_ATTEMPTS_BEFORE_FALLBACK = 5;
 
   var STATUS = {
     IDLE: 'idle',
@@ -16,7 +17,8 @@
     LIVE: 'live',
     RECONNECTING: 'reconnecting',
     PAUSED: 'paused',
-    UNAVAILABLE: 'unavailable'
+    UNAVAILABLE: 'unavailable',
+    BLOCKED: 'blocked'
   };
 
   var STATUS_LABEL = {
@@ -24,7 +26,8 @@
     live: '🔴 EN DIRECTO',
     reconnecting: '🔁 RECONECTANDO…',
     paused: '⏸ EN PAUSA',
-    unavailable: '⚠ NO DISPONIBLE AQUÍ'
+    unavailable: '⚠ NO DISPONIBLE AQUÍ',
+    blocked: '👆 TOCA PARA REANUDAR'
   };
 
   var audio = document.getElementById('audio-player');
@@ -50,6 +53,7 @@
   var watchdogTimer = null;
   var lastCurrentTime = 0;
   var reconnecting = false;
+  var reconnectAttemptCount = 0;
 
   function isUnavailable(station) {
     return !station.streamUrl || station.reliable === false;
@@ -114,9 +118,9 @@
     }
     miniPlayerStatus.textContent = STATUS_LABEL[currentStatus] || station.freq;
 
-    var isPaused = userPaused;
-    miniPlayerToggle.textContent = isPaused ? '▶' : '⏸';
-    miniPlayerToggle.setAttribute('aria-label', isPaused ? 'Reanudar' : 'Pausar');
+    var showResumeIcon = userPaused || currentStatus === STATUS.BLOCKED;
+    miniPlayerToggle.textContent = showResumeIcon ? '▶' : '⏸';
+    miniPlayerToggle.setAttribute('aria-label', showResumeIcon ? 'Reanudar' : 'Pausar');
   }
 
   function renderStatuses() {
@@ -141,6 +145,9 @@
       } else if (status === STATUS.TUNING) {
         statusEl.textContent = STATUS_LABEL.tuning;
         card.classList.add('is-reconnecting');
+      } else if (status === STATUS.BLOCKED) {
+        statusEl.textContent = STATUS_LABEL.blocked;
+        card.classList.add('is-reconnecting');
       } else if (status === STATUS.PAUSED) {
         statusEl.textContent = STATUS_LABEL.paused;
       } else {
@@ -158,13 +165,20 @@
     reconnecting = false;
   }
 
-  function playStation(index) {
+  function playStation(index, isAutoFallback) {
     var station = stations[index];
     if (!station || isUnavailable(station)) {
       return;
     }
 
     if (currentIndex === index && !userPaused && currentStatus !== STATUS.IDLE) {
+      if (currentStatus === STATUS.BLOCKED) {
+        // El navegador bloqueó el intento automático anterior; este toque sí
+        // es una interacción real y debería desbloquear la reproducción.
+        setStatus(STATUS.TUNING);
+        reconnectNow();
+        return;
+      }
       // Ya es la emisora activa: pulsar de nuevo la pausa/reanuda.
       togglePauseResume();
       return;
@@ -173,10 +187,57 @@
     stopPlayback();
     currentIndex = index;
     userPaused = false;
+    if (!isAutoFallback) {
+      // Elección manual del usuario: se reinicia el contador de reintentos
+      // fallidos que dispara el salto automático a otra emisora del TOP3.
+      reconnectAttemptCount = 0;
+    }
     setStatus(STATUS.TUNING);
 
     startStream(station);
     startWatchdog();
+  }
+
+  /* --- Salto automático a otra emisora del TOP3 tras varios reintentos fallidos --- */
+
+  function getTop3IndexesByRank() {
+    return podiumSlots
+      .map(function (slot) {
+        var occupant = slot.querySelector('.station-card');
+        return {
+          rank: parseInt(slot.dataset.rank, 10) || 99,
+          name: occupant ? occupant.dataset.name : null
+        };
+      })
+      .filter(function (entry) { return entry.name; })
+      .sort(function (a, b) { return a.rank - b.rank; })
+      .map(function (entry) {
+        for (var i = 0; i < stations.length; i++) {
+          if (stations[i].name === entry.name) {
+            return i;
+          }
+        }
+        return -1;
+      })
+      .filter(function (index) { return index !== -1 && !isUnavailable(stations[index]); });
+  }
+
+  function switchToNextFavorite() {
+    var favorites = getTop3IndexesByRank();
+    if (favorites.length < 1) {
+      return false;
+    }
+
+    var currentPos = favorites.indexOf(currentIndex);
+    var nextIndex = favorites[(currentPos + 1) % favorites.length];
+    if (nextIndex === currentIndex) {
+      // La única emisora fiable del TOP3 es la que ya está sonando (o fallando):
+      // no hay a dónde rotar.
+      return false;
+    }
+
+    playStation(nextIndex, true);
+    return true;
   }
 
   function startStream(station, isReconnect) {
@@ -230,8 +291,19 @@
   function attemptPlay() {
     var playPromise = audio.play();
     if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(function () {
-        // El navegador rechazó el play (p.ej. mientras se reconecta); el watchdog/reintento se encarga.
+      playPromise.catch(function (err) {
+        // El navegador puede bloquear la reproducción automática tras varios
+        // intentos fallidos sin una interacción reciente del usuario (política
+        // de autoplay). Si eso pasa, reintentar cada 3,5 s en bucle nunca
+        // funcionaría: hay que pedir un toque real, que sí cuenta como
+        // interacción y desbloquea el audio.
+        if (err && err.name === 'NotAllowedError' && currentIndex !== -1 && !userPaused) {
+          if (retryTimer) {
+            clearInterval(retryTimer);
+            retryTimer = null;
+          }
+          setStatus(STATUS.BLOCKED);
+        }
       });
     }
   }
@@ -268,6 +340,19 @@
     if (!station) {
       return;
     }
+
+    reconnectAttemptCount++;
+    if (reconnectAttemptCount > RECONNECT_ATTEMPTS_BEFORE_FALLBACK) {
+      reconnectAttemptCount = 0;
+      // Demasiados intentos fallidos seguidos con esta emisora: en vez de
+      // insistir indefinidamente, se prueba con la siguiente del TOP3 (si
+      // hay alguna distinta y fiable). Si no hay ninguna a la que rotar, se
+      // sigue reintentando la misma como hasta ahora.
+      if (switchToNextFavorite()) {
+        return;
+      }
+    }
+
     reconnecting = true;
     destroyHls();
     startStream(station, true);
@@ -299,6 +384,7 @@
       clearInterval(retryTimer);
       retryTimer = null;
     }
+    reconnectAttemptCount = 0;
     setStatus(STATUS.LIVE);
   });
 
@@ -337,6 +423,17 @@
     }
   });
 
+  document.addEventListener('visibilitychange', function () {
+    // El navegador puede ralentizar o pausar el temporizador de reintento
+    // mientras la pestaña está en segundo plano o la pantalla bloqueada; al
+    // volver, se fuerza un intento inmediato en vez de esperar al siguiente
+    // disparo del intervalo (que podría tardar, o haberse perdido).
+    if (document.visibilityState === 'visible' && !userPaused && currentIndex !== -1 &&
+        currentStatus !== STATUS.LIVE && currentStatus !== STATUS.BLOCKED) {
+      reconnectNow();
+    }
+  });
+
   /* --- Mini reproductor: play/pausa y volumen --- */
 
   function loadSavedVolume() {
@@ -369,6 +466,12 @@
 
   miniPlayerToggle.addEventListener('click', function () {
     if (currentIndex === -1) {
+      return;
+    }
+    if (currentStatus === STATUS.BLOCKED) {
+      // Este clic sí es una interacción real y debería desbloquear el audio.
+      setStatus(STATUS.TUNING);
+      reconnectNow();
       return;
     }
     togglePauseResume();

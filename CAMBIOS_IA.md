@@ -4,6 +4,71 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-08 (sin commitear) — Rotar automáticamente al TOP3 si una emisora no logra reconectar
+
+### Objetivo
+El usuario pidió que, si una emisora se queda atascada intentando reconectar, se salte automáticamente a otra del podio TOP3 en vez de tener que refrescar la página a mano. Preguntó también si sería mejor que, al refrescar, se reprodujera sola la emisora del puesto 1.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `sw.js`: modificado (subida de versión de caché).
+- `README.md`: modificado.
+
+### Cambios realizados
+- Se ha añadido un contador de intentos fallidos de reconexión. Si una emisora falla 5 veces seguidas intentando reconectar (unos 17-18 segundos de intentos), la web prueba automáticamente con la siguiente emisora del podio TOP 3 (por orden de puesto: 1º, 2º, 3º, y vuelve a empezar por el 1º si hace falta), sin recargar la página ni perder el volumen ni nada.
+- Si la emisora que falla no está en el TOP 3, o el TOP 3 solo tiene fijada esa misma emisora, se sigue reintentando la emisora original como hasta ahora (no hay otra opción a la que saltar).
+- Se ha explicado al usuario por qué la otra alternativa que planteó (recargar la página sola y que empezara a sonar el TOP1 automáticamente) no es una solución fiable: quitando el aviso "TOCA PARA REANUDAR" ya implementado, ningún navegador permite que una página, tras recargarse, empiece a reproducir sonido sin que la persona toque algo — es una restricción de seguridad del propio navegador, no algo que se pueda evitar con más código. Por eso no se ha implementado esa vía.
+
+### Motivo
+Rotar entre las emisoras favoritas dentro de la misma página funciona porque el reproductor de audio ya quedó "autorizado" a sonar por el primer toque de la persona al empezar a escuchar; cambiar de emisora dentro de esa misma sesión no vuelve a pedir permiso al navegador. Recargar la página, en cambio, empieza una sesión nueva desde cero, y ahí sí hace falta un toque real sí o sí.
+
+### Validaciones
+- `node --check app.js`: sin errores de sintaxis.
+- Cambios servidos en el servidor local de pruebas (`http://localhost:5174`).
+- No se ha podido probar de verdad el escenario completo (una emisora real caída varios reintentos seguidos, viendo el salto automático a la siguiente del podio) porque requeriría provocar una caída real de un servidor de streaming, algo que no se puede forzar desde este entorno. Se recomienda comprobarlo la próxima vez que una emisora del TOP3 falle de verdad, o simulándolo manualmente si se desea (por ejemplo, apagando el wifi/datos brevemente con una emisora del TOP3 sonando).
+
+### Riesgos o pendientes
+- Pendiente de verificación real del salto automático entre emisoras del TOP3 con un fallo de streaming genuino.
+- Si en el podio TOP3 solo hay una emisora fiable (o ninguna), no hay a dónde saltar y la web sigue reintentando la misma como hasta ahora; esto es un límite conocido, no un fallo.
+
+### Cómo revertir
+Deshacer los cambios en `app.js`, `sw.js` y `README.md` con `git checkout -- app.js sw.js README.md` (si no se ha commiteado todavía) o revirtiendo el commit correspondiente una vez creado.
+
+---
+
+## 2026-09-08 (sin commitear) — Detectar cuando el navegador bloquea la reconexión automática
+
+### Objetivo
+El usuario avisó de que, en algún momento, la radio dejó de reconectar sola tras un corte y tuvo que refrescar la página varias veces para que volviera a sonar. Preguntó si existía un límite de reintentos.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (subida de versión de caché).
+
+### Cambios realizados
+Revisando el código se ha confirmado que no existe ningún límite de número de reintentos: la web reintenta cada 3,5 segundos de forma indefinida. Sin embargo, hay dos motivos, propios del funcionamiento de los navegadores, que pueden hacer que ese reintento automático deje de notarse:
+
+1. **Bloqueo silencioso de reproducción automática:** tras varios intentos fallidos sin que la persona haya tocado nada recientemente, el navegador puede empezar a rechazar en silencio los intentos automáticos de reproducción (por su política "antipublicidad sonora"/autoplay). Antes, ese rechazo se ignoraba sin más, así que el reintento seguía "disparándose" cada 3,5 s pero nunca llegaba a sonar, sin ningún aviso visible — parecía colgado. Ahora, cuando esto ocurre, la tarjeta y el mini reproductor muestran un aviso claro ("👆 TOCA PARA REANUDAR") y basta un solo toque para reanudar, sin necesidad de refrescar la página.
+2. **Temporizador parado en segundo plano:** si el móvil bloquea la pantalla o el navegador manda la pestaña a segundo plano un buen rato, el navegador puede ralentizar o congelar el reintento automático. Ahora, en cuanto se vuelve a la pestaña o se desbloquea la pantalla, se fuerza un intento de reconexión inmediato en vez de esperar al siguiente disparo del temporizador (que podría tardar o haberse perdido).
+
+### Motivo
+Ninguno de los dos comportamientos es un fallo del código de la web en sí, sino restricciones que imponen los propios navegadores para evitar que las páginas reproduzcan sonido sin permiso. El problema real era que, cuando ocurrían, la web no lo comunicaba ni ofrecía una salida sencilla (aparte de refrescar). Ahora se detectan y se resuelven con un solo toque.
+
+### Validaciones
+- `node --check app.js`: sin errores de sintaxis.
+- Cambios servidos en el servidor local de pruebas (`http://localhost:5174`).
+- No se ha podido reproducir de verdad el escenario exacto que describió el usuario (requiere un navegador real, dejar la radio sonando un buen rato y provocar varios cortes de red seguidos) porque este entorno no dispone de navegador ni conexión a auriculares/altavoz. Queda pendiente que el usuario confirme si, la próxima vez que ocurra un corte largo, ve el aviso "TOCA PARA REANUDAR" en vez de quedarse colgado sin explicación.
+
+### Riesgos o pendientes
+- Pendiente de confirmación real por parte del usuario la próxima vez que se produzca una desconexión prolongada.
+- Sigue siendo posible, en teoría, que algún otro comportamiento distinto del navegador (no cubierto por estos dos casos) deje la reconexión colgada; si vuelve a pasar, sería útil que el usuario anote en qué móvil/navegador ocurrió y cuánto tiempo llevaba la pantalla bloqueada o la pestaña en segundo plano.
+
+### Cómo revertir
+Deshacer los cambios en `app.js`, `styles.css` y `sw.js` con `git checkout -- app.js styles.css sw.js` (si no se ha commiteado todavía) o revirtiendo el commit correspondiente una vez creado.
+
+---
+
 ## 2026-09-08 (sin commitear) — Efecto de "respiración" en el sol de fondo
 
 ### Objetivo

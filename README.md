@@ -41,6 +41,8 @@ No hace falta tocar `index.html`, `styles.css` ni `app.js` para añadir o quitar
 - HTML + CSS + JavaScript vanilla, sin build step.
 - `hls.js` se carga de forma perezosa vía CDN (cdnjs) solo si el usuario elige una emisora con `streamType: "hls"`.
 - Lógica de resiliencia ante microcortes en `app.js`: reintento indefinido cada ~3,5 s, reasignación de `src` + `load()` en cada reconexión, escucha de `online`/`offline`, y un watchdog cada 5 s que detecta streams "congelados" (sin errores mas `currentTime` parado).
+- Si el navegador bloquea la reproducción automática (política de autoplay tras varios fallos sin interacción), se muestra el aviso "TOCA PARA REANUDAR" en vez de seguir reintentando en silencio.
+- Si una emisora falla 5 veces seguidas al reconectar, se prueba automáticamente con la siguiente emisora del podio TOP 3 (en orden de puesto), sin necesidad de recargar la página. Esto no aplica al caso de bloqueo por autoplay: ahí hace falta un toque real igualmente, cambiar de emisora por script tampoco lo evitaría.
 
 ## Comprobación automática de emisoras caídas
 
