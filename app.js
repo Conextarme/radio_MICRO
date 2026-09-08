@@ -4,8 +4,10 @@
   var HLS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.15/hls.min.js';
   var RETRY_INTERVAL_MS = 3500;
   var WATCHDOG_INTERVAL_MS = 5000;
-  var ORDER_STORAGE_KEY = 'radioMicroOrder';
-  var TOP3_STORAGE_KEY = 'radioMicroTop3';
+  var STORAGE_KEY = 'radioMicroState';
+  var LEGACY_ORDER_KEY = 'radioMicroOrder';
+  var LEGACY_TOP3_KEY = 'radioMicroTop3';
+  var VOLUME_STORAGE_KEY = 'radioMicroVolume';
   var DEFAULT_ORDER = ['Los 40 Classic', 'Cadena 100'];
 
   var STATUS = {
@@ -28,6 +30,12 @@
   var audio = document.getElementById('audio-player');
   var grid = document.getElementById('stations-grid');
   var podiumSlots = Array.prototype.slice.call(document.querySelectorAll('.podium-drop'));
+
+  var miniPlayer = document.getElementById('mini-player');
+  var miniPlayerName = document.getElementById('mini-player-name');
+  var miniPlayerStatus = document.getElementById('mini-player-status');
+  var miniPlayerToggle = document.getElementById('mini-player-toggle');
+  var miniPlayerVolume = document.getElementById('mini-player-volume');
 
   var stations = [];
   var cards = [];
@@ -85,6 +93,30 @@
   function setStatus(status) {
     currentStatus = status;
     renderStatuses();
+    updateMiniPlayer();
+  }
+
+  function updateMiniPlayer() {
+    var station = stations[currentIndex];
+    document.body.classList.toggle('has-mini-player', !!station);
+
+    if (!station) {
+      miniPlayer.hidden = true;
+      return;
+    }
+
+    miniPlayer.hidden = false;
+    miniPlayerName.textContent = station.name;
+    if (station.lang) {
+      miniPlayerName.lang = station.lang;
+    } else {
+      miniPlayerName.removeAttribute('lang');
+    }
+    miniPlayerStatus.textContent = STATUS_LABEL[currentStatus] || station.freq;
+
+    var isPaused = userPaused;
+    miniPlayerToggle.textContent = isPaused ? '▶' : '⏸';
+    miniPlayerToggle.setAttribute('aria-label', isPaused ? 'Reanudar' : 'Pausar');
   }
 
   function renderStatuses() {
@@ -305,6 +337,43 @@
     }
   });
 
+  /* --- Mini reproductor: play/pausa y volumen --- */
+
+  function loadSavedVolume() {
+    try {
+      var raw = window.localStorage.getItem(VOLUME_STORAGE_KEY);
+      var value = raw === null ? 1 : parseFloat(raw);
+      return isNaN(value) ? 1 : Math.min(1, Math.max(0, value));
+    } catch (e) {
+      return 1;
+    }
+  }
+
+  function saveVolume(value) {
+    try {
+      window.localStorage.setItem(VOLUME_STORAGE_KEY, String(value));
+    } catch (e) { /* localStorage no disponible; el volumen simplemente no persiste */ }
+  }
+
+  audio.volume = loadSavedVolume();
+  miniPlayerVolume.value = String(audio.volume);
+
+  miniPlayerVolume.addEventListener('input', function () {
+    var value = parseFloat(miniPlayerVolume.value);
+    if (isNaN(value)) {
+      return;
+    }
+    audio.volume = value;
+    saveVolume(value);
+  });
+
+  miniPlayerToggle.addEventListener('click', function () {
+    if (currentIndex === -1) {
+      return;
+    }
+    togglePauseResume();
+  });
+
   function createCard(station, index) {
     var unavailable = isUnavailable(station);
     var card = document.createElement('div');
@@ -326,6 +395,9 @@
     var name = document.createElement('div');
     name.className = 'station-name';
     name.textContent = station.name;
+    if (station.lang) {
+      name.lang = station.lang;
+    }
     content.appendChild(name);
 
     var freq = document.createElement('div');
@@ -374,44 +446,52 @@
 
   /* --- Reordenar emisoras arrastrando (ratón y táctil) --- */
 
-  function loadSavedOrder() {
+  function loadLegacyState() {
+    var order = [];
+    var top3 = [];
     try {
-      var raw = window.localStorage.getItem(ORDER_STORAGE_KEY);
-      var parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      return [];
-    }
+      var rawOrder = window.localStorage.getItem(LEGACY_ORDER_KEY);
+      var parsedOrder = rawOrder ? JSON.parse(rawOrder) : [];
+      order = Array.isArray(parsedOrder) ? parsedOrder : [];
+    } catch (e) { /* noop */ }
+    try {
+      var rawTop3 = window.localStorage.getItem(LEGACY_TOP3_KEY);
+      var parsedTop3 = rawTop3 ? JSON.parse(rawTop3) : [];
+      top3 = Array.isArray(parsedTop3) ? parsedTop3 : [];
+    } catch (e) { /* noop */ }
+    return { order: order, top3: top3 };
   }
 
-  function saveCurrentOrder() {
+  function loadState() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        return {
+          order: Array.isArray(parsed.order) ? parsed.order : [],
+          top3: Array.isArray(parsed.top3) ? parsed.top3 : []
+        };
+      }
+    } catch (e) { /* noop */ }
+    // Sin datos en la clave actual: se migran (si existen) las claves antiguas
+    // de versiones previas de la web, que guardaban orden y podio por separado.
+    return loadLegacyState();
+  }
+
+  function saveState() {
     try {
       var order = Array.prototype.map.call(
         grid.querySelectorAll('.station-card'),
         function (el) { return el.dataset.name; }
       );
-      window.localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(order));
-    } catch (e) { /* localStorage no disponible; el orden simplemente no persiste */ }
-  }
-
-  function loadSavedTop3() {
-    try {
-      var raw = window.localStorage.getItem(TOP3_STORAGE_KEY);
-      var parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveCurrentTop3() {
-    try {
       var top3 = podiumSlots.map(function (slot) {
         var occupant = slot.querySelector('.station-card');
         return occupant ? occupant.dataset.name : null;
       });
-      window.localStorage.setItem(TOP3_STORAGE_KEY, JSON.stringify(top3));
-    } catch (e) { /* localStorage no disponible; el podio simplemente no persiste */ }
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ order: order, top3: top3 }));
+      window.localStorage.removeItem(LEGACY_ORDER_KEY);
+      window.localStorage.removeItem(LEGACY_TOP3_KEY);
+    } catch (e) { /* localStorage no disponible; el orden y el podio simplemente no persisten */ }
   }
 
   function applyTop3ToDom(top3Names) {
@@ -621,8 +701,7 @@
       card.style.height = '';
       try { handle.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
       state = null;
-      saveCurrentOrder();
-      saveCurrentTop3();
+      saveState();
     }
 
     handle.addEventListener('pointerdown', onPointerDown);
@@ -634,10 +713,11 @@
   fetch('stations.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
+      var savedState = loadState();
       var withDefaultOrder = applySavedOrder(data, DEFAULT_ORDER);
-      stations = applySavedOrder(withDefaultOrder, loadSavedOrder());
+      stations = applySavedOrder(withDefaultOrder, savedState.order);
       renderGrid();
-      applyTop3ToDom(loadSavedTop3());
+      applyTop3ToDom(savedState.top3);
     })
     .catch(function () {
       grid.textContent = 'No se pudo cargar la lista de emisoras.';

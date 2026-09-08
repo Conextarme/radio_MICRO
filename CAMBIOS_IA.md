@@ -4,6 +4,141 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-08 (sin commitear) — Efecto de "respiración" en el sol de fondo
+
+### Objetivo
+El usuario pidió que el sol animado del fondo se atenuara de forma progresiva, como si respirara.
+
+### Archivos afectados
+- `styles.css`: modificado.
+
+### Cambios realizados
+El sol de fondo ya tenía una animación de brillo (subía y bajaba de opacidad), pero era bastante sutil y rápida (6 segundos, poca diferencia entre el punto más apagado y el más brillante). Se ha hecho el ciclo más lento (9 segundos) y con más diferencia entre el punto más tenue y el más brillante, y ahora también el resplandor de alrededor del sol crece y encoge a la vez que la opacidad, para que se note como una respiración real y no solo un parpadeo. Se ha añadido además que, si la persona tiene activada en su dispositivo la opción de "reducir el movimiento" (una preferencia de accesibilidad), el sol se queda fijo sin animar, por si el movimiento constante le resulta molesto.
+
+### Motivo
+Petición directa del usuario para dar más presencia visual al efecto ya existente.
+
+### Validaciones
+- Cambio servido en el servidor local de pruebas (`http://localhost:5174`) para que el usuario lo revise visualmente.
+- No se ha podido comprobar el resultado visual (una animación) desde este entorno, al no disponer de navegador; pendiente de confirmación visual del usuario.
+
+### Riesgos o pendientes
+- Pendiente de que el usuario confirme si la velocidad e intensidad del "respirar" es la que buscaba, o si prefiere un ciclo más lento/rápido o más o menos marcado.
+
+### Cómo revertir
+Deshacer los cambios en `styles.css` con `git checkout -- styles.css` (si no se ha commiteado todavía) o revirtiendo el commit correspondiente una vez creado.
+
+---
+
+## 2026-09-08 (sin commitear) — Mejorar la legibilidad del texto de la cabecera
+
+### Objetivo
+El usuario avisó de que el texto "Elige tu emisora y suena, aunque falle la conexión", "Arrastra el icono ⠿..." y "Arrastra aquí tus emisoras favoritas..." no se leía bien sobre el fondo.
+
+### Archivos afectados
+- `styles.css`: modificado.
+
+### Cambios realizados
+Esos tres textos están colocados justo encima del sol animado y las franjas brillantes del fondo, y no tenían ninguna sombra que los separase visualmente de lo que hay detrás (a diferencia del título grande, que sí lleva un halo de color). Se les ha añadido una sombra oscura sutil detrás de las letras, igual que un contorno suave, para que se lean bien independientemente de si detrás hay una zona clara u oscura del fondo. También se ha quitado la transparencia extra que tenían dos de ellos, que reducía aún más el contraste.
+
+### Motivo
+El color claro y apagado de ese texto, sin ningún tipo de sombra ni contorno, se mezclaba visualmente con las zonas más brillantes del sol de fondo y perdía legibilidad.
+
+### Validaciones
+- Cambio aplicado y servido en el servidor local de pruebas (`http://localhost:5174`) para que el usuario lo revise visualmente.
+- No se ha podido comprobar el resultado visual desde este entorno (sin navegador disponible); pendiente de confirmación visual por parte del usuario.
+
+### Riesgos o pendientes
+- Pendiente de que el usuario confirme si la legibilidad ahora es suficiente o si prefiere un ajuste adicional (por ejemplo, oscurecer algo más el fondo detrás de la cabecera).
+
+### Cómo revertir
+Deshacer los cambios en `styles.css` con `git checkout -- styles.css` (si no se ha commiteado todavía) o revirtiendo el commit correspondiente una vez creado.
+
+---
+
+## 2026-09-08 (sin commitear) — Mini reproductor con volumen, idioma en emisoras catalanas, comprobación automática de streams y limpieza interna del guardado
+
+### Objetivo
+El usuario pidió implementar, todas juntas, varias mejoras sugeridas previamente: un control explícito de play/pausa y volumen (en vez de depender solo de tocar la tarjeta), una barra de reproducción fija ("mini player") visible al hacer scroll, marcar el idioma correcto en los nombres de emisoras que no están en español, un sistema para detectar automáticamente streams caídos, y unificar en el código el guardado del orden de tarjetas y del podio TOP 3 en un único dato guardado (sin cambio visible para el usuario).
+
+### Archivos afectados
+- `index.html`: modificado.
+- `app.js`: modificado.
+- `styles.css`: modificado.
+- `stations.json`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+
+### Archivos creados
+- `scripts/check-streams.mjs`: script que comprueba una a una todas las URLs de streaming de `stations.json` y avisa de cuáles han dejado de responder.
+- `.github/workflows/check-streams.yml`: automatización en GitHub que ejecuta ese script todos los lunes (y también se puede lanzar a mano desde GitHub) y avisa por email si alguna emisora fiable ha caído.
+
+### Cambios realizados
+- **Mini reproductor fijo:** se ha añadido una barra en la parte inferior de la pantalla que aparece en cuanto se elige una emisora y se queda siempre visible (incluso al hacer scroll hacia abajo para ver más emisoras). Muestra el nombre de la emisora actual, su estado (sintonizando/en directo/reconectando/en pausa), un botón grande de play/pausa fácil de tocar con el dedo, y un control deslizante de volumen. El volumen elegido se recuerda para la próxima vez que se abra la web.
+- **Idioma correcto en emisoras catalanas:** los nombres de "Catalunya Informació", "Catalunya Radio (Barcelona)", "Flaix FM", "Radio Flaixbac (Barcelona)", "RAC 1" y "RAC 105" ahora llevan marcado que están en catalán, para que un lector de pantalla (usado por personas con discapacidad visual) los lea con la pronunciación correcta en vez de intentar leerlos como si fueran español.
+- **Comprobación automática de emisoras caídas:** se ha creado un script que visita cada URL de streaming y comprueba si responde. Se ejecuta solo cada lunes mediante GitHub Actions; si alguna emisora (de las que no están ya marcadas como "no fiable") deja de responder, GitHub avisa por email a quien tenga acceso al repositorio, sin tener que estar comprobándolo a mano. También se puede ejecutar en cualquier momento a mano con `node scripts/check-streams.mjs`.
+- **Guardado interno unificado:** por dentro, el orden de las tarjetas y las emisoras fijadas en el podio TOP 3 ahora se guardan juntos en un único dato en el navegador, en vez de en dos independientes como antes. Se ha añadido una migración automática: a quien ya tuviera guardado un orden o un podio con el sistema antiguo, se le seguirá respetando la primera vez que abra la web con este cambio. No cambia nada visible para quien usa la web.
+- Se ha subido el número de versión de caché del service worker (`sw.js`) de `v1` a `v2`, para que quien ya tenga la web instalada como app reciba estos cambios en vez de seguir viendo la versión anterior guardada.
+- Se ha documentado todo lo anterior en `README.md` (nuevo campo opcional `lang` en `stations.json`, cómo ejecutar la comprobación de streams a mano, y qué hace la automatización semanal).
+
+### Motivo
+Estas eran mejoras que se habían sugerido previamente al usuario como ideas de accesibilidad, comodidad en móvil y mantenimiento del proyecto, y el usuario pidió implementarlas todas juntas.
+
+### Validaciones
+- `node --check app.js` y `node --check sw.js`: sin errores de sintaxis.
+- `stations.json` comprobado como JSON válido tras los cambios.
+- El script `scripts/check-streams.mjs` se ha ejecutado de verdad contra las 38 emisoras con stream de `stations.json`: las 38 han respondido correctamente.
+- Se ha servido la web con un servidor local de pruebas y se ha comprobado que `index.html`, `manifest.json`, `sw.js` y los iconos se sirven sin errores (código 200), y que el HTML del mini reproductor está presente en la página.
+- No se ha podido probar de forma interactiva en un navegador real (pulsar el botón de play/pausa, mover el control de volumen, comprobar visualmente la barra fija al hacer scroll, ni un lector de pantalla real leyendo los nombres en catalán) porque este entorno no dispone de un navegador con el que interactuar. Se recomienda probarlo a mano, sobre todo en un móvil, antes de darlo por cerrado del todo.
+
+### Riesgos o pendientes
+- Pendiente de prueba manual real en navegador/móvil de: el botón de play/pausa del mini reproductor, el control de volumen, y que la barra no tape contenido del pie de página.
+- El workflow de GitHub Actions (`check-streams.yml`) no se ha podido probar de verdad ejecutándose en GitHub (requeriría subir los cambios al repositorio remoto); el script en sí sí se ha probado localmente con éxito.
+- Si una persona ya tenía guardado un orden de emisoras o un podio con el sistema antiguo, la migración a la clave nueva ocurre la primera vez que carga la web tras este cambio; no debería perder su configuración, pero conviene confirmarlo probando con datos guardados previamente si se quiere estar totalmente seguro.
+
+### Cómo revertir
+Deshacer los cambios en `index.html`, `app.js`, `styles.css`, `stations.json`, `sw.js` y `README.md` con `git checkout -- <archivo>` (si no se ha commiteado todavía), y borrar `scripts/check-streams.mjs` y `.github/workflows/check-streams.yml`. Si ya se hubiera commiteado, revertir el commit correspondiente.
+
+---
+
+## 2026-09-08 (sin commitear) — Convertir la web en PWA instalable
+
+### Objetivo
+El usuario pidió convertir la web en una PWA (aplicación web progresiva) para poder instalarla en el móvil.
+
+### Archivos afectados
+- `index.html`: modificado.
+- `README.md`: modificado.
+
+### Archivos creados
+- `manifest.json`: ficha de la app (nombre, iconos, colores) que usa el navegador para poder "instalarla".
+- `sw.js`: service worker (script en segundo plano) que guarda una copia de la web (HTML, CSS, JS e iconos) para que cargue al instante y funcione algo sin conexión.
+- `icons/icon-192.png`, `icons/icon-512.png`, `icons/icon-maskable-512.png`, `icons/apple-touch-icon.png`: iconos de la app generados con el mismo estilo visual synthwave de la web (sol con franjas + ecualizador), en los tamaños que exigen Android e iOS.
+
+### Cambios realizados
+- Se ha enlazado `manifest.json` y los iconos nuevos desde `index.html`, y se ha añadido el color de tema para la barra del navegador/estado en móvil.
+- Se ha añadido un pequeño script en `index.html` que registra `sw.js` al cargar la página (si el navegador no soporta service workers, la web sigue funcionando exactamente igual, simplemente no se puede instalar).
+- El service worker guarda en caché el HTML, el CSS, el JS, el `manifest.json` y los iconos para que la web cargue al instante en visitas siguientes e incluso sin conexión. La lista de emisoras (`stations.json`) se pide siempre primero a internet para tenerla actualizada, y solo se usa la copia guardada si no hay conexión. Los streams de audio en directo y la librería `hls.js` del CDN **nunca** se guardan en caché, se piden siempre directos a internet, para no interferir con la reconexión automática ante microcortes.
+- Se ha documentado en `README.md` qué es cada archivo nuevo y, sobre todo, que hay que subir el número `CACHE_VERSION` en `sw.js` cada vez que se modifique `index.html`, `styles.css`, `app.js`, `manifest.json` o los iconos, para que a quien ya tenga la app instalada no le siga apareciendo la versión antigua guardada.
+
+### Motivo
+El usuario preguntó qué implicaba convertir la web en PWA y, tras confirmar que no afecta a quien la visita como página web normal (sigue funcionando igual), pidió implementarlo para poder "instalarla" en el móvil y que abra como una app.
+
+### Validaciones
+- `manifest.json` comprobado como JSON válido (`JSON.parse` sin errores).
+- Iconos generados y comprobados visualmente (tamaños correctos, buen aspecto con el estilo de la web).
+- No se ha podido probar la instalación real de la PWA en un móvil ni comprobar el funcionamiento sin conexión en esta sesión (entorno sin navegador ni dispositivo disponible). Se recomienda comprobar en Chrome de Android (aviso de "instalar app") y en Safari de iOS ("Compartir → Añadir a pantalla de inicio") antes de darlo por cerrado, además de revisar en las herramientas de desarrollador (pestaña "Application/Aplicación") que el service worker se registra sin errores.
+
+### Riesgos o pendientes
+- Pendiente de prueba real en dispositivo móvil (instalación y modo sin conexión).
+- Recordar subir `CACHE_VERSION` en `sw.js` en cada cambio futuro de los archivos cacheados, o los usuarios con la app instalada verán versiones antiguas.
+- En local, sin servir la web por HTTPS (o `localhost`), el navegador puede negarse a registrar el service worker; esto es una limitación normal de los navegadores, no un fallo del código.
+
+### Cómo revertir
+Quitar el `<link rel="manifest">`, las etiquetas `<meta>` de PWA y el script de registro del service worker en `index.html`; borrar `manifest.json`, `sw.js` y la carpeta `icons/`; deshacer el añadido correspondiente en `README.md`. Si ya hay usuarios con la app instalada, además conviene subir `CACHE_VERSION` una última vez con un `sw.js` vacío que borre la caché, para limpiar lo ya guardado en sus navegadores.
+
+---
+
 ## 2026-09-08 (sin commitear) — Adaptación a dispositivos móviles
 
 ### Objetivo
