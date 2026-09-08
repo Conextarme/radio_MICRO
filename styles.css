@@ -497,6 +497,65 @@ main {
   50% { transform: scaleY(1); }
 }
 
+/* --- Detalle discreto --- */
+
+.easter-egg-trigger {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 15;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  opacity: 0.18;
+  cursor: pointer;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.easter-egg-trigger:hover,
+.easter-egg-trigger:focus-visible {
+  opacity: 0.8;
+  box-shadow: 0 0 10px 3px rgba(45, 226, 230, 0.6);
+  transform: scale(1.3);
+  outline: none;
+}
+
+.easter-egg-video-wrap {
+  position: fixed;
+  right: 12px;
+  bottom: calc(4.25rem + env(safe-area-inset-bottom, 0px) + 10px);
+  z-index: 19;
+  width: 96px;
+  height: 54px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 226, 230, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  background: #000;
+}
+
+.easter-egg-video-wrap[hidden] {
+  display: none;
+}
+
+.easter-egg-video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .easter-egg-video-wrap {
+    width: 72px;
+    height: 40px;
+  }
+}
+
 /* --- Mini reproductor fijo --- */
 
 body.has-mini-player {

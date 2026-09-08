@@ -4,6 +4,43 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-08 (sin commitear) — Easter egg: UVB-76 ("la radio del Juicio Final")
+
+### Objetivo
+El usuario pidió añadir, a modo de "huevo de pascua" (easter egg) escondido en la web, la posibilidad de escuchar en directo UVB-76, una emisora de onda corta rusa apodada "la radio del Juicio Final" por las teorías sobre su relación con un sistema militar soviético. Tras aclarar el formato, pidió que se mostrara en una ventanita de vídeo lo más pequeña y discreta posible, controlable con los mismos botones de play/pausa y volumen que las demás emisoras.
+
+### Archivos afectados
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (subida de versión de caché).
+
+### Cambios realizados
+- Se ha añadido un punto diminuto y casi invisible en la esquina superior derecha de la pantalla (aparece un poco más marcado solo al pasar el ratón o el foco por encima). Al tocarlo, aparece una ventanita muy pequeña (96×54 píxeles, más pequeña aún en móvil) con la retransmisión en directo de UVB-76 vía YouTube, encima del mini reproductor.
+- El play/pausa y el volumen de ese mini reproductor (los mismos que usan las emisoras normales) pasan a controlar ese vídeo mientras está activo, en vez del audio de una emisora.
+- Elegir cualquier emisora normal mientras suena esto la detiene automáticamente (y viceversa: activar este detalle detiene la emisora que estuviera sonando). Volver a tocar el mismo punto discreto lo apaga.
+- No hay ninguna emisora de este tipo en `stations.json` ni en la rejilla de tarjetas: no está pensado para descubrirse navegando la lista, sino solo para quien sepa (o encuentre) dónde tocar.
+- No se ha encontrado ninguna emisión en directo de UVB-76 con una URL de audio directa y estable que se pudiera usar igual que las demás emisoras (los sitios que la ofrecen o son aplicaciones móviles, o cargan el sonido con JavaScript sin exponer un enlace fijo, o daban error de certificado de seguridad al comprobarlos). Por eso se usa, en su lugar, un canal de YouTube dedicado en exclusiva a retransmitir esta emisora las 24 horas, comprobado en el momento de implementarlo que estaba efectivamente en directo.
+
+### Motivo
+Petición directa del usuario, explícitamente como una curiosidad/broma interna ("easter egg"), no como una funcionalidad principal de la web.
+
+### Validaciones
+- Se ha comprobado, mediante una consulta pública a YouTube (antes de implementar nada), que el vídeo elegido existe, se puede incrustar y estaba en directo en el momento de la comprobación.
+- `node --check app.js`: sin errores de sintaxis.
+- Cambios servidos y comprobados en el servidor local de pruebas (código HTTP 200, y el HTML/JS servido contiene ya el nuevo código).
+- No se ha podido comprobar de forma visual e interactiva (ver el punto discreto, tocarlo, ver que aparece el vídeo y que efectivamente suena, comprobar que el play/pausa y el volumen lo controlan) porque este entorno no dispone de navegador. Se recomienda encarecidamente probarlo a mano antes de considerarlo terminado.
+
+### Riesgos o pendientes
+- **Pendiente de prueba visual real**, sobre todo importante en este caso al depender de la API de YouTube (que solo se puede verificar de verdad ejecutándola en un navegador).
+- El canal de YouTube usado es de un tercero, no propio ni controlado por el usuario: si ese canal deja de retransmitir en directo, cierra, o YouTube retira el vídeo, el easter egg dejaría de sonar (mostraría un vídeo no disponible) hasta que se actualice manualmente el identificador del vídeo en `app.js` (constante `BUZZER_VIDEO_ID`).
+- Al ser contenido de YouTube incrustado, sigue las normas de uso de YouTube (anuncios ocasionales antes o durante el vídeo pueden estar fuera de nuestro control, según la configuración del canal de origen).
+
+### Cómo revertir
+Deshacer los cambios en `index.html`, `styles.css`, `app.js` y `sw.js` con `git checkout -- index.html styles.css app.js sw.js` (si no se ha commiteado todavía) o revirtiendo el commit correspondiente una vez creado.
+
+---
+
 ## 2026-09-08 (sin commitear) — Rotar automáticamente al TOP3 si una emisora no logra reconectar
 
 ### Objetivo

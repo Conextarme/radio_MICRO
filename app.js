@@ -10,6 +10,8 @@
   var VOLUME_STORAGE_KEY = 'radioMicroVolume';
   var DEFAULT_ORDER = ['Los 40 Classic', 'Cadena 100'];
   var RECONNECT_ATTEMPTS_BEFORE_FALLBACK = 5;
+  var BUZZER_VIDEO_ID = 'ZAOVHbXdDoU';
+  var BUZZER_NAME = '📡 4625 kHz';
 
   var STATUS = {
     IDLE: 'idle',
@@ -40,11 +42,19 @@
   var miniPlayerToggle = document.getElementById('mini-player-toggle');
   var miniPlayerVolume = document.getElementById('mini-player-volume');
 
+  var easterEggTrigger = document.getElementById('easter-egg-trigger');
+  var easterEggVideoWrap = document.getElementById('easter-egg-video-wrap');
+
   var stations = [];
   var cards = [];
   var currentIndex = -1;
   var currentStatus = STATUS.IDLE;
   var userPaused = false;
+
+  var playerMode = 'radio';
+  var buzzerPlayer = null;
+  var buzzerPaused = false;
+  var youTubeApiPromise = null;
 
   var hls = null;
   var hlsLoadPromise = null;
@@ -101,6 +111,17 @@
   }
 
   function updateMiniPlayer() {
+    if (playerMode === 'buzzer') {
+      document.body.classList.add('has-mini-player');
+      miniPlayer.hidden = false;
+      miniPlayerName.textContent = BUZZER_NAME;
+      miniPlayerName.removeAttribute('lang');
+      miniPlayerStatus.textContent = buzzerPaused ? STATUS_LABEL.paused : STATUS_LABEL.live;
+      miniPlayerToggle.textContent = buzzerPaused ? '▶' : '⏸';
+      miniPlayerToggle.setAttribute('aria-label', buzzerPaused ? 'Reanudar' : 'Pausar');
+      return;
+    }
+
     var station = stations[currentIndex];
     document.body.classList.toggle('has-mini-player', !!station);
 
@@ -169,6 +190,10 @@
     var station = stations[index];
     if (!station || isUnavailable(station)) {
       return;
+    }
+
+    if (playerMode === 'buzzer') {
+      deactivateBuzzer();
     }
 
     if (currentIndex === index && !userPaused && currentStatus !== STATUS.IDLE) {
@@ -460,11 +485,21 @@
     if (isNaN(value)) {
       return;
     }
-    audio.volume = value;
     saveVolume(value);
+    if (playerMode === 'buzzer') {
+      if (buzzerPlayer && typeof buzzerPlayer.setVolume === 'function') {
+        buzzerPlayer.setVolume(Math.round(value * 100));
+      }
+      return;
+    }
+    audio.volume = value;
   });
 
   miniPlayerToggle.addEventListener('click', function () {
+    if (playerMode === 'buzzer') {
+      toggleBuzzerPauseResume();
+      return;
+    }
     if (currentIndex === -1) {
       return;
     }
@@ -475,6 +510,109 @@
       return;
     }
     togglePauseResume();
+  });
+
+  /* --- Detalle discreto: retransmisión en directo de UVB-76 ("La Zumbadora") --- */
+
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) {
+      return Promise.resolve();
+    }
+    if (youTubeApiPromise) {
+      return youTubeApiPromise;
+    }
+    youTubeApiPromise = new Promise(function (resolve) {
+      var previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof previousReady === 'function') {
+          previousReady();
+        }
+        resolve();
+      };
+      var script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(script);
+    });
+    return youTubeApiPromise;
+  }
+
+  function activateBuzzer() {
+    if (playerMode === 'buzzer') {
+      return;
+    }
+    stopPlayback();
+    currentIndex = -1;
+    currentStatus = STATUS.IDLE;
+    renderStatuses();
+
+    playerMode = 'buzzer';
+    buzzerPaused = false;
+    easterEggVideoWrap.hidden = false;
+    updateMiniPlayer();
+
+    loadYouTubeApi().then(function () {
+      if (playerMode !== 'buzzer') {
+        return;
+      }
+      if (buzzerPlayer) {
+        buzzerPlayer.playVideo();
+        return;
+      }
+      buzzerPlayer = new window.YT.Player('easter-egg-video', {
+        videoId: BUZZER_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: function (e) {
+            e.target.setVolume(Math.round(loadSavedVolume() * 100));
+            if (playerMode === 'buzzer' && !buzzerPaused) {
+              e.target.playVideo();
+            }
+          }
+        }
+      });
+    });
+  }
+
+  function deactivateBuzzer() {
+    if (playerMode !== 'buzzer') {
+      return;
+    }
+    playerMode = 'radio';
+    buzzerPaused = false;
+    easterEggVideoWrap.hidden = true;
+    if (buzzerPlayer && typeof buzzerPlayer.pauseVideo === 'function') {
+      try { buzzerPlayer.pauseVideo(); } catch (e) { /* noop */ }
+    }
+    updateMiniPlayer();
+  }
+
+  function toggleBuzzerPauseResume() {
+    if (!buzzerPlayer) {
+      return;
+    }
+    if (buzzerPaused) {
+      buzzerPaused = false;
+      try { buzzerPlayer.playVideo(); } catch (e) { /* noop */ }
+    } else {
+      buzzerPaused = true;
+      try { buzzerPlayer.pauseVideo(); } catch (e) { /* noop */ }
+    }
+    updateMiniPlayer();
+  }
+
+  easterEggTrigger.addEventListener('click', function () {
+    if (playerMode === 'buzzer') {
+      deactivateBuzzer();
+    } else {
+      activateBuzzer();
+    }
   });
 
   function createCard(station, index) {
