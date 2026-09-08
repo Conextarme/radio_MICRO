@@ -1,0 +1,317 @@
+:root {
+  --neon-cyan: #2de2e6;
+  --neon-magenta: #f924e3;
+  --neon-yellow: #f9e347;
+  --bg-deep: #1a0b2e;
+  --bg-mid: #2d1b4e;
+  --card-bg: rgba(45, 20, 70, 0.55);
+  --card-border: rgba(45, 226, 230, 0.35);
+  --text-main: #f4f1fb;
+  --text-dim: #b8a9d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(180deg, #120821 0%, #2a1150 35%, #6a1e6e 70%, #c23a7a 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Sol retro + horizonte de cuadrícula --- */
+
+.sun-horizon {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sun {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    180deg,
+    var(--neon-yellow) 0px,
+    var(--neon-yellow) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  background-color: #ff7a45;
+  background-blend-mode: normal;
+  box-shadow: 0 0 60px 10px rgba(249, 227, 71, 0.35), 0 0 120px 40px rgba(249, 36, 227, 0.15);
+  opacity: 0.55;
+  animation: sun-pulse 6s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.65; }
+}
+
+.grid-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background-image:
+    linear-gradient(rgba(45, 226, 230, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 226, 230, 0.35) 1px, transparent 1px);
+  background-size: 60px 40px;
+  transform: perspective(300px) rotateX(60deg);
+  transform-origin: bottom;
+  opacity: 0.5;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 90%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 90%);
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.12) 0px,
+    rgba(0, 0, 0, 0.12) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.35;
+}
+
+/* --- Cabecera --- */
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1rem 1.5rem;
+}
+
+.title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: 'Audiowide', 'Rajdhani', sans-serif;
+  line-height: 1.3;
+}
+
+.title-main {
+  font-size: clamp(1.6rem, 6vw, 3rem);
+  color: var(--text-main);
+  text-shadow:
+    0 0 6px var(--neon-cyan),
+    0 0 18px var(--neon-cyan),
+    0 0 36px rgba(45, 226, 230, 0.6);
+  letter-spacing: 0.08em;
+}
+
+.title-sub {
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  color: var(--neon-magenta);
+  text-shadow:
+    0 0 6px var(--neon-magenta),
+    0 0 18px var(--neon-magenta),
+    0 0 32px rgba(249, 36, 227, 0.6);
+  letter-spacing: 0.3em;
+}
+
+.tagline {
+  margin: 1rem auto 0;
+  max-width: 32rem;
+  font-size: 1.05rem;
+  color: var(--text-dim);
+}
+
+/* --- Grid de emisoras --- */
+
+main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  padding: 1rem 1.5rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.stations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.station-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  color: var(--text-main);
+  cursor: pointer;
+  font-family: inherit;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.station-card:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-2px);
+}
+
+.station-card:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+.station-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.station-freq {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.station-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.status-idle { color: var(--text-dim); }
+
+.status-tuning {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 6px rgba(249, 227, 71, 0.6);
+}
+
+.status-live {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 6px rgba(249, 36, 227, 0.7);
+  animation: live-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.status-reconnecting {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 6px rgba(249, 227, 71, 0.7);
+  animation: live-blink 0.9s ease-in-out infinite;
+}
+
+.status-paused { color: var(--text-dim); }
+
+.status-unavailable { color: #ff6b6b; }
+
+.official-link {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--neon-cyan);
+  text-decoration: none;
+}
+
+.official-link:hover,
+.official-link:focus-visible {
+  text-decoration: underline;
+}
+
+.station-card.is-playing {
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 12px rgba(249, 36, 227, 0.5), 0 0 28px rgba(249, 36, 227, 0.25);
+}
+
+.station-card.is-reconnecting {
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 12px rgba(249, 227, 71, 0.5);
+}
+
+.station-card.is-unavailable {
+  opacity: 0.7;
+}
+
+/* Icono ecualizador animado para la tarjeta en directo */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.eq span {
+  width: 3px;
+  background: var(--neon-magenta);
+  display: inline-block;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+
+.eq span:nth-child(1) { animation-delay: 0s; height: 40%; }
+.eq span:nth-child(2) { animation-delay: 0.2s; height: 100%; }
+.eq span:nth-child(3) { animation-delay: 0.4s; height: 60%; }
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+/* --- Footer --- */
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem 1.5rem 2rem;
+  color: var(--text-dim);
+}
+
+.help-text {
+  max-width: 40rem;
+  margin: 0 auto 0.6rem;
+  font-size: 0.9rem;
+}
+
+.small-print {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .stations-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

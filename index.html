@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radios de España Sin Microcortes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="sun-horizon" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="grid-horizon"></div>
+  </div>
+
+  <header class="site-header">
+    <h1 class="title">
+      <span class="title-main">RADIOS DE ESPAÑA</span>
+      <span class="title-sub">SIN MICROCORTES</span>
+    </h1>
+    <p class="tagline">Elige tu emisora y suena, aunque falle la conexión.</p>
+  </header>
+
+  <main>
+    <div id="stations-grid" class="stations-grid" aria-live="polite">
+      <!-- Tarjetas de emisora generadas por app.js -->
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="help-text">Reproductor con reconexión automática: si tu conexión sufre un microcorte, la radio se retoma sola en cuanto vuelve internet. Sin cookies, sin cuentas, sin publicidad — solo para uso personal.</p>
+    <p class="small-print">Los streams pertenecen a cada emisora; esta página solo los enlaza para uso personal.</p>
+  </footer>
+
+  <audio id="audio-player" preload="none"></audio>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
