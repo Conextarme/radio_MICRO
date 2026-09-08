@@ -218,6 +218,8 @@ body {
   min-height: 96px;
   border: 2px dashed var(--card-border);
   border-radius: 10px;
+  background: rgba(20, 8, 38, 0.55);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;

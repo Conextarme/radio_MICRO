@@ -6,6 +6,7 @@
   var WATCHDOG_INTERVAL_MS = 5000;
   var ORDER_STORAGE_KEY = 'radioMicroOrder';
   var TOP3_STORAGE_KEY = 'radioMicroTop3';
+  var DEFAULT_ORDER = ['Los 40 Classic', 'Cadena 100'];
 
   var STATUS = {
     IDLE: 'idle',
@@ -633,7 +634,8 @@
   fetch('stations.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      stations = applySavedOrder(data, loadSavedOrder());
+      var withDefaultOrder = applySavedOrder(data, DEFAULT_ORDER);
+      stations = applySavedOrder(withDefaultOrder, loadSavedOrder());
       renderGrid();
       applyTop3ToDom(loadSavedTop3());
     })
