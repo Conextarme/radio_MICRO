@@ -5,6 +5,7 @@
   var RETRY_INTERVAL_MS = 3500;
   var WATCHDOG_INTERVAL_MS = 5000;
   var ORDER_STORAGE_KEY = 'radioMicroOrder';
+  var TOP3_STORAGE_KEY = 'radioMicroTop3';
 
   var STATUS = {
     IDLE: 'idle',
@@ -25,6 +26,7 @@
 
   var audio = document.getElementById('audio-player');
   var grid = document.getElementById('stations-grid');
+  var podiumSlots = Array.prototype.slice.call(document.querySelectorAll('.podium-drop'));
 
   var stations = [];
   var cards = [];
@@ -391,6 +393,102 @@
     } catch (e) { /* localStorage no disponible; el orden simplemente no persiste */ }
   }
 
+  function loadSavedTop3() {
+    try {
+      var raw = window.localStorage.getItem(TOP3_STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCurrentTop3() {
+    try {
+      var top3 = podiumSlots.map(function (slot) {
+        var occupant = slot.querySelector('.station-card');
+        return occupant ? occupant.dataset.name : null;
+      });
+      window.localStorage.setItem(TOP3_STORAGE_KEY, JSON.stringify(top3));
+    } catch (e) { /* localStorage no disponible; el podio simplemente no persiste */ }
+  }
+
+  function applyTop3ToDom(top3Names) {
+    top3Names.forEach(function (name, i) {
+      if (!name || !podiumSlots[i]) {
+        return;
+      }
+      var card = cards.filter(function (c) { return c.dataset.name === name; })[0];
+      if (card) {
+        podiumSlots[i].appendChild(card);
+      }
+    });
+  }
+
+  function findPodiumSlotAt(clientX, clientY) {
+    for (var i = 0; i < podiumSlots.length; i++) {
+      var r = podiumSlots[i].getBoundingClientRect();
+      if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
+        return podiumSlots[i];
+      }
+    }
+    return null;
+  }
+
+  function clearPodiumHighlight() {
+    podiumSlots.forEach(function (slot) { slot.classList.remove('drop-hover'); });
+  }
+
+  /* --- Autoscroll de la página mientras se arrastra una tarjeta cerca del borde --- */
+
+  var AUTOSCROLL_MARGIN = 90;
+  var AUTOSCROLL_MAX_SPEED = 16;
+  var autoScrollPointerX = 0;
+  var autoScrollPointerY = 0;
+  var autoScrollRAF = null;
+  var activeDragUpdate = null;
+
+  function autoScrollStep() {
+    var viewportHeight = window.innerHeight;
+    var distanceFromTop = autoScrollPointerY;
+    var distanceFromBottom = viewportHeight - autoScrollPointerY;
+    var scrollDelta = 0;
+
+    if (distanceFromTop < AUTOSCROLL_MARGIN) {
+      scrollDelta = -AUTOSCROLL_MAX_SPEED * (1 - Math.max(distanceFromTop, 0) / AUTOSCROLL_MARGIN);
+    } else if (distanceFromBottom < AUTOSCROLL_MARGIN) {
+      scrollDelta = AUTOSCROLL_MAX_SPEED * (1 - Math.max(distanceFromBottom, 0) / AUTOSCROLL_MARGIN);
+    }
+
+    if (scrollDelta !== 0) {
+      window.scrollBy(0, scrollDelta);
+      if (activeDragUpdate) {
+        activeDragUpdate(autoScrollPointerX, autoScrollPointerY);
+      }
+    }
+    autoScrollRAF = requestAnimationFrame(autoScrollStep);
+  }
+
+  function startAutoScroll(clientX, clientY) {
+    autoScrollPointerX = clientX;
+    autoScrollPointerY = clientY;
+    if (!autoScrollRAF) {
+      autoScrollRAF = requestAnimationFrame(autoScrollStep);
+    }
+  }
+
+  function updateAutoScrollPointer(clientX, clientY) {
+    autoScrollPointerX = clientX;
+    autoScrollPointerY = clientY;
+  }
+
+  function stopAutoScroll() {
+    if (autoScrollRAF) {
+      cancelAnimationFrame(autoScrollRAF);
+      autoScrollRAF = null;
+    }
+  }
+
   function applySavedOrder(rawStations, savedOrder) {
     if (!savedOrder.length) {
       return rawStations.slice();
@@ -444,6 +542,18 @@
       }
     }
 
+    function updateDragTarget(clientX, clientY) {
+      updateCardPosition(clientX, clientY);
+      var hoverSlot = findPodiumSlotAt(clientX, clientY);
+      state.hoverSlot = hoverSlot;
+      clearPodiumHighlight();
+      if (hoverSlot) {
+        hoverSlot.classList.add('drop-hover');
+      } else {
+        moveePlaceholder(clientX, clientY);
+      }
+    }
+
     function onPointerDown(e) {
       if (e.pointerType === 'mouse' && e.button !== 0) {
         return;
@@ -468,6 +578,8 @@
       card.style.width = rect.width + 'px';
       card.style.height = rect.height + 'px';
       updateCardPosition(e.clientX, e.clientY);
+      activeDragUpdate = updateDragTarget;
+      startAutoScroll(e.clientX, e.clientY);
 
       try { handle.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
     }
@@ -476,16 +588,30 @@
       if (!state || e.pointerId !== state.pointerId) {
         return;
       }
-      updateCardPosition(e.clientX, e.clientY);
-      moveePlaceholder(e.clientX, e.clientY);
+      updateAutoScrollPointer(e.clientX, e.clientY);
+      updateDragTarget(e.clientX, e.clientY);
     }
 
     function onPointerEnd(e) {
       if (!state || e.pointerId !== state.pointerId) {
         return;
       }
-      grid.insertBefore(card, state.placeholder);
-      state.placeholder.remove();
+      stopAutoScroll();
+      activeDragUpdate = null;
+      clearPodiumHighlight();
+
+      if (state.hoverSlot) {
+        var occupant = state.hoverSlot.querySelector('.station-card');
+        if (occupant && occupant !== card) {
+          grid.insertBefore(occupant, grid.firstChild);
+        }
+        state.placeholder.remove();
+        state.hoverSlot.appendChild(card);
+      } else {
+        grid.insertBefore(card, state.placeholder);
+        state.placeholder.remove();
+      }
+
       card.classList.remove('dragging');
       card.style.position = '';
       card.style.left = '';
@@ -495,6 +621,7 @@
       try { handle.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
       state = null;
       saveCurrentOrder();
+      saveCurrentTop3();
     }
 
     handle.addEventListener('pointerdown', onPointerDown);
@@ -508,6 +635,7 @@
     .then(function (data) {
       stations = applySavedOrder(data, loadSavedOrder());
       renderGrid();
+      applyTop3ToDom(loadSavedTop3());
     })
     .catch(function () {
       grid.textContent = 'No se pudo cargar la lista de emisoras.';

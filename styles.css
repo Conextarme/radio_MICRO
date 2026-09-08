@@ -154,6 +154,128 @@ body {
   opacity: 0.75;
 }
 
+/* --- Podio TOP 3 --- */
+
+.top3-section {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.top3-title {
+  margin: 0;
+  font-family: 'Audiowide', 'Rajdhani', sans-serif;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  letter-spacing: 0.15em;
+  color: var(--neon-yellow);
+  text-shadow: 0 0 6px rgba(249, 227, 71, 0.6), 0 0 18px rgba(249, 227, 71, 0.3);
+}
+
+.top3-hint {
+  margin: 0.4rem auto 1.5rem;
+  max-width: 30rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  opacity: 0.8;
+}
+
+.top3-podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(240px, 42vw);
+}
+
+.podium-slot--1 { order: 2; }
+.podium-slot--2 { order: 1; }
+.podium-slot--3 { order: 3; }
+
+.podium-rank {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.podium-slot--1 .podium-rank {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px rgba(249, 227, 71, 0.7);
+  font-size: 1.15rem;
+}
+
+.podium-slot--2 .podium-rank { color: #d7d7e0; text-shadow: 0 0 6px rgba(215, 215, 224, 0.5); }
+.podium-slot--3 .podium-rank { color: #e0a468; text-shadow: 0 0 6px rgba(224, 164, 104, 0.5); }
+
+.podium-drop {
+  width: 100%;
+  min-height: 96px;
+  border: 2px dashed var(--card-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.podium-drop:empty::before {
+  content: 'Suelta aquí tu favorita';
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  opacity: 0.65;
+  padding: 0 0.5rem;
+}
+
+.podium-drop .station-card {
+  width: 100%;
+}
+
+.podium-slot--1 .podium-drop { border-color: rgba(249, 227, 71, 0.55); }
+.podium-slot--2 .podium-drop { border-color: rgba(215, 215, 224, 0.5); }
+.podium-slot--3 .podium-drop { border-color: rgba(224, 164, 104, 0.5); }
+
+.podium-drop.drop-hover {
+  border-style: solid;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 16px rgba(45, 226, 230, 0.5);
+  background: rgba(45, 226, 230, 0.08);
+}
+
+.podium-base {
+  width: 78%;
+  margin-top: 0.6rem;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid;
+}
+
+.podium-slot--1 .podium-base {
+  height: 60px;
+  background: linear-gradient(180deg, rgba(249, 227, 71, 0.35), rgba(249, 227, 71, 0.05));
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 14px rgba(249, 227, 71, 0.4);
+}
+
+.podium-slot--2 .podium-base {
+  height: 40px;
+  background: linear-gradient(180deg, rgba(215, 215, 224, 0.3), rgba(215, 215, 224, 0.05));
+  border-color: #d7d7e0;
+  box-shadow: 0 0 10px rgba(215, 215, 224, 0.3);
+}
+
+.podium-slot--3 .podium-base {
+  height: 26px;
+  background: linear-gradient(180deg, rgba(224, 164, 104, 0.3), rgba(224, 164, 104, 0.05));
+  border-color: #e0a468;
+  box-shadow: 0 0 10px rgba(224, 164, 104, 0.3);
+}
+
 /* --- Grid de emisoras --- */
 
 main {
@@ -365,5 +487,23 @@ main {
 @media (max-width: 480px) {
   .stations-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .top3-podium {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .podium-slot {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .podium-slot--1 { order: 1; }
+  .podium-slot--2 { order: 2; }
+  .podium-slot--3 { order: 3; }
+
+  .podium-base {
+    display: none;
   }
 }
