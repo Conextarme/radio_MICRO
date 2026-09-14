@@ -4,6 +4,66 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-14 18:40 — Nuevas emisoras y cuadrícula colapsable ("Ver más")
+
+### Objetivo
+El usuario pidió (1) revisar el fallo del job automático que comprueba los streams (`.github/workflows/check-streams.yml`) y (2) añadir más emisoras españolas que faltaban en la lista, junto con un botón "ver más" o una cuadrícula más optimizada para que la lista de emisoras no sature la pantalla, tanto en móvil como en escritorio.
+
+### Archivos afectados
+- `scripts/check-streams.mjs`: modificado.
+- `stations.json`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (subida de versión de caché a v6).
+
+### Cambios realizados
+
+**1. Fallo del job de comprobación de streams**
+El aviso de fallo (14 de 38 emisoras marcadas como caídas) resultó ser un falso positivo: comprobé una a una las 38 URLs a mano y todas respondían correctamente en ese momento, así que no era que las emisoras estuvieran caídas de verdad, sino un corte de red puntual en el servidor donde corre la comprobación automática (GitHub Actions), no en Vercel como parecía sugerir el aviso. Para que no vuelva a pasar, `scripts/check-streams.mjs` ahora reintenta cada emisora hasta 3 veces (esperando 2 segundos entre intento e intento) antes de darla por caída de verdad, en vez de fallar al primer intento fallido.
+
+**2. Emisoras nuevas**
+Se han añadido 7 emisoras españolas que faltaban, todas comprobadas a mano (URL de audio real, no solo la página del reproductor):
+- Europa FM
+- M80 Radio
+- Kiss FM
+- Radio Euskadi (EITB, en euskera)
+- Radio Galega (CRTVG, en gallego)
+- IB3 Ràdio (Baleares, en catalán)
+- Ràdio 4 (RTVE, en catalán)
+
+Se buscaron también Máxima FM, Onda Madrid y Canal Extremadura Radio, pero no se han añadido: Máxima FM dejó de emitir con ese nombre en 2019 (la sustituyó Los 40 Dance, que ya estaba en la lista), y para Onda Madrid y Canal Extremadura Radio no se encontró ninguna URL de streaming que funcionara de verdad (dominios de streaming dados de baja).
+
+Nota sobre IB3 Ràdio: su único stream localizado es `http://` (sin cifrar), no `https://`. Como el resto de la web sí se sirve por https, algunos navegadores podrían bloquearlo como "contenido mixto". Queda anotado en `stations.json` (campo `notes`) para quien revise el código; si algún usuario ve que esa emisora concreta no suena, tocaría buscarle una URL https alternativa o quitarla.
+
+**3. Cuadrícula colapsable ("Ver más")**
+Con 45 emisoras la cuadrícula podía hacerse muy larga, sobre todo en el móvil (2 columnas). Ahora la cuadrícula se muestra con una altura máxima fija (con un ligero degradado al final indicando que hay más contenido) y, solo si de verdad no caben todas las tarjetas, aparece debajo un botón "Ver más ▾" que la despliega entera; al volver a pulsarlo ("Ver menos ▴") se vuelve a colapsar. El botón se calcula dinámicamente comparando el alto real de la cuadrícula con el hueco visible, así que funciona igual de bien en pantallas pequeñas y grandes sin depender de un número fijo de tarjetas por breakpoint. El podio de favoritos (TOP 3) y el arrastrar-para-reordenar no se han tocado y siguen funcionando igual.
+
+### Motivo
+- Los reintentos en `check-streams.mjs` evitan que un corte de red puntual (no una emisora realmente caída) tumbe el aviso automático semanal.
+- Las emisoras nuevas se limitaron a las que se pudieron verificar de verdad con una petición HTTP real (código 200/206), siguiendo la misma exigencia de fiabilidad que ya tenía el resto del proyecto.
+- La cuadrícula colapsable evita que una lista cada vez más larga de emisoras sature la pantalla de entrada, sin perder ninguna emisora ni obligar a hacer scroll infinito para llegar al pie de página.
+
+### Validaciones
+- Se ejecutó `node scripts/check-streams.mjs` tras el cambio de reintentos y tras añadir las emisoras nuevas: las 45 emisoras responden con código 200/206, salida del proceso 0 (sin fallos).
+- Se comprobó a mano con `curl` cada una de las 7 URLs nuevas antes de incluirlas en `stations.json` (todas devuelven 200 o 206).
+- Se validó que `stations.json` sigue siendo JSON válido tras los cambios (`JSON.parse` sin errores).
+- Se comprobó la sintaxis de `app.js` (`node --check`), sin errores.
+- No se ha podido probar visualmente el botón "Ver más" en un navegador real dentro de esta sesión (no había herramienta de navegador disponible); la lógica se apoya en comparar `scrollHeight` de la cuadrícula con el alto visible del contenedor, mismo patrón ya usado en el resto del proyecto para otros cálculos de layout.
+
+### Riesgos o pendientes
+- Pendiente de comprobación visual real en navegador (móvil y escritorio) del botón "Ver más" — recomendable antes de dar la funcionalidad por definitiva.
+- IB3 Ràdio usa una URL de streaming `http://` sin cifrar; podría no sonar en algunos navegadores por bloqueo de contenido mixto (queda anotado en `stations.json`).
+- Onda Madrid y Canal Extremadura Radio se quedan fuera por no encontrarse un stream funcional; si en el futuro recuperan un dominio de streaming activo, se podrían añadir.
+
+### Cómo revertir
+- Emisoras nuevas: en `stations.json`, eliminar las 7 entradas cuyo `name` es "Europa FM", "M80 Radio", "Kiss FM", "Radio Euskadi", "Radio Galega", "IB3 Ràdio (Baleares)" y "Ràdio 4".
+- Reintentos del chequeo de streams: en `scripts/check-streams.mjs`, deshacer los cambios y volver a la función `checkUrl` original de un único intento (sin `checkUrlOnce`/`RETRIES`/`sleep`).
+- Cuadrícula colapsable: en `index.html` quitar el `<div id="stations-grid-wrap">`/`stations-grid-fade` y el botón `#toggle-grid-btn` (dejando `#stations-grid` directamente dentro de `<main>`); en `styles.css` quitar las reglas `.stations-grid-wrap`, `.stations-grid-fade` y `.toggle-grid-btn`; en `app.js` quitar las variables `gridWrap`/`toggleGridBtn`/`gridExpanded`, la función `updateGridToggleVisibility`, el listener del botón y sus llamadas dentro de `renderGrid()` y del bloque `fetch('stations.json')`.
+- Versión de caché: si se revierte cualquiera de los cambios anteriores, no hace falta tocar `sw.js`; si se revierten todos, se puede volver `CACHE_VERSION` a `'v5'` (opcional, solo afecta a qué versión ven los usuarios con la PWA ya instalada).
+
+---
+
 ## 2026-09-08 (sin commitear) — Easter egg: UVB-76 ("la radio del Juicio Final")
 
 ### Objetivo

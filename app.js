@@ -34,7 +34,10 @@
 
   var audio = document.getElementById('audio-player');
   var grid = document.getElementById('stations-grid');
+  var gridWrap = document.getElementById('stations-grid-wrap');
+  var toggleGridBtn = document.getElementById('toggle-grid-btn');
   var podiumSlots = Array.prototype.slice.call(document.querySelectorAll('.podium-drop'));
+  var gridExpanded = false;
 
   var miniPlayer = document.getElementById('mini-player');
   var miniPlayerName = document.getElementById('mini-player-name');
@@ -683,7 +686,41 @@
       grid.appendChild(card);
       return card;
     });
+    updateGridToggleVisibility();
   }
+
+  /* --- "Ver más": la cuadrícula se colapsa a una altura fija si hay muchas
+     emisoras, para que la lista larga no sature la pantalla de entrada. --- */
+
+  function updateGridToggleVisibility() {
+    if (!gridWrap || !toggleGridBtn) {
+      return;
+    }
+    if (gridExpanded) {
+      toggleGridBtn.hidden = false;
+      return;
+    }
+    // Se comprueba tras el siguiente frame para que el navegador ya haya
+    // calculado el alto real de la cuadrícula (scrollHeight) con las tarjetas
+    // recién insertadas.
+    requestAnimationFrame(function () {
+      var overflows = grid.scrollHeight > gridWrap.clientHeight + 4;
+      toggleGridBtn.hidden = !overflows;
+    });
+  }
+
+  if (toggleGridBtn) {
+    toggleGridBtn.addEventListener('click', function () {
+      gridExpanded = !gridExpanded;
+      gridWrap.classList.toggle('is-expanded', gridExpanded);
+      toggleGridBtn.textContent = gridExpanded ? 'Ver menos ▴' : 'Ver más ▾';
+      if (!gridExpanded) {
+        gridWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  window.addEventListener('resize', updateGridToggleVisibility);
 
   /* --- Reordenar emisoras arrastrando (ratón y táctil) --- */
 
@@ -959,6 +996,7 @@
       stations = applySavedOrder(withDefaultOrder, savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
+      updateGridToggleVisibility();
     })
     .catch(function () {
       grid.textContent = 'No se pudo cargar la lista de emisoras.';

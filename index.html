@@ -56,9 +56,13 @@
       </div>
     </section>
 
-    <div id="stations-grid" class="stations-grid" aria-live="polite">
-      <!-- Tarjetas de emisora generadas por app.js -->
+    <div id="stations-grid-wrap" class="stations-grid-wrap">
+      <div id="stations-grid" class="stations-grid" aria-live="polite">
+        <!-- Tarjetas de emisora generadas por app.js -->
+      </div>
+      <div class="stations-grid-fade" aria-hidden="true"></div>
     </div>
+    <button type="button" id="toggle-grid-btn" class="toggle-grid-btn" hidden>Ver más ▾</button>
   </main>
 
   <footer class="site-footer">
