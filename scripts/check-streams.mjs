@@ -19,7 +19,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATIONS_PATH = path.join(__dirname, '..', 'stations.json');
 const TIMEOUT_MS = 10000;
 
-async function checkUrl(url) {
+const RETRIES = 3;
+const RETRY_DELAY_MS = 2000;
+
+async function checkUrlOnce(url) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
@@ -48,6 +51,21 @@ async function checkUrl(url) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function checkUrl(url) {
+  let result;
+  for (let attempt = 1; attempt <= RETRIES; attempt += 1) {
+    result = await checkUrlOnce(url);
+    if (result.ok) return result;
+    if (attempt < RETRIES) await sleep(RETRY_DELAY_MS);
+  }
+  // Se han agotado los reintentos: se da por caída de verdad, no un fallo puntual.
+  return result;
 }
 
 async function main() {
