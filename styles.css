@@ -518,6 +518,25 @@ main {
   opacity: 0.7;
 }
 
+/* Bloque de blues internacional: distinto del resto de emisoras (españolas) */
+.station-card.category-blues-internacional {
+  border-color: rgba(58, 160, 255, 0.55);
+  background: linear-gradient(180deg, rgba(58, 160, 255, 0.08), var(--card-bg));
+}
+
+.station-card.category-blues-internacional .station-name::before {
+  content: '🎸 Blues internacional · ';
+  color: #3aa0ff;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.station-card.category-blues-internacional.is-playing {
+  border-color: #3aa0ff;
+  box-shadow: 0 0 12px rgba(58, 160, 255, 0.5), 0 0 28px rgba(58, 160, 255, 0.25);
+}
+
 /* Icono ecualizador animado para la tarjeta en directo */
 .eq {
   display: inline-flex;

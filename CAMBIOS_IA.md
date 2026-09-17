@@ -4,6 +4,53 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-17 11:10 — Bloque de blues internacional (3 emisoras nuevas)
+
+### Objetivo
+El usuario pidió añadir un bloque de tres emisoras de blues internacional al principio de la lista, sin tocar las emisoras españolas ya existentes, con el mismo formato de datos que el resto y distinguidas visualmente como bloque aparte.
+
+### Archivos afectados
+- `stations.json`: modificado.
+- `app.js`: modificado.
+- `styles.css`: modificado.
+
+### Cambios realizados
+Se añadieron al principio de `stations.json` (antes de "Aragón Radio (Zaragoza)", que era la primera hasta ahora) estas tres emisoras, todas comprobadas a mano con `curl` antes de incluirlas:
+- **RADIO BOB! Blues** (Alemania, red streamABC) — `https://streams.radiobob.de/blues/mp3-192/streams.radiobob.de/`
+- **JZR Blues** (Blues/Jazz, hospedada en Infomaniak, Suiza) — `https://jazzblues.ice.infomaniak.ch/jazzblues-high.mp3`
+- **Carbon Radio (Psych Blues)** (Psychedelic Blues / Southern Rock / Blues Rock) — `https://radio.carbonradio.live/listen/carbonradio/radio.mp3`
+
+Se descartó buscar una emisora dedicada en exclusiva a Stevie Ray Vaughan: no existe ninguna 24/7 con stream estable y embebible (Pandora, Spotify, Jango y varios agregadores exigen su propio SDK/cuenta o no exponen un endpoint de audio directo), así que se optó por estas tres generalistas de blues.
+
+Cada entrada usa exactamente los mismos campos que ya tenía el resto (`name`, `freq`, `streamUrl`, `streamType`, `officialUrl`, `notes`), y se les añadió un campo nuevo, `category: "blues-internacional"`, que no existía antes en el proyecto (no había ninguna categorización por género/país/color). Este campo es opcional y solo lo llevan estas tres emisoras.
+
+En `app.js` (función `createCard`), cuando una emisora tiene `category`, la tarjeta recibe una clase CSS adicional (`category-<valor>`) — no se ha tocado nada más de la lógica de reproducción, reintentos, reconexión o estados ("en directo"/"reconectando"/etc.), que ya era común a todas las emisoras y se reutiliza tal cual para las tres nuevas.
+
+En `styles.css` se añadió el estilo `.station-card.category-blues-internacional`: borde y fondo en azul (distinto del magenta/amarillo que ya usaba el resto de estados), y una pequeña etiqueta "🎸 Blues internacional ·" delante del nombre de la emisora, para que se note a simple vista que son un bloque aparte.
+
+El orden de renderizado de las tarjetas es el mismo orden del array de `stations.json` (salvo que el usuario haya reordenado manualmente y quede guardado en su navegador), así que al insertarlas al principio del JSON, aparecen las tres primeras.
+
+### Motivo
+- Se reutilizó la misma estructura de datos y el mismo pipeline de tarjeta/reproductor para no duplicar lógica, siguiendo el patrón ya establecido en el proyecto.
+- El campo `category` es la forma más simple de distinguir visualmente un bloque sin construir un sistema de pestañas/filtros que el proyecto no tenía y no se pidió.
+- Las tres URLs se verificaron con `curl -I` antes de incluirlas, exigiendo lo mismo que ya se exigía al resto: devolver `Content-Type: audio/mpeg` y permitir CORS desde el navegador (`Access-Control-Allow-Origin`).
+
+### Validaciones
+- `node -e "JSON.parse(...)"` sobre `stations.json`: JSON válido, 48 emisoras en total, las 3 nuevas son las tres primeras del array.
+- `curl -I` a las tres URLs de stream: las tres devuelven `Content-Type: audio/mpeg`; RADIO BOB! y JZR Blues devuelven `Access-Control-Allow-Origin: *`, y Carbon Radio lo devuelve de forma dinámica según la cabecera `Origin` enviada (comprobado enviando `Origin: https://example.com` y recibiendo ese mismo valor de vuelta, lo que confirma que no bloquea por CORS).
+- Se sirvió el proyecto con un servidor HTTP local (`python -m http.server`) y se comprobó que `stations.json`, tal como lo serviría la web, mantiene las 3 emisoras nuevas en primera posición y con el campo `category` correcto.
+- No se ha podido comprobar en un navegador real que suene el audio ni el aspecto visual final de la tarjeta (color, etiqueta) — no había herramienta de navegador disponible en esta sesión. El proyecto no tiene `package.json` ni lint/type-check configurado, así que no aplica ese paso.
+
+### Riesgos o pendientes
+- Pendiente de comprobación visual real en navegador (móvil y escritorio) de las tres tarjetas nuevas y de que el audio suene correctamente al pulsarlas.
+- El campo `category` es nuevo en el proyecto; si en el futuro se añaden más bloques por género/país, convendría revisar si conviene generalizar el sistema (filtros, pestañas) en vez de ir añadiendo clases CSS sueltas.
+- Los streams de terceros pueden cambiar de URL sin aviso, igual que ya ocurre con el resto de emisoras del proyecto.
+
+### Cómo revertir
+En `stations.json`, eliminar las tres entradas cuyo `name` es "RADIO BOB! Blues", "JZR Blues" y "Carbon Radio (Psych Blues)" (las tres primeras del array). En `app.js`, deshacer el cambio en `createCard` que añade la clase `category-` (la línea que concatena `station.category ? ' category-' + station.category : ''`). En `styles.css`, eliminar el bloque de reglas `.station-card.category-blues-internacional` (incluye la variante `.is-playing`).
+
+---
+
 ## 2026-09-14 18:40 — Nuevas emisoras y cuadrícula colapsable ("Ver más")
 
 ### Objetivo

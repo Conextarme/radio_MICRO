@@ -621,7 +621,8 @@
   function createCard(station, index) {
     var unavailable = isUnavailable(station);
     var card = document.createElement('div');
-    card.className = 'station-card' + (unavailable ? ' is-unavailable' : '');
+    card.className = 'station-card' + (unavailable ? ' is-unavailable' : '') +
+      (station.category ? ' category-' + station.category : '');
     card.dataset.name = station.name;
 
     var handle = document.createElement('div');
