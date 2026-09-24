@@ -10,6 +10,19 @@
   --text-dim: #b8a9d9;
 }
 
+/* --- Modo dormir: paleta cálida y de bajo brillo --- */
+body.sleep-mode {
+  --neon-cyan: #6f7fd6;
+  --neon-magenta: #caa46b;
+  --neon-yellow: #d8b872;
+  --bg-deep: #0a0e24;
+  --bg-mid: #131a3a;
+  --card-bg: rgba(18, 22, 48, 0.6);
+  --card-border: rgba(111, 127, 214, 0.3);
+  --text-main: #f0e6d2;
+  --text-dim: #8f97c2;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -30,6 +43,11 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+body.sleep-mode {
+  background: linear-gradient(180deg, #05061a 0%, #0b0f2e 40%, #131a3a 75%, #1c2350 100%);
 }
 
 /* --- Sol retro + horizonte de cuadrícula --- */
@@ -112,6 +130,85 @@ body {
     transparent 3px
   );
   opacity: 0.35;
+  transition: opacity 0.6s ease;
+}
+
+body.sleep-mode .scanlines {
+  opacity: 0.08;
+}
+
+/* --- Modo dormir: luna y estrellas --- */
+
+.sun-horizon,
+.moon-sky {
+  transition: opacity 0.6s ease;
+}
+
+.moon-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+body.sleep-mode .sun-horizon {
+  opacity: 0;
+}
+
+body.sleep-mode .moon-sky {
+  opacity: 1;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 28% 44%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1px 1px at 45% 12%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 62% 30%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1px 1px at 78% 55%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 22%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1px 1px at 8% 65%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 75%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1px 1px at 55% 68%, #f0e6d2 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 92% 78%, #f0e6d2 50%, transparent 100%);
+  opacity: 0.55;
+  animation: stars-twinkle 6s ease-in-out infinite;
+}
+
+@keyframes stars-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+
+.moon {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 35% 35%, #f4ecd8 0%, #e4d6ae 55%, #cbb98a 100%);
+  box-shadow: 0 0 35px 8px rgba(228, 214, 174, 0.25), 0 0 70px 20px rgba(228, 214, 174, 0.12);
+  animation: moon-breathe 8s ease-in-out infinite;
+}
+
+@keyframes moon-breathe {
+  0%, 100% { box-shadow: 0 0 30px 6px rgba(228, 214, 174, 0.2), 0 0 60px 16px rgba(228, 214, 174, 0.1); }
+  50% { box-shadow: 0 0 45px 12px rgba(228, 214, 174, 0.3), 0 0 85px 24px rgba(228, 214, 174, 0.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars, .moon { animation: none; }
+}
+
+body.tab-hidden .stars,
+body.tab-hidden .moon {
+  animation-play-state: paused;
 }
 
 /* --- Cabecera --- */
@@ -121,6 +218,38 @@ body {
   z-index: 2;
   text-align: center;
   padding: 3rem 1rem 1.5rem;
+}
+
+.sleep-mode-toggle {
+  display: block;
+  margin: 0 auto 1.1rem;
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sleep-mode-toggle:hover,
+.sleep-mode-toggle:focus-visible {
+  border-color: var(--neon-cyan);
+}
+
+@media (min-width: 640px) {
+  .sleep-mode-toggle {
+    position: absolute;
+    top: 0.9rem;
+    right: 1.25rem;
+    margin: 0;
+  }
 }
 
 .title {
@@ -292,6 +421,65 @@ body {
   box-shadow: 0 0 10px rgba(224, 164, 104, 0.3);
 }
 
+/* --- Continuar donde lo dejé (modo dormir) --- */
+
+.sleep-continue-btn {
+  display: block;
+  margin: 0 auto 2rem;
+  min-height: 52px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(216, 184, 114, 0.6);
+  background: rgba(216, 184, 114, 0.12);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  max-width: 90%;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.sleep-continue-btn:hover,
+.sleep-continue-btn:focus-visible {
+  border-color: var(--neon-yellow);
+  background: rgba(216, 184, 114, 0.2);
+}
+
+/* --- Chips de filtro por temática (modo dormir) --- */
+
+.sleep-chips {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.2rem 0.2rem 0.9rem;
+  margin-bottom: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sleep-chip {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sleep-chip.is-active {
+  border-color: var(--neon-cyan);
+  color: var(--text-main);
+  background: rgba(111, 127, 214, 0.18);
+}
+
 /* --- Grid de emisoras --- */
 
 main {
@@ -370,6 +558,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  position: relative;
 }
 
 .station-card:hover {
@@ -390,18 +579,52 @@ main {
   background: rgba(45, 226, 230, 0.06);
 }
 
-.drag-handle {
+.card-toolbar {
   align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: -0.2rem -0.3rem 0 0;
+}
+
+.drag-handle {
   color: var(--text-dim);
   font-size: 1.1rem;
   line-height: 1;
   padding: 0.2rem 0.3rem;
-  margin: -0.2rem -0.3rem 0 0;
   cursor: grab;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.podium-add-btn {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0.2rem 0.3rem;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.podium-add-btn:hover,
+.podium-add-btn:focus-visible {
+  color: var(--neon-yellow);
+  background: rgba(249, 227, 71, 0.12);
+}
+
+@media (pointer: coarse) {
+  .podium-add-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 /* En pantallas táctiles el icono de arrastre necesita un área de toque mayor
@@ -491,6 +714,44 @@ main {
 .status-paused { color: var(--text-dim); }
 
 .status-unavailable { color: #ff6b6b; }
+
+.rank-badge {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: rgba(111, 127, 214, 0.85);
+  color: #0a0e24;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.rank-badge.rank-1 { background: linear-gradient(135deg, #f9e347, #d8b872); }
+.rank-badge.rank-2 { background: linear-gradient(135deg, #e6e6f0, #c3c3d6); }
+.rank-badge.rank-3 { background: linear-gradient(135deg, #e0a468, #b97e4a); }
+
+.station-category-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--neon-cyan);
+  opacity: 0.9;
+}
+
+.station-meta {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  opacity: 0.85;
+}
 
 .official-link {
   margin-top: 0.15rem;
@@ -698,6 +959,130 @@ body.has-mini-player {
 .mini-player-toggle:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
+}
+
+body.sleep-mode .mini-player-toggle {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.4rem;
+}
+
+.sleep-timer {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sleep-timer-countdown {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  min-width: 2.6em;
+  text-align: right;
+}
+
+.sleep-timer-btn {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: rgba(216, 184, 114, 0.12);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sleep-timer-menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(11, 16, 38, 0.95);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 25;
+}
+
+.sleep-timer-menu button {
+  min-height: 40px;
+  padding: 0.35rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sleep-timer-menu button:hover,
+.sleep-timer-menu button:focus-visible {
+  background: rgba(216, 184, 114, 0.15);
+}
+
+.sleep-fallback-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 22;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(11, 16, 38, 0.9);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.sleep-fallback-toast[hidden] {
+  display: none;
+}
+
+.sleep-dim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(2, 3, 10, 0.96);
+  transition: opacity 0.4s ease;
+}
+
+.sleep-dim-overlay[hidden] {
+  display: none;
+}
+
+.sleep-dim-moon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f4ecd8 0%, #cbb98a 100%);
+  opacity: 0.5;
+  animation: moon-breathe 8s ease-in-out infinite;
+}
+
+.sleep-dim-name {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sleep-dim-moon { animation: none; }
 }
 
 .mini-player-volume {

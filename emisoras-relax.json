@@ -1,0 +1,691 @@
+{
+  "fuente": "radio-browser.info (votos de la comunidad); todos los streams son HTTPS y respondieron con audio el 2026-09-24",
+  "categorias": [
+    {
+      "id": "lluvia",
+      "nombre": "Lluvia y tormenta",
+      "emisoras": [
+        {
+          "nombre": "Nature Radio Rain",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 3410,
+          "stream": "https://maggie.torontocast.com:2020/stream/natureradiorain",
+          "web": "https://radiosuitenetwork.torontocast.stream/nature-radio-rain/",
+          "descripcion": "Lluvia continua"
+        },
+        {
+          "nombre": "Rain Songs (雨声轻音乐)",
+          "pais": "CN",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 2496,
+          "stream": "https://stream.zeno.fm/689zc32y4x8uv",
+          "web": "https://zeno.fm/radio/rain-songs/",
+          "descripcion": "Lluvia con música instrumental suave"
+        },
+        {
+          "nombre": "myNoise Rainy Day",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 809,
+          "stream": "https://rainyday-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Lluvia y tormenta suave"
+        },
+        {
+          "nombre": "Rain Sounds (雨声)",
+          "pais": "CN",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 705,
+          "stream": "https://stream.zeno.fm/ckptaagp6x8uv",
+          "web": "https://zeno.fm/radio/rain-sounds/",
+          "descripcion": "Sonido de lluvia para dormir"
+        },
+        {
+          "nombre": "Sleepscapes Rain",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 64,
+          "votos": 15,
+          "stream": "https://stream.willstare.com:8850/;",
+          "web": "https://www.willstare.com/sleep/",
+          "descripcion": "Lluvia para dormir"
+        }
+      ]
+    },
+    {
+      "id": "mar",
+      "nombre": "Mar y olas",
+      "emisoras": [
+        {
+          "nombre": "myNoise Ocean Waves",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 845,
+          "stream": "https://oceanwaves-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Olas del mar"
+        },
+        {
+          "nombre": "myNoise Siren Songs",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 285,
+          "stream": "https://sirensongs-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Paisaje sonoro marino"
+        },
+        {
+          "nombre": "Otsuchi Coastal Soundscape (costa en directo)",
+          "pais": "JP",
+          "codec": "MP3",
+          "bitrate": 185,
+          "votos": 105,
+          "stream": "https://mp3s.nc.u-tokyo.ac.jp/OTSUCHI_CyberForest.mp3",
+          "web": "http://cyberforest.nenv.k.u-tokyo.ac.jp/",
+          "descripcion": "Micrófono en directo en la costa de Otsuchi (Japón)"
+        },
+        {
+          "nombre": "SeaSalt",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 76,
+          "stream": "https://stream.laut.fm/seasaltradio",
+          "web": "http://www.laut.fm/seasaltradio",
+          "descripcion": "Sonido del océano"
+        }
+      ]
+    },
+    {
+      "id": "bosque",
+      "nombre": "Bosque y pájaros",
+      "emisoras": [
+        {
+          "nombre": "Birdsong Radio",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 364,
+          "stream": "https://a1.radio.co/s5c5da6a36/listen",
+          "web": "https://birdsong.fm/",
+          "descripcion": "Canto de pájaros"
+        },
+        {
+          "nombre": "Phaune Radio",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 343,
+          "stream": "https://stream.phauneradio.com/phaune_128",
+          "web": "http://phauneradio.com/",
+          "descripcion": "Sonidos de la naturaleza y fauna salvaje"
+        },
+        {
+          "nombre": "CyberForest Fuji (bosque en directo)",
+          "pais": "JP",
+          "codec": "MP3",
+          "bitrate": 185,
+          "votos": 263,
+          "stream": "https://mp3s.nc.u-tokyo.ac.jp/Fuji_CyberForest.mp3",
+          "web": "http://cyberforest.nenv.k.u-tokyo.ac.jp/",
+          "descripcion": "Micrófono en directo en un bosque junto al monte Fuji"
+        },
+        {
+          "nombre": "Brazilian Birds Radio",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 97,
+          "stream": "https://strm112.1.fm/brazilianbirds_mobile_mp3",
+          "web": "https://www.1.fm/",
+          "descripcion": "Aves y selva de Brasil"
+        },
+        {
+          "nombre": "Radia.cz Birds",
+          "pais": "CZ",
+          "codec": "AAC",
+          "bitrate": 64,
+          "votos": 24,
+          "stream": "https://ice2.radia.cz/relax-morning-birds64.aac",
+          "web": "https://www.radia.cz/",
+          "descripcion": "Pájaros por la mañana"
+        }
+      ]
+    },
+    {
+      "id": "naturaleza",
+      "nombre": "Naturaleza mixta",
+      "emisoras": [
+        {
+          "nombre": "myNoise Pure Nature",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 1626,
+          "stream": "https://purenature-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Mezcla de naturaleza"
+        },
+        {
+          "nombre": "Ambi Nature Radio",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 320,
+          "votos": 1370,
+          "stream": "https://nature-rex.radioca.st/stream",
+          "web": "https://www.ambinature.xyz/",
+          "descripcion": "Grabaciones de campo reales, 320 kbps"
+        },
+        {
+          "nombre": "N07 Nature Meditation",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 1191,
+          "stream": "https://air.radioart.com/fMeditation.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Meditación con naturaleza"
+        },
+        {
+          "nombre": "Relax FM Nature",
+          "pais": "RU",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 1073,
+          "stream": "https://pub0101.101.ru/stream/trust/mp3/128/263",
+          "web": "https://top-radio.ru/web/relax-nature",
+          "descripcion": "Naturaleza y relax"
+        },
+        {
+          "nombre": "Radio Art Nature",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 612,
+          "stream": "https://air.radioart.com/fNature.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Música tranquila con sonidos de naturaleza"
+        },
+        {
+          "nombre": "Epic Lounge Nature Sounds",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 560,
+          "stream": "https://stream.epic-lounge.com/nature-sounds",
+          "web": "https://epic-lounge.com/",
+          "descripcion": "Naturaleza y chill"
+        },
+        {
+          "nombre": "Nature Radio Sleep",
+          "pais": "IT",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 433,
+          "stream": "https://az1.mediacp.eu/listen/natureradiosleep/radio.mp3",
+          "web": "https://natureradiosleep.weebly.com/",
+          "descripcion": "Pájaros, bosque y agua"
+        },
+        {
+          "nombre": "myNoise Zen Garden",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 403,
+          "stream": "https://zengarden-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Jardín zen, agua y cuencos"
+        },
+        {
+          "nombre": "0R Nature Relax",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 237,
+          "stream": "https://0nlineradio.radioho.st/lounge-nature-sounds",
+          "web": "https://0nlineradio.com/",
+          "descripcion": "Sonidos de naturaleza y relax"
+        },
+        {
+          "nombre": "24/7 Nature Radio",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 64,
+          "votos": 62,
+          "stream": "https://ec3.yesstreaming.net:3545/stream",
+          "web": "https://www.247natureradio.com/",
+          "descripcion": "Sonidos de naturaleza 24/7"
+        },
+        {
+          "nombre": "Radio Relax Nature",
+          "pais": "MD",
+          "codec": "AAC",
+          "bitrate": 128,
+          "votos": 11,
+          "stream": "https://radio8.dixi.md/listen/relax_ice_arena/relaxicearena128.aac",
+          "web": "https://radio8.dixi.md/",
+          "descripcion": "Ambient y naturaleza"
+        }
+      ]
+    },
+    {
+      "id": "ruido",
+      "nombre": "Ruido y paisajes sonoros",
+      "emisoras": [
+        {
+          "nombre": "myNoise Space Odyssey",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 528,
+          "stream": "https://spaceodyssey-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Paisaje sonoro espacial"
+        },
+        {
+          "nombre": "myNoise Drone Zone",
+          "pais": "BE",
+          "codec": "MP3",
+          "bitrate": 160,
+          "votos": 423,
+          "stream": "https://dronezone-mynoise.radioca.st/stream",
+          "web": "https://mynoise.net/",
+          "descripcion": "Drones graves continuos"
+        },
+        {
+          "nombre": "NTS Field Recordings",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 213,
+          "stream": "https://stream-mixtape-geo.ntslive.net/mixtape23",
+          "web": "https://www.nts.live/infinite-mixtapes/field-recordings",
+          "descripcion": "Grabaciones de campo y paisajes sonoros"
+        },
+        {
+          "nombre": "Brown Noise Radio",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 64,
+          "votos": 38,
+          "stream": "https://uk1.internet-radio.com/proxy/brownnoise?mp=/stream;",
+          "web": "https://www.internet-radio.com/",
+          "descripcion": "Ruido marrón para dormir o concentrarse"
+        }
+      ]
+    },
+    {
+      "id": "ambient",
+      "nombre": "Ambient, drone y espacio",
+      "emisoras": [
+        {
+          "nombre": "Ambient Sleeping Pill",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 54431,
+          "stream": "https://radio.stereoscenic.com/asp-h",
+          "web": "http://ambientsleepingpill.com/",
+          "descripcion": "Ambient sin ritmo, la más votada del género"
+        },
+        {
+          "nombre": "SomaFM Space Station Soma",
+          "pais": "US",
+          "codec": "AAC",
+          "bitrate": 128,
+          "votos": 24320,
+          "stream": "https://ice2.somafm.com/spacestation-128-aac",
+          "web": "https://somafm.com/spacestation/",
+          "descripcion": "Electrónica espacial a medio tempo"
+        },
+        {
+          "nombre": "SomaFM Drone Zone",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 3822,
+          "stream": "https://ice2.somafm.com/dronezone-128-mp3",
+          "web": "https://somafm.com/dronezone/",
+          "descripcion": "Clásico del ambient atmosférico"
+        },
+        {
+          "nombre": "Ambient Modern",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 3646,
+          "stream": "https://radio.stereoscenic.com/mod-h",
+          "web": "https://ambientmodern.com/",
+          "descripcion": "Ambient contemporáneo, sin anuncios"
+        },
+        {
+          "nombre": "SomaFM Deep Space One",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 2701,
+          "stream": "https://ice2.somafm.com/deepspaceone-128-mp3",
+          "web": "https://somafm.com/deepspaceone/",
+          "descripcion": "Ambient espacial profundo"
+        },
+        {
+          "nombre": "NTS Slow Focus",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 887,
+          "stream": "https://stream-mixtape-geo.ntslive.net/mixtape",
+          "web": "https://www.nts.live/infinite-mixtapes/slow-focus",
+          "descripcion": "Ambient y drone para concentrarse"
+        },
+        {
+          "nombre": "ambient.fm",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 647,
+          "stream": "https://ambient.fm/live/",
+          "web": "https://ambient.fm/",
+          "descripcion": "Ambient y relajación"
+        },
+        {
+          "nombre": "Radio Paradise Serenity",
+          "pais": "US",
+          "codec": "AAC",
+          "bitrate": 64,
+          "votos": 54,
+          "stream": "https://stream.radioparadise.com/serenity",
+          "web": "https://radioparadise.com/",
+          "descripcion": "Ambient sereno"
+        }
+      ]
+    },
+    {
+      "id": "dormir",
+      "nombre": "Para dormir",
+      "emisoras": [
+        {
+          "nombre": "dinamo.fm Sleep",
+          "pais": "TR",
+          "codec": "MP3",
+          "bitrate": 320,
+          "votos": 6101,
+          "stream": "https://channels.dinamo.fm/sleep-mp3",
+          "web": "http://www.dinamo.fm/",
+          "descripcion": "Nanas y ambient, 320 kbps"
+        },
+        {
+          "nombre": "Epic Classical Music for Sleep",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 2039,
+          "stream": "https://stream.epic-classical.com/classical-music-for-sleep",
+          "web": "https://epic-classical.com/",
+          "descripcion": "Clásica lenta para dormir"
+        },
+        {
+          "nombre": "Epic Lounge Sleep & Meditation",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 1889,
+          "stream": "https://stream.epic-lounge.com/sleep-meditation",
+          "web": "https://epic-lounge.com/",
+          "descripcion": "Ambient para dormir y meditar"
+        },
+        {
+          "nombre": "Radio Art Piano for Sleep",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 1778,
+          "stream": "https://air.radioart.com/fPiano_for_sleep.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Piano suave"
+        },
+        {
+          "nombre": "Radio Art Jazz for Sleep",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 1068,
+          "stream": "https://air.radioart.com/fJazz_for_sleep.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Jazz lento"
+        },
+        {
+          "nombre": "Positively Sleep Relax",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 622,
+          "stream": "https://streaming.positivity.radio/pr/sleeprelax/icecast.audio",
+          "web": "https://play.you.radio/",
+          "descripcion": "Ambient para dormir"
+        },
+        {
+          "nombre": "Calm Radio Sleep Channel",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 523,
+          "stream": "https://streams.calmradio.com/api/39/128/stream",
+          "web": "https://www.calmradio.com/",
+          "descripcion": "Canal para dormir"
+        },
+        {
+          "nombre": "Yoto Sleep Radio",
+          "pais": "GB",
+          "codec": "AAC",
+          "bitrate": 96,
+          "votos": 257,
+          "stream": "https://s3.radio.co/s74390585c/listen",
+          "web": "https://yotoplay.com/",
+          "descripcion": "Música suave para dormir"
+        },
+        {
+          "nombre": "Radio Art Guitar for Sleep",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 80,
+          "stream": "https://air.radioart.online/fGuitar_for_sleep.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Guitarra suave"
+        },
+        {
+          "nombre": "Radio Art Cello for Sleep",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 49,
+          "stream": "https://air.radioart.online/fCello_for_sleep.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Violonchelo suave"
+        }
+      ]
+    },
+    {
+      "id": "meditacion",
+      "nombre": "Meditación, yoga y new age",
+      "emisoras": [
+        {
+          "nombre": "Enigmatic Immersion",
+          "pais": "RU",
+          "codec": "AAC",
+          "bitrate": 64,
+          "votos": 831,
+          "stream": "https://radio.enigmatic.su:8040/radio",
+          "web": "http://enigmatic.su/radio-station/immersion",
+          "descripcion": "Ambient profundo, new age"
+        }
+      ]
+    },
+    {
+      "id": "piano",
+      "nombre": "Piano y clásica tranquila",
+      "emisoras": [
+        {
+          "nombre": "YourClassical Peaceful Piano",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 3013,
+          "stream": "https://peacefulpiano.stream.publicradio.org/peacefulpiano.mp3",
+          "web": "https://www.yourclassical.org/",
+          "descripcion": "Piano tranquilo"
+        },
+        {
+          "nombre": "Radio Art Solo Piano",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 2389,
+          "stream": "https://live.radioart.com/fSolo_piano.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Piano solo"
+        },
+        {
+          "nombre": "Radio Art Relaxing (violín, piano, chelo)",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 1891,
+          "stream": "https://air.radioart.com/fRelaxing.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Cuerdas y piano"
+        },
+        {
+          "nombre": "Epic Piano Chillout Piano",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 1488,
+          "stream": "https://stream.epic-piano.com/chillout-piano",
+          "web": "https://epic-piano.com/",
+          "descripcion": "Piano chill"
+        },
+        {
+          "nombre": "Whisperings Solo Piano Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 96,
+          "votos": 873,
+          "stream": "https://pianosolo.streamguys1.com/live",
+          "web": "http://www.solopianoradio.com/",
+          "descripcion": "Piano solo contemporáneo"
+        }
+      ]
+    },
+    {
+      "id": "chillout",
+      "nombre": "Chillout, lounge y downtempo",
+      "emisoras": [
+        {
+          "nombre": "SomaFM Groove Salad",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 47611,
+          "stream": "https://ice5.somafm.com/groovesalad-128-mp3",
+          "web": "https://somafm.com/groovesalad/",
+          "descripcion": "Downtempo y ambient, un clásico"
+        },
+        {
+          "nombre": "Spokoinoe Radio",
+          "pais": "RU",
+          "codec": "MP3",
+          "bitrate": 320,
+          "votos": 30169,
+          "stream": "https://listen9.myradio24.com/6262",
+          "web": "http://spokoinoeradio.ru/",
+          "descripcion": "Lounge, jazz suave, sonidos de naturaleza"
+        },
+        {
+          "nombre": "Smooth Chill",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 13324,
+          "stream": "https://media-ssl.musicradio.com/ChillMP3",
+          "web": "https://www.smoothradio.com/chill/",
+          "descripcion": "Chill británico"
+        },
+        {
+          "nombre": "1.FM Chillout Lounge",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 11958,
+          "stream": "https://strm112.1.fm/chilloutlounge_mobile_mp3",
+          "web": "https://www.1.fm/",
+          "descripcion": "Chillout y lounge"
+        },
+        {
+          "nombre": "Café del Mar",
+          "pais": "ES",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 8733,
+          "stream": "https://streams.radio.co/se1a320b47/listen",
+          "web": "https://cafedelmar.com/radio/",
+          "descripcion": "Chill balear, Ibiza"
+        },
+        {
+          "nombre": "1.FM Ambient Psychill",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 256,
+          "votos": 3094,
+          "stream": "https://strm112.1.fm/ambientpsy_mobile_mp3",
+          "web": "http://www.1.fm/station/ambientpsy",
+          "descripcion": "Psychill lento"
+        }
+      ]
+    },
+    {
+      "id": "lofi",
+      "nombre": "Lo-fi y chillhop",
+      "emisoras": [
+        {
+          "nombre": "Lofi 24/7",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "votos": 1266,
+          "stream": "https://usa9.fastcast4u.com/proxy/jamz?mp=/1",
+          "web": "https://lofi247.com/",
+          "descripcion": "Lo-fi hip hop"
+        },
+        {
+          "nombre": "REYFM #lofi",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 320,
+          "votos": 416,
+          "stream": "https://listen.reyfm.de/lofi_320kbps.mp3",
+          "web": "http://reyfm.de/",
+          "descripcion": "Lo-fi 320 kbps"
+        },
+        {
+          "nombre": "I Love Chillhop",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "votos": 394,
+          "stream": "https://ilm.stream12.radiohost.de/ilm_ilovechillhop_mp3-192",
+          "web": "https://www.ilovemusic.de/ilovechillhop/",
+          "descripcion": "Chillhop para estudiar"
+        }
+      ]
+    }
+  ]
+}

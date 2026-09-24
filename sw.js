@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v6';
+var CACHE_VERSION = 'v7';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -24,6 +24,7 @@ var APP_SHELL = [
   './app.js',
   './manifest.json',
   './stations.json',
+  './emisoras-relax.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'
@@ -72,9 +73,9 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
-  // stations.json: red primero (para tener la lista más reciente),
-  // con la copia en caché como respaldo si no hay conexión.
-  if (url.pathname.endsWith('/stations.json')) {
+  // stations.json y emisoras-relax.json: red primero (para tener la lista
+  // más reciente), con la copia en caché como respaldo si no hay conexión.
+  if (url.pathname.endsWith('/stations.json') || url.pathname.endsWith('/emisoras-relax.json')) {
     event.respondWith(
       fetch(request).then(function (response) {
         var copy = response.clone();

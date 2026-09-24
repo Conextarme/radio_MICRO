@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1a0b2e">
+  <meta name="theme-color" content="#1a0b2e" id="theme-color-meta">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,7 +24,13 @@
     <div class="grid-horizon"></div>
   </div>
 
+  <div class="moon-sky" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="moon"></div>
+  </div>
+
   <header class="site-header">
+    <button type="button" id="sleep-mode-toggle" class="sleep-mode-toggle" aria-pressed="false" aria-label="Activar modo dormir">🌙 Modo dormir</button>
     <h1 class="title">
       <span class="title-main">RADIOS DE ESPAÑA</span>
       <span class="title-sub">SIN MICROCORTES</span>
@@ -34,6 +40,8 @@
   </header>
 
   <main>
+    <button type="button" id="sleep-continue-btn" class="sleep-continue-btn" hidden></button>
+
     <section class="top3-section">
       <h2 class="top3-title">🏆 TOP 3</h2>
       <p class="top3-hint">Arrastra aquí tus emisoras favoritas para fijarlas en el podio.</p>
@@ -55,6 +63,8 @@
         </div>
       </div>
     </section>
+
+    <div id="sleep-chips" class="sleep-chips" hidden role="tablist" aria-label="Filtrar por temática"></div>
 
     <div id="stations-grid-wrap" class="stations-grid-wrap">
       <div id="stations-grid" class="stations-grid" aria-live="polite">
@@ -83,11 +93,30 @@
       <div class="mini-player-name" id="mini-player-name"></div>
       <div class="mini-player-status" id="mini-player-status"></div>
     </div>
+    <div id="sleep-timer" class="sleep-timer" hidden>
+      <span class="sleep-timer-countdown" id="sleep-timer-countdown"></span>
+      <button type="button" id="sleep-timer-btn" class="sleep-timer-btn" aria-haspopup="true" aria-expanded="false" aria-label="Temporizador de apagado">⏱</button>
+      <div id="sleep-timer-menu" class="sleep-timer-menu" hidden>
+        <button type="button" data-min="15">15 min</button>
+        <button type="button" data-min="30">30 min</button>
+        <button type="button" data-min="45">45 min</button>
+        <button type="button" data-min="60">60 min</button>
+        <button type="button" data-min="120">2 h</button>
+        <button type="button" data-min="0">Desactivado</button>
+      </div>
+    </div>
     <button type="button" id="mini-player-toggle" class="mini-player-toggle" aria-label="Pausar">⏸</button>
     <div class="mini-player-volume">
       <span aria-hidden="true">🔊</span>
       <input type="range" id="mini-player-volume" class="mini-player-volume-slider" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
     </div>
+  </div>
+
+  <div id="sleep-fallback-toast" class="sleep-fallback-toast" hidden aria-live="polite"></div>
+
+  <div id="sleep-dim-overlay" class="sleep-dim-overlay" hidden aria-hidden="true">
+    <div class="sleep-dim-moon"></div>
+    <div class="sleep-dim-name" id="sleep-dim-name"></div>
   </div>
 
   <script src="app.js" defer></script>

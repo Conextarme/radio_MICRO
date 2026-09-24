@@ -13,6 +13,41 @@
   var BUZZER_VIDEO_ID = 'ZAOVHbXdDoU';
   var BUZZER_NAME = '📡 4625 kHz';
 
+  /* --- Modo dormir --- */
+  var SLEEP_STORAGE_KEY = 'radioMicroSleepState';
+  var SLEEP_MODE_KEY = 'radioMicroSleepMode';
+  var SLEEP_TIMER_KEY = 'radioMicroSleepTimerEnd';
+  var SLEEP_TIMER_MIN_KEY = 'radioMicroSleepTimerMinutes';
+  var SLEEP_LAST_KEY = 'radioMicroSleepLast';
+  var SLEEP_DIM_DELAY_MS = 20000;
+
+  var SLEEP_CATEGORY_ORDER = ['lluvia', 'mar', 'bosque', 'naturaleza', 'ruido', 'ambient', 'dormir', 'meditacion', 'piano', 'chillout', 'lofi'];
+  var SLEEP_CATEGORY_META = {
+    lluvia: { icon: '🌧', label: 'Lluvia' },
+    mar: { icon: '🌊', label: 'Mar' },
+    bosque: { icon: '🌲', label: 'Bosque' },
+    naturaleza: { icon: '🌿', label: 'Naturaleza' },
+    ruido: { icon: '🔊', label: 'Ruido' },
+    ambient: { icon: '🌌', label: 'Ambient' },
+    dormir: { icon: '😴', label: 'Dormir' },
+    meditacion: { icon: '🧘', label: 'Meditación' },
+    piano: { icon: '🎹', label: 'Piano' },
+    chillout: { icon: '🍸', label: 'Chillout' },
+    lofi: { icon: '🎧', label: 'Lo-fi' }
+  };
+
+  var sleepMode = false;
+  var normalStationsCache = null;
+  var sleepStationsCache = null;
+  var rankByName = null;
+  var activeCategoryFilter = 'all';
+  var wakeLockSentinel = null;
+  var dimTimeout = null;
+  var timerEndAt = 0;
+  var timerInterval = null;
+  var volumeFadeInterval = null;
+  var volumeFadeInInterval = null;
+
   var STATUS = {
     IDLE: 'idle',
     TUNING: 'tuning',
@@ -47,6 +82,22 @@
 
   var easterEggTrigger = document.getElementById('easter-egg-trigger');
   var easterEggVideoWrap = document.getElementById('easter-egg-video-wrap');
+
+  var sleepModeToggle = document.getElementById('sleep-mode-toggle');
+  var titleMainEl = document.querySelector('.title-main');
+  var titleSubEl = document.querySelector('.title-sub');
+  var taglineEl = document.querySelector('.tagline');
+  var top3TitleEl = document.querySelector('.top3-title');
+  var themeColorMeta = document.getElementById('theme-color-meta');
+  var sleepChipsWrap = document.getElementById('sleep-chips');
+  var sleepContinueBtn = document.getElementById('sleep-continue-btn');
+  var sleepTimerWrap = document.getElementById('sleep-timer');
+  var sleepTimerBtn = document.getElementById('sleep-timer-btn');
+  var sleepTimerMenu = document.getElementById('sleep-timer-menu');
+  var sleepTimerCountdown = document.getElementById('sleep-timer-countdown');
+  var sleepFallbackToast = document.getElementById('sleep-fallback-toast');
+  var sleepDimOverlay = document.getElementById('sleep-dim-overlay');
+  var sleepDimName = document.getElementById('sleep-dim-name');
 
   var stations = [];
   var cards = [];
@@ -187,6 +238,8 @@
     audio.removeAttribute('src');
     try { audio.load(); } catch (e) { /* noop */ }
     reconnecting = false;
+    releaseWakeLock();
+    clearScreenDim();
   }
 
   function playStation(index, isAutoFallback) {
@@ -221,6 +274,12 @@
       reconnectAttemptCount = 0;
     }
     setStatus(STATUS.TUNING);
+
+    if (sleepMode) {
+      saveLastSleepStation(station.name);
+      updateMediaSession(station);
+      fadeInVolume();
+    }
 
     startStream(station);
     startWatchdog();
@@ -347,7 +406,41 @@
       destroyHls();
       audio.pause();
       setStatus(STATUS.PAUSED);
+      releaseWakeLock();
+      clearScreenDim();
     }
+  }
+
+  /* --- Salto a otra emisora de la misma temática (modo dormir) --- */
+
+  function getSameCategoryFallbackIndex(fromIndex) {
+    var station = stations[fromIndex];
+    if (!station || !station.category) {
+      return -1;
+    }
+    var candidates = [];
+    stations.forEach(function (s, i) {
+      if (i !== fromIndex && s.category === station.category && !isUnavailable(s)) {
+        candidates.push({ index: i, votos: s.votos || 0 });
+      }
+    });
+    if (!candidates.length) {
+      return -1;
+    }
+    candidates.sort(function (a, b) { return b.votos - a.votos; });
+    return candidates[0].index;
+  }
+
+  function showSleepFallbackToast(message) {
+    if (!sleepFallbackToast) {
+      return;
+    }
+    sleepFallbackToast.textContent = message;
+    sleepFallbackToast.hidden = false;
+    clearTimeout(sleepFallbackToast._hideTimer);
+    sleepFallbackToast._hideTimer = setTimeout(function () {
+      sleepFallbackToast.hidden = true;
+    }, 4000);
   }
 
   function scheduleReconnect() {
@@ -372,10 +465,19 @@
     reconnectAttemptCount++;
     if (reconnectAttemptCount > RECONNECT_ATTEMPTS_BEFORE_FALLBACK) {
       reconnectAttemptCount = 0;
-      // Demasiados intentos fallidos seguidos con esta emisora: en vez de
-      // insistir indefinidamente, se prueba con la siguiente del TOP3 (si
-      // hay alguna distinta y fiable). Si no hay ninguna a la que rotar, se
-      // sigue reintentando la misma como hasta ahora.
+      // Demasiados intentos fallidos seguidos con esta emisora. En modo
+      // dormir se prueba primero con otra de la misma temática (más votada);
+      // si no hay ninguna, o en modo normal, se prueba con la siguiente
+      // fiable del TOP3. Si tampoco hay ninguna a la que rotar, se sigue
+      // reintentando la misma como hasta ahora.
+      if (sleepMode) {
+        var altIndex = getSameCategoryFallbackIndex(currentIndex);
+        if (altIndex !== -1) {
+          showSleepFallbackToast('Cambiando a ' + stations[altIndex].name + '…');
+          playStation(altIndex, true);
+          return;
+        }
+      }
       if (switchToNextFavorite()) {
         return;
       }
@@ -414,6 +516,10 @@
     }
     reconnectAttemptCount = 0;
     setStatus(STATUS.LIVE);
+    if (sleepMode) {
+      requestWakeLock();
+      scheduleScreenDim();
+    }
   });
 
   audio.addEventListener('error', function () {
@@ -459,6 +565,14 @@
     if (document.visibilityState === 'visible' && !userPaused && currentIndex !== -1 &&
         currentStatus !== STATUS.LIVE && currentStatus !== STATUS.BLOCKED) {
       reconnectNow();
+    }
+    if (document.visibilityState === 'visible' && sleepMode) {
+      if (timerEndAt) {
+        tickSleepTimer();
+      }
+      if (currentStatus === STATUS.LIVE) {
+        requestWakeLock();
+      }
     }
   });
 
@@ -624,18 +738,57 @@
     card.className = 'station-card' + (unavailable ? ' is-unavailable' : '') +
       (station.category ? ' category-' + station.category : '');
     card.dataset.name = station.name;
+    if (station.category) {
+      card.dataset.category = station.category;
+    }
+
+    var toolbar = document.createElement('div');
+    toolbar.className = 'card-toolbar';
 
     var handle = document.createElement('div');
     handle.className = 'drag-handle';
     handle.setAttribute('aria-hidden', 'true');
     handle.title = 'Arrastra para reordenar';
     handle.textContent = '⠿';
-    card.appendChild(handle);
+    toolbar.appendChild(handle);
     attachDragHandle(card, handle);
+
+    if (!unavailable) {
+      var podiumBtn = document.createElement('button');
+      podiumBtn.type = 'button';
+      podiumBtn.className = 'podium-add-btn';
+      podiumBtn.title = 'Al podio';
+      podiumBtn.setAttribute('aria-label', 'Añadir ' + station.name + ' al podio');
+      podiumBtn.textContent = '⭐';
+      podiumBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        addToPodium(card);
+      });
+      toolbar.appendChild(podiumBtn);
+    }
+
+    card.appendChild(toolbar);
+
+    if (sleepMode) {
+      var rank = rankByName ? rankByName[station.name] : null;
+      if (rank) {
+        var badge = document.createElement('div');
+        badge.className = 'rank-badge' + (rank <= 3 ? ' rank-' + rank : '');
+        badge.textContent = '#' + rank;
+        card.appendChild(badge);
+      }
+    }
 
     var content = document.createElement('button');
     content.type = 'button';
     content.className = 'card-content';
+
+    if (sleepMode && station.category && SLEEP_CATEGORY_META[station.category]) {
+      var catTag = document.createElement('div');
+      catTag.className = 'station-category-tag';
+      catTag.textContent = SLEEP_CATEGORY_META[station.category].icon + ' ' + SLEEP_CATEGORY_META[station.category].label;
+      content.appendChild(catTag);
+    }
 
     var name = document.createElement('div');
     name.className = 'station-name';
@@ -654,6 +807,20 @@
     status.className = 'station-status ' + (unavailable ? 'status-unavailable' : 'status-idle');
     status.textContent = unavailable ? STATUS_LABEL.unavailable : station.freq;
     content.appendChild(status);
+
+    if (sleepMode && (station.votos || station.bitrate)) {
+      var meta = document.createElement('div');
+      meta.className = 'station-meta';
+      var bits = [];
+      if (station.votos) {
+        bits.push(station.votos.toLocaleString('es-ES') + ' votos');
+      }
+      if (station.bitrate) {
+        bits.push(station.bitrate + ' kbps');
+      }
+      meta.textContent = bits.join(' · ');
+      content.appendChild(meta);
+    }
 
     card.appendChild(content);
 
@@ -741,9 +908,13 @@
     return { order: order, top3: top3 };
   }
 
+  function currentStorageKey() {
+    return sleepMode ? SLEEP_STORAGE_KEY : STORAGE_KEY;
+  }
+
   function loadState() {
     try {
-      var raw = window.localStorage.getItem(STORAGE_KEY);
+      var raw = window.localStorage.getItem(currentStorageKey());
       if (raw) {
         var parsed = JSON.parse(raw);
         return {
@@ -752,6 +923,10 @@
         };
       }
     } catch (e) { /* noop */ }
+    if (sleepMode) {
+      // El modo dormir no tiene claves antiguas que migrar: empieza vacío.
+      return { order: [], top3: [] };
+    }
     // Sin datos en la clave actual: se migran (si existen) las claves antiguas
     // de versiones previas de la web, que guardaban orden y podio por separado.
     return loadLegacyState();
@@ -767,10 +942,31 @@
         var occupant = slot.querySelector('.station-card');
         return occupant ? occupant.dataset.name : null;
       });
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ order: order, top3: top3 }));
-      window.localStorage.removeItem(LEGACY_ORDER_KEY);
-      window.localStorage.removeItem(LEGACY_TOP3_KEY);
+      window.localStorage.setItem(currentStorageKey(), JSON.stringify({ order: order, top3: top3 }));
+      if (!sleepMode) {
+        window.localStorage.removeItem(LEGACY_ORDER_KEY);
+        window.localStorage.removeItem(LEGACY_TOP3_KEY);
+      }
     } catch (e) { /* localStorage no disponible; el orden y el podio simplemente no persisten */ }
+  }
+
+  /* --- Alternativa táctil al arrastrar: botón "Al podio" en cada tarjeta --- */
+
+  function addToPodium(card) {
+    if (card.parentNode && card.parentNode.classList && card.parentNode.classList.contains('podium-drop')) {
+      return;
+    }
+    var sorted = podiumSlots.slice().sort(function (a, b) {
+      return (parseInt(a.dataset.rank, 10) || 9) - (parseInt(b.dataset.rank, 10) || 9);
+    });
+    var emptySlot = sorted.filter(function (s) { return !s.querySelector('.station-card'); })[0];
+    var slot = emptySlot || sorted[0];
+    var occupant = slot.querySelector('.station-card');
+    if (occupant) {
+      grid.insertBefore(occupant, grid.firstChild);
+    }
+    slot.appendChild(card);
+    saveState();
   }
 
   function applyTop3ToDom(top3Names) {
@@ -989,17 +1185,491 @@
     handle.addEventListener('pointercancel', onPointerEnd);
   }
 
-  fetch('stations.json')
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
+  /* =========================================================================
+     Modo dormir
+     ========================================================================= */
+
+  function flattenSleepData(data) {
+    var out = [];
+    (data.categorias || []).forEach(function (cat) {
+      (cat.emisoras || []).forEach(function (e) {
+        out.push({
+          name: e.nombre,
+          freq: 'Stream',
+          streamUrl: e.stream,
+          streamType: (e.codec || 'mp3').toLowerCase(),
+          officialUrl: e.web,
+          notes: e.descripcion,
+          category: cat.id,
+          votos: e.votos || 0,
+          bitrate: e.bitrate,
+          pais: e.pais
+        });
+      });
+    });
+    return out;
+  }
+
+  function defaultSleepOrder(list) {
+    var catIndex = {};
+    SLEEP_CATEGORY_ORDER.forEach(function (id, i) { catIndex[id] = i; });
+    return list.slice().sort(function (a, b) {
+      var ca = catIndex[a.category] !== undefined ? catIndex[a.category] : 99;
+      var cb = catIndex[b.category] !== undefined ? catIndex[b.category] : 99;
+      if (ca !== cb) {
+        return ca - cb;
+      }
+      return (b.votos || 0) - (a.votos || 0);
+    });
+  }
+
+  function computeRankMap(list) {
+    var sorted = list.slice().sort(function (a, b) { return (b.votos || 0) - (a.votos || 0); });
+    var map = {};
+    sorted.forEach(function (s, i) { map[s.name] = i + 1; });
+    return map;
+  }
+
+  function saveSleepModePref() {
+    try { window.localStorage.setItem(SLEEP_MODE_KEY, sleepMode ? '1' : '0'); } catch (e) { /* noop */ }
+  }
+
+  function loadSleepModePref() {
+    try { return window.localStorage.getItem(SLEEP_MODE_KEY) === '1'; } catch (e) { return false; }
+  }
+
+  function saveLastSleepStation(name) {
+    try { window.localStorage.setItem(SLEEP_LAST_KEY, name); } catch (e) { /* noop */ }
+  }
+
+  function updateModeUI() {
+    if (sleepModeToggle) {
+      sleepModeToggle.textContent = sleepMode ? '☀️ Modo normal' : '🌙 Modo dormir';
+      sleepModeToggle.setAttribute('aria-pressed', sleepMode ? 'true' : 'false');
+      sleepModeToggle.setAttribute('aria-label', sleepMode ? 'Volver al modo normal' : 'Activar modo dormir');
+    }
+    if (titleMainEl) {
+      titleMainEl.textContent = sleepMode ? 'SONIDOS' : 'RADIOS DE ESPAÑA';
+    }
+    if (titleSubEl) {
+      titleSubEl.textContent = sleepMode ? 'PARA DORMIR' : 'SIN MICROCORTES';
+    }
+    if (taglineEl) {
+      taglineEl.textContent = sleepMode
+        ? 'Cierra los ojos y déjate llevar.'
+        : 'Elige tu emisora y suena, aunque falle la conexión.';
+    }
+    if (top3TitleEl) {
+      top3TitleEl.textContent = sleepMode ? '🌙 TOP 3 PARA DORMIR' : '🏆 TOP 3';
+    }
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', sleepMode ? '#0b1026' : '#1a0b2e');
+    }
+    if (sleepTimerWrap) {
+      sleepTimerWrap.hidden = !sleepMode;
+    }
+    if (!sleepMode && sleepChipsWrap) {
+      sleepChipsWrap.hidden = true;
+    }
+    if (!sleepMode && sleepContinueBtn) {
+      sleepContinueBtn.hidden = true;
+    }
+  }
+
+  /* --- Filtro por temática (chips) --- */
+
+  function renderCategoryChips() {
+    if (!sleepChipsWrap) {
+      return;
+    }
+    sleepChipsWrap.innerHTML = '';
+    sleepChipsWrap.hidden = !sleepMode;
+    if (!sleepMode) {
+      return;
+    }
+    activeCategoryFilter = 'all';
+    sleepChipsWrap.appendChild(makeCategoryChip('all', 'Todas'));
+    SLEEP_CATEGORY_ORDER.forEach(function (id) {
+      var meta = SLEEP_CATEGORY_META[id];
+      sleepChipsWrap.appendChild(makeCategoryChip(id, meta.icon + ' ' + meta.label));
+    });
+    applyCategoryFilter();
+  }
+
+  function makeCategoryChip(id, label) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sleep-chip' + (activeCategoryFilter === id ? ' is-active' : '');
+    btn.textContent = label;
+    btn.addEventListener('click', function () {
+      activeCategoryFilter = id;
+      Array.prototype.forEach.call(sleepChipsWrap.children, function (c) { c.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      applyCategoryFilter();
+    });
+    return btn;
+  }
+
+  function applyCategoryFilter() {
+    cards.forEach(function (card, i) {
+      var station = stations[i];
+      var show = activeCategoryFilter === 'all' || (station && station.category === activeCategoryFilter);
+      card.style.display = show ? '' : 'none';
+    });
+    updateGridToggleVisibility();
+  }
+
+  /* --- Continuar donde lo dejé --- */
+
+  function showContinueButtonIfAny() {
+    if (!sleepContinueBtn) {
+      return;
+    }
+    var name;
+    try { name = window.localStorage.getItem(SLEEP_LAST_KEY); } catch (e) { name = null; }
+    if (!name) {
+      sleepContinueBtn.hidden = true;
+      return;
+    }
+    var idx = -1;
+    for (var i = 0; i < stations.length; i++) {
+      if (stations[i].name === name) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx === -1) {
+      sleepContinueBtn.hidden = true;
+      return;
+    }
+    sleepContinueBtn.hidden = false;
+    sleepContinueBtn.textContent = '▶ Continuar: ' + name;
+    sleepContinueBtn.onclick = function () {
+      sleepContinueBtn.hidden = true;
+      playStation(idx);
+    };
+  }
+
+  /* --- Fundidos de volumen --- */
+
+  function fadeInVolume() {
+    var target = loadSavedVolume();
+    audio.volume = 0;
+    var steps = 15;
+    var i = 0;
+    if (volumeFadeInInterval) {
+      clearInterval(volumeFadeInInterval);
+    }
+    volumeFadeInInterval = setInterval(function () {
+      i++;
+      audio.volume = target * Math.min(1, i / steps);
+      if (i >= steps) {
+        clearInterval(volumeFadeInInterval);
+        volumeFadeInInterval = null;
+        audio.volume = target;
+      }
+    }, 100);
+  }
+
+  function fadeOutAndPause() {
+    var startVolume = audio.volume;
+    var steps = 40;
+    var i = 0;
+    if (volumeFadeInterval) {
+      clearInterval(volumeFadeInterval);
+    }
+    volumeFadeInterval = setInterval(function () {
+      i++;
+      audio.volume = Math.max(0, startVolume * (1 - i / steps));
+      if (i >= steps) {
+        clearInterval(volumeFadeInterval);
+        volumeFadeInterval = null;
+        if (!userPaused && currentIndex !== -1) {
+          togglePauseResume();
+        }
+        audio.volume = loadSavedVolume();
+      }
+    }, 750);
+  }
+
+  /* --- Temporizador de apagado --- */
+
+  function startSleepTimer(minutes) {
+    timerEndAt = Date.now() + minutes * 60000;
+    try {
+      window.localStorage.setItem(SLEEP_TIMER_KEY, String(timerEndAt));
+      window.localStorage.setItem(SLEEP_TIMER_MIN_KEY, String(minutes));
+    } catch (e) { /* noop */ }
+    restartTimerLoop();
+  }
+
+  function clearSleepTimer(removeStorage) {
+    timerEndAt = 0;
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    if (sleepTimerCountdown) {
+      sleepTimerCountdown.textContent = '';
+    }
+    if (removeStorage) {
+      try {
+        window.localStorage.removeItem(SLEEP_TIMER_KEY);
+        window.localStorage.removeItem(SLEEP_TIMER_MIN_KEY);
+      } catch (e) { /* noop */ }
+    }
+  }
+
+  function restartTimerLoop() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    tickSleepTimer();
+    timerInterval = setInterval(tickSleepTimer, 1000);
+  }
+
+  function tickSleepTimer() {
+    if (!timerEndAt) {
+      return;
+    }
+    var remaining = timerEndAt - Date.now();
+    if (remaining <= 0) {
+      clearSleepTimer(true);
+      fadeOutAndPause();
+      return;
+    }
+    if (sleepTimerCountdown) {
+      var mins = Math.floor(remaining / 60000);
+      var secs = Math.floor((remaining % 60000) / 1000);
+      sleepTimerCountdown.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }
+  }
+
+  function restoreSleepTimer() {
+    try {
+      var raw = window.localStorage.getItem(SLEEP_TIMER_KEY);
+      if (raw) {
+        var end = parseInt(raw, 10);
+        if (end && end > Date.now()) {
+          timerEndAt = end;
+          restartTimerLoop();
+          return;
+        }
+      }
+    } catch (e) { /* noop */ }
+    clearSleepTimer(true);
+  }
+
+  if (sleepTimerBtn && sleepTimerMenu) {
+    sleepTimerBtn.addEventListener('click', function () {
+      var isHidden = sleepTimerMenu.hidden;
+      sleepTimerMenu.hidden = !isHidden;
+      sleepTimerBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    });
+    Array.prototype.forEach.call(sleepTimerMenu.querySelectorAll('button'), function (btn) {
+      btn.addEventListener('click', function () {
+        var minutes = parseInt(btn.dataset.min, 10) || 0;
+        if (minutes > 0) {
+          startSleepTimer(minutes);
+        } else {
+          clearSleepTimer(true);
+        }
+        sleepTimerMenu.hidden = true;
+        sleepTimerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* --- Pantalla encendida (Wake Lock) --- */
+
+  function requestWakeLock() {
+    if (!sleepMode || !navigator.wakeLock) {
+      return;
+    }
+    try {
+      navigator.wakeLock.request('screen').then(function (sentinel) {
+        wakeLockSentinel = sentinel;
+      }).catch(function () { /* noop: la web sigue funcionando sin bloqueo de pantalla */ });
+    } catch (e) { /* noop */ }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLockSentinel) {
+      try { wakeLockSentinel.release(); } catch (e) { /* noop */ }
+      wakeLockSentinel = null;
+    }
+  }
+
+  /* --- Capa de atenuación de pantalla en modo dormir --- */
+
+  function scheduleScreenDim() {
+    clearTimeout(dimTimeout);
+    if (!sleepMode || currentIndex === -1) {
+      return;
+    }
+    dimTimeout = setTimeout(function () {
+      if (!sleepDimOverlay || currentStatus !== STATUS.LIVE) {
+        return;
+      }
+      var station = stations[currentIndex];
+      if (sleepDimName) {
+        sleepDimName.textContent = station ? station.name : '';
+      }
+      sleepDimOverlay.hidden = false;
+    }, SLEEP_DIM_DELAY_MS);
+  }
+
+  function clearScreenDim() {
+    clearTimeout(dimTimeout);
+    if (sleepDimOverlay) {
+      sleepDimOverlay.hidden = true;
+    }
+  }
+
+  if (sleepDimOverlay) {
+    sleepDimOverlay.addEventListener('pointerdown', function () {
+      clearScreenDim();
+      scheduleScreenDim();
+    });
+  }
+
+  document.addEventListener('pointerdown', function () {
+    if (sleepMode && currentStatus === STATUS.LIVE) {
+      clearScreenDim();
+      scheduleScreenDim();
+    }
+  });
+
+  /* --- Media Session (control desde la pantalla de bloqueo) --- */
+
+  function updateMediaSession(station) {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+    try {
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: station.name,
+        artist: station.category && SLEEP_CATEGORY_META[station.category]
+          ? SLEEP_CATEGORY_META[station.category].label
+          : 'Radios de España'
+      });
+      navigator.mediaSession.setActionHandler('play', function () {
+        if (currentIndex !== -1) {
+          togglePauseResume();
+        }
+      });
+      navigator.mediaSession.setActionHandler('pause', function () {
+        if (currentIndex !== -1) {
+          togglePauseResume();
+        }
+      });
+      navigator.mediaSession.setActionHandler('stop', function () {
+        if (currentIndex !== -1) {
+          togglePauseResume();
+        }
+      });
+    } catch (e) { /* noop: Media Session no disponible en este navegador */ }
+  }
+
+  /* --- Cambio de modo --- */
+
+  function setSleepMode(enabled, skipSave) {
+    if (sleepMode === enabled) {
+      return;
+    }
+    stopPlayback();
+    currentIndex = -1;
+    currentStatus = STATUS.IDLE;
+    userPaused = false;
+    clearScreenDim();
+    releaseWakeLock();
+    clearSleepTimer(false);
+    if (miniPlayer) {
+      miniPlayer.hidden = true;
+    }
+    document.body.classList.remove('has-mini-player');
+
+    sleepMode = enabled;
+    document.body.classList.toggle('sleep-mode', sleepMode);
+    updateModeUI();
+    if (!skipSave) {
+      saveSleepModePref();
+    }
+
+    if (sleepMode) {
+      initSleepMode();
+    } else {
+      initNormalMode();
+    }
+  }
+
+  if (sleepModeToggle) {
+    sleepModeToggle.addEventListener('click', function () {
+      setSleepMode(!sleepMode);
+    });
+  }
+
+  /* --- Carga de datos por modo --- */
+
+  function initNormalMode() {
+    var fetchPromise = normalStationsCache
+      ? Promise.resolve(normalStationsCache)
+      : fetch('stations.json').then(function (res) { return res.json(); });
+
+    return fetchPromise.then(function (data) {
+      normalStationsCache = data;
+      rankByName = null;
       var savedState = loadState();
       var withDefaultOrder = applySavedOrder(data, DEFAULT_ORDER);
       stations = applySavedOrder(withDefaultOrder, savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
       updateGridToggleVisibility();
-    })
-    .catch(function () {
+    }).catch(function () {
       grid.textContent = 'No se pudo cargar la lista de emisoras.';
     });
+  }
+
+  function initSleepMode() {
+    var fetchPromise = sleepStationsCache
+      ? Promise.resolve(sleepStationsCache)
+      : fetch('emisoras-relax.json').then(function (res) {
+        if (!res.ok) {
+          throw new Error('No se pudo cargar emisoras-relax.json');
+        }
+        return res.json();
+      }).then(flattenSleepData);
+
+    return fetchPromise.then(function (flat) {
+      sleepStationsCache = flat;
+      rankByName = computeRankMap(flat);
+      var savedState = loadState();
+      var defaultOrder = defaultSleepOrder(flat);
+      stations = applySavedOrder(defaultOrder, savedState.order);
+      renderGrid();
+      applyTop3ToDom(savedState.top3);
+      updateGridToggleVisibility();
+      renderCategoryChips();
+      showContinueButtonIfAny();
+      restoreSleepTimer();
+    }).catch(function () {
+      grid.textContent = 'No se pudieron cargar las emisoras para dormir. Volviendo al modo normal…';
+      setSleepMode(false, true);
+    });
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    document.body.classList.toggle('tab-hidden', document.hidden);
+  });
+
+  /* --- Arranque --- */
+
+  sleepMode = loadSleepModePref();
+  document.body.classList.toggle('sleep-mode', sleepMode);
+  updateModeUI();
+  if (sleepMode) {
+    initSleepMode();
+  } else {
+    initNormalMode();
+  }
 })();

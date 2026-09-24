@@ -4,6 +4,67 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-24 17:35 — Implementación del "modo dormir"
+
+### Objetivo
+Implementar lo descrito en `PROMPT_MODO_DORMIR.md`: un botón en la cabecera que active un "modo dormir" con emisoras de sonidos relajantes (`emisoras-relax.json`), manteniendo la misma estructura de TOP 3 y cuadrícula que el modo normal, más funciones propias para dormir (temporizador con fundido, pantalla encendida, control desde pantalla bloqueada, filtro por temática, continuar donde lo dejé, fundidos de volumen, salto a alternativa de la misma temática si una emisora falla) y ampliar la comprobación automática de streams a las dos listas.
+
+### Archivos afectados
+- `index.html`: modificado. Botón "🌙 Modo dormir"/"☀️ Modo normal" en la cabecera, fondo de luna y estrellas (además del sol existente), fila de chips de temática, botón "Continuar", temporizador de apagado dentro del mini-reproductor, aviso ("toast") de cambio de emisora y capa de atenuación de pantalla.
+- `app.js`: modificado. Se generaliza la carga de emisoras y el guardado en `localStorage` para trabajar con dos "modos" (normal/dormir) sin duplicar `createCard`, `renderGrid`, `playStation`, la reconexión ni el arrastrar y soltar del podio, que se reutilizan tal cual. Se añaden: aplanado de `emisoras-relax.json` al formato interno de emisora, orden inicial por temática y votos, ranking por votos (chapa `#N` en la tarjeta), botón alternativo "⭐ Al podio" para tocar en vez de arrastrar, filtro por chips de temática, temporizador de apagado con fundido de volumen (basado en marca de tiempo, no en `setInterval` puro, para sobrevivir a pantalla bloqueada), fundidos de volumen al empezar/cambiar de emisora, `Wake Lock` (pantalla encendida) y capa de atenuación tras 20 s sin tocar, integración con `navigator.mediaSession` para controlar play/pausa desde la pantalla de bloqueo, salto a otra emisora de la misma temática (por votos) si la actual falla repetidamente, "continuar donde lo dejé" y guardado del modo elegido y del podio/orden del modo dormir en su propia clave de `localStorage` (`radioMicroSleepState`, `radioMicroSleepMode`, etc.), separada de la del modo normal.
+- `styles.css`: modificado. Paleta y fondo específicos del modo dormir (`body.sleep-mode`, variables CSS), luna y estrellas en CSS puro con animaciones lentas (respetando `prefers-reduced-motion` y pausándose con la pestaña oculta), estilos de la chapa de ranking, la etiqueta de temática, los chips, el temporizador, el aviso de cambio de emisora, la capa de atenuación, el botón "Continuar" y el botón "Al podio", todos pensados para móvil (áreas táctiles ≥44 px, botón de play/pausa de 56 px en modo dormir).
+- `sw.js`: modificado. Se añade `emisoras-relax.json` a la lista de archivos precacheados y se trata igual que `stations.json` (red primero, caché de respaldo). Se sube `CACHE_VERSION` de `v6` a `v7` para que las instalaciones ya hechas reciban los cambios.
+- `scripts/check-streams.mjs`: modificado. Ahora lee `stations.json` **y** `emisoras-relax.json` (aplanando sus categorías), distingue cada emisora con el prefijo `[normal]` o `[dormir]` en la consola, indica en qué archivo revisar cada una que falle, y comprueba en lotes de 10 en paralelo en vez de todas a la vez.
+
+### Motivo
+Ofrecer una alternativa de radio pensada para relajarse y dormir, sin duplicar la lógica de reproducción/reconexión ya probada del modo normal (se reutiliza integramente) y sin mezclar sus datos, orden ni podio con los de las emisoras habituales. Las funciones de temporizador, pantalla encendida y control desde bloqueo están pensadas para el uso real: el móvil en la mesilla con la pantalla bloqueada.
+
+### Validaciones
+- `node --check app.js` y `node --check scripts/check-streams.mjs`: sin errores de sintaxis.
+- `node scripts/check-streams.mjs` ejecutado en local: comprueba 111 emisoras (49 del modo normal + 62 del modo dormir) con prefijos `[normal]`/`[dormir]`; termina con 3 caídas puntuales identificadas con el archivo a revisar en cada caso (`RADIO BOB! Blues` en `stations.json`; `Otsuchi Coastal Soundscape` y `CyberForest Fuji` en `emisoras-relax.json`), sin relación con este cambio de código.
+- Comprobación de que todos los `id` usados por `app.js` (`getElementById`) existen en `index.html` (script de verificación ad hoc): sin IDs huérfanos.
+- Comprobación de balance de etiquetas HTML abiertas/cerradas en `index.html` (`div`, `header`, `main`, `footer`, `section`, `button`, `audio`): todas balanceadas.
+- Servidor estático local (Node) para comprobar que `index.html` y `emisoras-relax.json` se sirven y el JSON es válido: correcto.
+
+### Riesgos o pendientes
+- **No se ha podido probar en un navegador real** (ni de escritorio ni móvil, ni en distintos anchos, ni Safari iOS): este entorno no tiene acceso a un navegador gráfico ni a herramientas de captura de pantalla. Falta la verificación visual/interactiva pedida en el prompt (activar y desactivar el modo, reproducir, recargar y comprobar que se recuerda, fundido del temporizador, filtro, capa de atenuación, sin errores de consola, y prueba en vista móvil 360/375 px).
+- No se ha podido probar el bloqueo de pantalla real con `Wake Lock` ni el control desde pantalla bloqueada con `mediaSession` (requiere un dispositivo real).
+- No se ha probado en Safari iOS ni Chrome Android reales.
+- El aplanado de `emisoras-relax.json` asume que `codec` solo vale `MP3` o `AAC` (comprobado por script: es así en las 62 emisoras actuales); si en el futuro se añaden emisoras con otro codec, revisar el mapeo a `streamType`.
+- Recomendación antes de dar la función por cerrada: abrir la web en un navegador (escritorio y móvil) y seguir la lista de comprobación del apartado "Al terminar" de `PROMPT_MODO_DORMIR.md`.
+
+### Cómo revertir
+Deshacer los cambios en `index.html`, `app.js`, `styles.css`, `sw.js` y `scripts/check-streams.mjs` de este commit (por ejemplo con `git revert` sobre el commit correspondiente, o restaurando estos cinco archivos a su versión anterior con `git checkout <commit-anterior> -- index.html app.js styles.css sw.js scripts/check-streams.mjs`). `emisoras-relax.json` puede conservarse sin efecto si se revierte el resto, ya que solo se usa desde el código revertido.
+
+---
+
+## 2026-09-24 12:00 — Preparación del modo dormir (datos y prompt)
+
+### Objetivo
+El usuario quiere añadir un botón de "modo dormir" con emisoras relajantes y pidió un prompt para el agente que programa la web.
+
+### Archivos afectados
+- `emisoras-relax.json`: creado.
+- `PROMPT_MODO_DORMIR.md`: creado.
+
+### Cambios realizados
+Se añadió una lista de 62 emisoras de sonidos relajantes agrupadas en 11 temáticas, con foco en lluvia, mar y bosque (fuente: radio-browser.info, ordenadas por votos de la comunidad). Todas con HTTPS y comprobadas con `curl` el 2026-09-24. Se añadió el prompt con las instrucciones de implementación. No se ha tocado código de la web.
+
+### Motivo
+Dar al agente de desarrollo los datos y las instrucciones para implementar el modo dormir.
+
+### Validaciones
+- Comprobación de cada stream con `curl` (respuesta 200/206 con audio). Las que no respondieron por HTTPS se descartaron.
+
+### Riesgos o pendientes
+- Los streams de terceros pueden cambiar o caer con el tiempo.
+- Falta implementar el modo dormir en la web (lo hará el agente con el prompt).
+
+### Cómo revertir
+Borrar `emisoras-relax.json` y `PROMPT_MODO_DORMIR.md`.
+
+---
+
 ## 2026-09-17 11:10 — Bloque de blues internacional (3 emisoras nuevas)
 
 ### Objetivo
