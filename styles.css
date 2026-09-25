@@ -1193,3 +1193,34 @@ body.sleep-mode .mini-player-toggle {
     letter-spacing: 0.18em;
   }
 }
+
+/* El atributo hidden debe ganar siempre a los display de estos elementos */
+.sleep-timer[hidden],
+.sleep-timer-menu[hidden],
+.sleep-chips[hidden],
+.sleep-continue-btn[hidden] {
+  display: none;
+}
+
+/* Barra de desplazamiento de los chips: fina y del tono de la web */
+.sleep-chips {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(111, 127, 214, 0.45) transparent;
+}
+
+.sleep-chips::-webkit-scrollbar {
+  height: 6px;
+}
+
+.sleep-chips::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sleep-chips::-webkit-scrollbar-thumb {
+  background: rgba(111, 127, 214, 0.4);
+  border-radius: 999px;
+}
+
+.sleep-chips::-webkit-scrollbar-thumb:hover {
+  background: rgba(111, 127, 214, 0.65);
+}

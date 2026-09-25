@@ -4,6 +4,112 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-25 10:40 — Barra de desplazamiento de los chips en el tono de la web
+
+### Objetivo
+Que la barra de desplazamiento horizontal de las etiquetas de temática del modo dormir encaje con el estilo de la web.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Se estiliza la barra de `.sleep-chips`: más fina (6 px), pista transparente y control redondeado en el azul violáceo del modo dormir, con `scrollbar-width`/`scrollbar-color` (Firefox) y `::-webkit-scrollbar` (Chrome, Edge, Safari).
+
+### Motivo
+La barra por defecto del navegador destacaba en gris claro sobre el fondo nocturno.
+
+### Validaciones
+- No probado en navegador real (solo CSS añadido).
+
+### Riesgos o pendientes
+- Comprobar el aspecto en el navegador. En móvil las barras suelen ser superpuestas y no se ven.
+
+### Cómo revertir
+`git checkout <commit-anterior> -- styles.css`.
+
+---
+
+## 2026-09-25 10:20 — Guardar el podio al cambiar de modo
+
+### Objetivo
+Que el podio y el orden de cada modo se guarden al pasar de uno a otro.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Al pulsar el botón de modo, antes de cambiar se guarda el orden y el podio del modo que se deja, en su propia clave de `localStorage`. Solo se guarda si ya hay tarjetas pintadas, para no grabar un estado vacío si la carga anterior no había terminado.
+
+### Motivo
+Antes solo se guardaba al arrastrar o pulsar "⭐ Al podio"; guardar también al cambiar de modo lo hace más robusto.
+
+### Validaciones
+- `node --check app.js`: sin errores. No probado en navegador real.
+
+### Riesgos o pendientes
+- Verificar en el navegador alternando modos con favoritas en ambos podios y recargando. Si había datos mezclados de antes de la corrección anterior, puede hacer falta vaciar las claves `radioMicroState` y `radioMicroSleepState` del almacenamiento del navegador.
+
+### Cómo revertir
+`git checkout <commit-anterior> -- app.js`.
+
+---
+
+## 2026-09-25 10:00 — TOP 3 independiente en cada modo
+
+### Objetivo
+Que el podio TOP 3 del modo normal y el del modo dormir no se mezclen ni dupliquen tarjetas.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Al cambiar de modo se vacían los tres huecos del podio antes de pintar las tarjetas del modo actual, y después se colocan solo las guardadas para ese modo.
+
+### Motivo
+El podio es un único bloque de HTML compartido; las tarjetas del modo anterior se quedaban dentro y las del nuevo modo se añadían encima. Cada modo ya guardaba su podio en su propia clave de `localStorage`; faltaba limpiar el HTML.
+
+### Validaciones
+- `node --check app.js`: sin errores. No probado en navegador real.
+
+### Riesgos o pendientes
+- Verificar en el navegador alternando modos varias veces con favoritas en ambos podios.
+
+### Cómo revertir
+`git checkout <commit-anterior> -- app.js`.
+
+---
+
+## 2026-09-25 09:30 — Correcciones del modo dormir: menú del temporizador y atenuación
+
+### Objetivo
+Corregir que el menú del temporizador se veía siempre, y limitar la atenuación de pantalla a móvil.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- El menú del temporizador (y también el propio temporizador, los chips y el botón "Continuar") ignoraban el atributo `hidden` porque su `display` lo anulaba; se añade una regla para que `hidden` gane. Ahora el menú solo aparece al pulsar ⏱ y se cierra al elegir una opción, al volver a pulsar el botón o al pulsar fuera.
+- La capa de atenuación solo se activa en dispositivos táctiles (`pointer: coarse`), no en escritorio.
+
+### Motivo
+Un `display: flex` en CSS tiene más prioridad que el atributo `hidden` del navegador.
+
+### Validaciones
+- `node --check app.js`: sin errores. No probado en navegador real.
+
+### Riesgos o pendientes
+- Verificar visualmente en el navegador. En un escritorio con pantalla táctil la atenuación también se activará.
+
+### Cómo revertir
+Restaurar `styles.css` y `app.js` con `git checkout <commit-anterior> -- styles.css app.js`.
+
+---
+
 ## 2026-09-24 17:35 — Implementación del "modo dormir"
 
 ### Objetivo

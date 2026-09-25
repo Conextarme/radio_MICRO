@@ -848,6 +848,10 @@
   }
 
   function renderGrid() {
+    // El podio es un único bloque de HTML compartido por los dos modos: hay
+    // que vaciarlo antes de pintar las tarjetas del modo actual, si no se
+    // quedan las del modo anterior y se mezclan o duplican.
+    podiumSlots.forEach(function (slot) { slot.innerHTML = ''; });
     grid.innerHTML = '';
     cards = stations.map(function (station, index) {
       var card = createCard(station, index);
@@ -1480,6 +1484,19 @@
     });
   }
 
+  function closeSleepTimerMenu() {
+    if (sleepTimerMenu && !sleepTimerMenu.hidden) {
+      sleepTimerMenu.hidden = true;
+      sleepTimerBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    if (sleepTimerWrap && !sleepTimerWrap.contains(e.target)) {
+      closeSleepTimerMenu();
+    }
+  });
+
   /* --- Pantalla encendida (Wake Lock) --- */
 
   function requestWakeLock() {
@@ -1502,9 +1519,13 @@
 
   /* --- Capa de atenuación de pantalla en modo dormir --- */
 
+  function isTouchDevice() {
+    return !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  }
+
   function scheduleScreenDim() {
     clearTimeout(dimTimeout);
-    if (!sleepMode || currentIndex === -1) {
+    if (!sleepMode || currentIndex === -1 || !isTouchDevice()) {
       return;
     }
     dimTimeout = setTimeout(function () {
@@ -1576,6 +1597,12 @@
   function setSleepMode(enabled, skipSave) {
     if (sleepMode === enabled) {
       return;
+    }
+    // Se guarda el orden y el podio del modo que se abandona, con su propia
+    // clave, antes de cambiar. Solo si ya hay tarjetas pintadas: si la carga
+    // anterior no había terminado se guardaría un estado vacío.
+    if (cards.length) {
+      saveState();
     }
     stopPlayback();
     currentIndex = -1;
