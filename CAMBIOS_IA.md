@@ -4,6 +4,32 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-25 11:00 — Botón del huevo de pascua a la izquierda
+
+### Objetivo
+Mover el botón discreto del huevo de pascua del lado derecho al izquierdo.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+El punto `.easter-egg-trigger` pasa de `right: 10px` a `left: 10px`. El mini vídeo que aparece al activarlo sigue abajo a la derecha.
+
+### Motivo
+Petición del usuario.
+
+### Validaciones
+- No probado en navegador real (cambio de una propiedad CSS).
+
+### Riesgos o pendientes
+- Ninguno detectado.
+
+### Cómo revertir
+`git checkout <commit-anterior> -- styles.css`.
+
+---
+
 ## 2026-09-25 10:40 — Barra de desplazamiento de los chips en el tono de la web
 
 ### Objetivo

@@ -829,7 +829,7 @@ main {
 .easter-egg-trigger {
   position: fixed;
   top: 10px;
-  right: 10px;
+  left: 10px;
   z-index: 15;
   width: 10px;
   height: 10px;
