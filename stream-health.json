@@ -1,0 +1,1105 @@
+{
+  "stations": {
+    "stations.json|RADIO BOB! Blues": {
+      "name": "RADIO BOB! Blues",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": "fetch failed",
+      "lastFailure": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|JZR Blues": {
+      "name": "JZR Blues",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Carbon Radio (Psych Blues)": {
+      "name": "Carbon Radio (Psych Blues)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Aragón Radio (Zaragoza)": {
+      "name": "Aragón Radio (Zaragoza)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Cadena 100": {
+      "name": "Cadena 100",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Cadena Dial": {
+      "name": "Cadena Dial",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Cadena SER": {
+      "name": "Cadena SER",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Cadena SER (Sevilla)": {
+      "name": "Cadena SER (Sevilla)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Canal Fiesta": {
+      "name": "Canal Fiesta",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Canal Sur Radio Andalucía": {
+      "name": "Canal Sur Radio Andalucía",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Catalunya Informació": {
+      "name": "Catalunya Informació",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Catalunya Radio (Barcelona)": {
+      "name": "Catalunya Radio (Barcelona)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Cope FM": {
+      "name": "Cope FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Dance Radio": {
+      "name": "Dance Radio",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|esRadio": {
+      "name": "esRadio",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Europa FM": {
+      "name": "Europa FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Flaix FM": {
+      "name": "Flaix FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Flamenco Radio": {
+      "name": "Flamenco Radio",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Ibiza Global": {
+      "name": "Ibiza Global",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Ibiza Sonica Radio": {
+      "name": "Ibiza Sonica Radio",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|IB3 Ràdio (Baleares)": {
+      "name": "IB3 Ràdio (Baleares)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Kiss FM": {
+      "name": "Kiss FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Los 40 Classic": {
+      "name": "Los 40 Classic",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Los 40 Dance": {
+      "name": "Los 40 Dance",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Los 40 Principales": {
+      "name": "Los 40 Principales",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|M80 Radio": {
+      "name": "M80 Radio",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|MegaStar FM": {
+      "name": "MegaStar FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Onda Cero": {
+      "name": "Onda Cero",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Q FM": {
+      "name": "Q FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|RAC 1": {
+      "name": "RAC 1",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|RAC 105": {
+      "name": "RAC 105",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Clásica": {
+      "name": "Radio Clásica",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Euskadi": {
+      "name": "Radio Euskadi",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Flaixbac (Barcelona)": {
+      "name": "Radio Flaixbac (Barcelona)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Galega": {
+      "name": "Radio Galega",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Intereconomía": {
+      "name": "Radio Intereconomía",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Marca": {
+      "name": "Radio Marca",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio María": {
+      "name": "Radio María",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 503,
+      "lastFailure": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio Nervión (Bilbao)": {
+      "name": "Radio Nervión (Bilbao)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio RNE 3": {
+      "name": "Radio RNE 3",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio RNE 5": {
+      "name": "Radio RNE 5",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radio TeleTaxi (Barcelona)": {
+      "name": "Radio TeleTaxi (Barcelona)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Radiolé": {
+      "name": "Radiolé",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Ràdio 4": {
+      "name": "Ràdio 4",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|RNE Radio (Nacional)": {
+      "name": "RNE Radio (Nacional)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Rock FM": {
+      "name": "Rock FM",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Spektra FM (Valencia)": {
+      "name": "Spektra FM (Valencia)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "stations.json|Vaughan Radio (Zaragoza)": {
+      "name": "Vaughan Radio (Zaragoza)",
+      "file": "stations.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Nature Radio Rain": {
+      "name": "Nature Radio Rain",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Rain Songs (雨声轻音乐)": {
+      "name": "Rain Songs (雨声轻音乐)",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Rainy Day": {
+      "name": "myNoise Rainy Day",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Rain Sounds (雨声)": {
+      "name": "Rain Sounds (雨声)",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Sleepscapes Rain": {
+      "name": "Sleepscapes Rain",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Ocean Waves": {
+      "name": "myNoise Ocean Waves",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Siren Songs": {
+      "name": "myNoise Siren Songs",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Otsuchi Coastal Soundscape (costa en directo)": {
+      "name": "Otsuchi Coastal Soundscape (costa en directo)",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": "timeout",
+      "lastFailure": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|SeaSalt": {
+      "name": "SeaSalt",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Birdsong Radio": {
+      "name": "Birdsong Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Phaune Radio": {
+      "name": "Phaune Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|CyberForest Fuji (bosque en directo)": {
+      "name": "CyberForest Fuji (bosque en directo)",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": "timeout",
+      "lastFailure": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Brazilian Birds Radio": {
+      "name": "Brazilian Birds Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radia.cz Birds": {
+      "name": "Radia.cz Birds",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Pure Nature": {
+      "name": "myNoise Pure Nature",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Ambi Nature Radio": {
+      "name": "Ambi Nature Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|N07 Nature Meditation": {
+      "name": "N07 Nature Meditation",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Relax FM Nature": {
+      "name": "Relax FM Nature",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Nature": {
+      "name": "Radio Art Nature",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Epic Lounge Nature Sounds": {
+      "name": "Epic Lounge Nature Sounds",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Nature Radio Sleep": {
+      "name": "Nature Radio Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Zen Garden": {
+      "name": "myNoise Zen Garden",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|0R Nature Relax": {
+      "name": "0R Nature Relax",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|24/7 Nature Radio": {
+      "name": "24/7 Nature Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Relax Nature": {
+      "name": "Radio Relax Nature",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Space Odyssey": {
+      "name": "myNoise Space Odyssey",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|myNoise Drone Zone": {
+      "name": "myNoise Drone Zone",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|NTS Field Recordings": {
+      "name": "NTS Field Recordings",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Brown Noise Radio": {
+      "name": "Brown Noise Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Ambient Sleeping Pill": {
+      "name": "Ambient Sleeping Pill",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|SomaFM Space Station Soma": {
+      "name": "SomaFM Space Station Soma",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|SomaFM Drone Zone": {
+      "name": "SomaFM Drone Zone",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Ambient Modern": {
+      "name": "Ambient Modern",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|SomaFM Deep Space One": {
+      "name": "SomaFM Deep Space One",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|NTS Slow Focus": {
+      "name": "NTS Slow Focus",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|ambient.fm": {
+      "name": "ambient.fm",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Paradise Serenity": {
+      "name": "Radio Paradise Serenity",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|dinamo.fm Sleep": {
+      "name": "dinamo.fm Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Epic Classical Music for Sleep": {
+      "name": "Epic Classical Music for Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Epic Lounge Sleep & Meditation": {
+      "name": "Epic Lounge Sleep & Meditation",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Piano for Sleep": {
+      "name": "Radio Art Piano for Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Jazz for Sleep": {
+      "name": "Radio Art Jazz for Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Positively Sleep Relax": {
+      "name": "Positively Sleep Relax",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Calm Radio Sleep Channel": {
+      "name": "Calm Radio Sleep Channel",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Yoto Sleep Radio": {
+      "name": "Yoto Sleep Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Guitar for Sleep": {
+      "name": "Radio Art Guitar for Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Cello for Sleep": {
+      "name": "Radio Art Cello for Sleep",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Enigmatic Immersion": {
+      "name": "Enigmatic Immersion",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|YourClassical Peaceful Piano": {
+      "name": "YourClassical Peaceful Piano",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Solo Piano": {
+      "name": "Radio Art Solo Piano",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Radio Art Relaxing (violín, piano, chelo)": {
+      "name": "Radio Art Relaxing (violín, piano, chelo)",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Epic Piano Chillout Piano": {
+      "name": "Epic Piano Chillout Piano",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Whisperings Solo Piano Radio": {
+      "name": "Whisperings Solo Piano Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|SomaFM Groove Salad": {
+      "name": "SomaFM Groove Salad",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 206,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Spokoinoe Radio": {
+      "name": "Spokoinoe Radio",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Smooth Chill": {
+      "name": "Smooth Chill",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|1.FM Chillout Lounge": {
+      "name": "1.FM Chillout Lounge",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Café del Mar": {
+      "name": "Café del Mar",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|1.FM Ambient Psychill": {
+      "name": "1.FM Ambient Psychill",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|Lofi 24/7": {
+      "name": "Lofi 24/7",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|REYFM #lofi": {
+      "name": "REYFM #lofi",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    },
+    "emisoras-relax.json|I Love Chillhop": {
+      "name": "I Love Chillhop",
+      "file": "emisoras-relax.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-09-25T07:21:31.800Z",
+      "lastStatus": 200,
+      "lastOk": "2026-09-25T07:21:31.800Z"
+    }
+  },
+  "updated": "2026-09-25T07:21:31.800Z"
+}

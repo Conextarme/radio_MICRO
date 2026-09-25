@@ -1,3 +1,4 @@
+---
 name: Comprobar streams de emisoras
 
 on:
@@ -5,6 +6,10 @@ on:
     # Todos los lunes a las 07:00 UTC.
     - cron: '0 7 * * 1'
   workflow_dispatch: {}
+
+# Necesario para que el workflow pueda guardar el historial de fallos.
+permissions:
+  contents: write
 
 jobs:
   check-streams:
@@ -16,3 +21,15 @@ jobs:
           node-version: '20'
       - name: Comprobar URLs de streaming
         run: node scripts/check-streams.mjs
+      # Se ejecuta siempre (también si la comprobación falla) para no perder
+      # el registro justo de las semanas en que hay emisoras caídas.
+      - name: Guardar historial de fallos
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain stream-health.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add stream-health.json
+            git commit -m "actualizar historial de fallos de streams"
+            git push
+          fi

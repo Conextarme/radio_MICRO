@@ -12,13 +12,15 @@
  * alguna emisora caída, para poder usarlo en un workflow automatizado.
  */
 
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATIONS_PATH = path.join(__dirname, '..', 'stations.json');
 const SLEEP_STATIONS_PATH = path.join(__dirname, '..', 'emisoras-relax.json');
+const HEALTH_PATH = path.join(__dirname, '..', 'stream-health.json');
+const CHRONIC_CONSECUTIVE_FAILURES = 2;
 const TIMEOUT_MS = 10000;
 
 const RETRIES = 3;
@@ -112,6 +114,59 @@ async function loadStations() {
   return normal.concat(sleep);
 }
 
+/* Historial de fallos (stream-health.json): en cada ejecución se suma una
+   comprobación por emisora y, si falla, un fallo. Así se ve qué emisoras
+   caen más a menudo y cuáles llevan varias semanas seguidas caídas. */
+async function loadHealth() {
+  try {
+    const parsed = JSON.parse(await readFile(HEALTH_PATH, 'utf8'));
+    return parsed && parsed.stations ? parsed : { stations: {} };
+  } catch {
+    return { stations: {} };
+  }
+}
+
+function updateHealth(health, results) {
+  const now = new Date().toISOString();
+  for (const r of results) {
+    const key = `${r.file}|${r.name}`;
+    const entry = health.stations[key] || {
+      name: r.name, file: r.file, checks: 0, failures: 0, consecutiveFailures: 0
+    };
+    entry.checks += 1;
+    entry.lastCheck = now;
+    entry.lastStatus = r.status;
+    if (r.ok) {
+      entry.consecutiveFailures = 0;
+      entry.lastOk = now;
+    } else {
+      entry.failures += 1;
+      entry.consecutiveFailures += 1;
+      entry.lastFailure = now;
+    }
+    health.stations[key] = entry;
+  }
+  // Se eliminan las emisoras que ya no están en ninguna lista.
+  const current = new Set(results.map((r) => `${r.file}|${r.name}`));
+  for (const key of Object.keys(health.stations)) {
+    if (!current.has(key)) delete health.stations[key];
+  }
+  health.updated = now;
+  return health;
+}
+
+function printFailureRanking(health) {
+  const ranking = Object.values(health.stations)
+    .filter((e) => e.failures > 0)
+    .sort((a, b) => (b.consecutiveFailures - a.consecutiveFailures) || (b.failures / b.checks - a.failures / a.checks));
+  if (!ranking.length) return;
+  console.log('\nEmisoras con más fallos acumulados (historial en stream-health.json):');
+  ranking.slice(0, 10).forEach((e) => {
+    const chronic = e.consecutiveFailures >= CHRONIC_CONSECUTIVE_FAILURES ? '  ← CRÓNICA: plantéate quitarla o marcarla reliable:false' : '';
+    console.log(`  - ${e.name} (${e.file}): ${e.failures}/${e.checks} fallos, ${e.consecutiveFailures} seguidos${chronic}`);
+  });
+}
+
 async function main() {
   const withStream = await loadStations();
 
@@ -121,6 +176,9 @@ async function main() {
     const result = await checkUrl(station.streamUrl);
     return { ...station, ...result };
   });
+
+  const health = updateHealth(await loadHealth(), results);
+  await writeFile(HEALTH_PATH, JSON.stringify(health, null, 2) + '\n', 'utf8');
 
   const failed = [];
   for (const r of results) {
@@ -142,6 +200,7 @@ async function main() {
   } else {
     console.log('Todas las emisoras fiables han respondido correctamente.');
   }
+  printFailureRanking(health);
 }
 
 main().catch((err) => {

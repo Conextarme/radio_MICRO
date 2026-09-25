@@ -4,6 +4,38 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-09-25 11:30 — Historial de fallos de streams para el cron de revisión
+
+### Objetivo
+Llevar un registro de las emisoras que más fallan al conectar para que la revisión semanal lo tenga en cuenta.
+
+### Archivos afectados
+- `scripts/check-streams.mjs`: modificado.
+- `.github/workflows/check-streams.yml`: modificado.
+- `stream-health.json`: creado (lo genera el script).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+El script guarda en `stream-health.json`, por cada emisora, cuántas veces se ha comprobado, cuántas ha fallado, cuántos fallos seguidos lleva y cuándo fue el último fallo/acierto. Al final muestra las 10 con más fallos y marca como "CRÓNICA" las que llevan 2 o más semanas seguidas caídas, sugiriendo quitarlas o marcarlas `reliable:false`. Las emisoras eliminadas de las listas se borran del historial. El workflow, tras la comprobación (incluso si falla), guarda el archivo en el repositorio con un commit automático; para eso se le da permiso `contents: write`.
+
+### Motivo
+Un fallo puntual no significa lo mismo que una emisora caída semanas seguidas; el historial permite distinguirlas. Es un sitio estático sin servidor, por lo que no se pueden recoger los fallos de conexión de los navegadores de los usuarios: el registro se basa solo en las comprobaciones del cron.
+
+### Validaciones
+- `node --check` del script: sin errores.
+- Ejecución real en local: se genera `stream-health.json` y se muestra el ranking. 4 emisoras fallaron en esa ejecución (RADIO BOB! Blues, Radio María, Otsuchi Coastal Soundscape, CyberForest Fuji).
+- El workflow de GitHub Actions NO se ha probado (solo se puede ejecutar en GitHub).
+
+### Riesgos o pendientes
+- El workflow hace `git push` a la rama por defecto con un commit automático cada lunes que cambie el archivo; si la rama estuviera protegida, el push fallaría.
+- El historial local ya contiene 1 comprobación de esta prueba; si se quiere empezar de cero, borrar `stream-health.json` antes de hacer commit.
+- El script sigue terminando con error si alguna emisora falla, como antes.
+
+### Cómo revertir
+`git checkout <commit-anterior> -- scripts/check-streams.mjs .github/workflows/check-streams.yml` y borrar `stream-health.json`.
+
+---
+
 ## 2026-09-25 11:00 — Botón del huevo de pascua a la izquierda
 
 ### Objetivo
