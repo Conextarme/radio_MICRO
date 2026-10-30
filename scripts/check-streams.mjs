@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /*
  * Comprueba que las URLs de streaming en stations.json y en
- * emisoras-relax.json (modo dormir) siguen respondiendo.
+ * emisoras-relax.json (modo dormir) y emisoras-modos.json (Big Calm,
+ * Music Time y Buggy Time) siguen respondiendo.
  *
  * Uso: node scripts/check-streams.mjs
  * Requiere Node 18 o superior (usa el fetch nativo, sin dependencias).
@@ -19,6 +20,7 @@ import path from 'node:path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATIONS_PATH = path.join(__dirname, '..', 'stations.json');
 const SLEEP_STATIONS_PATH = path.join(__dirname, '..', 'emisoras-relax.json');
+const EXTRA_MODES_PATH = path.join(__dirname, '..', 'emisoras-modos.json');
 const HEALTH_PATH = path.join(__dirname, '..', 'stream-health.json');
 const CHRONIC_CONSECUTIVE_FAILURES = 2;
 const TIMEOUT_MS = 10000;
@@ -103,6 +105,20 @@ function flattenSleepStations(data) {
   return out;
 }
 
+function flattenExtraModeStations(data) {
+  const out = [];
+  for (const modo of Object.values(data.modos || {})) {
+    for (const emisora of modo.emisoras || []) {
+      out.push({
+        name: emisora.nombre,
+        streamUrl: emisora.stream,
+        reliable: true
+      });
+    }
+  }
+  return out;
+}
+
 async function loadStations() {
   const rawNormal = await readFile(STATIONS_PATH, 'utf8');
   const normal = JSON.parse(rawNormal)
@@ -114,7 +130,12 @@ async function loadStations() {
     .filter((s) => s.streamUrl)
     .map((s) => ({ ...s, source: 'dormir', file: 'emisoras-relax.json' }));
 
-  return normal.concat(sleep);
+  const rawExtra = await readFile(EXTRA_MODES_PATH, 'utf8');
+  const extra = flattenExtraModeStations(JSON.parse(rawExtra))
+    .filter((s) => s.streamUrl)
+    .map((s) => ({ ...s, source: 'modos', file: 'emisoras-modos.json' }));
+
+  return normal.concat(sleep, extra);
 }
 
 /* Historial de fallos (stream-health.json): en cada ejecución se suma una
@@ -204,7 +225,7 @@ async function main() {
   const failed = [];
   for (const r of results) {
     const flag = r.ok ? 'OK  ' : 'FAIL';
-    const prefix = r.source === 'dormir' ? '[dormir]' : '[normal]';
+    const prefix = `[${r.source}]`;
     // Un 403 en una emisora geoRestricted es el bloqueo a los servidores de
     // GitHub, no una caída; cualquier otro error sí cuenta como fallo.
     const geoBlocked = r.geoRestricted && r.status === 403;

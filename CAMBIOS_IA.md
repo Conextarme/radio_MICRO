@@ -4,6 +4,186 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-10-30 11:04 — Seis emisoras más para Buggy Time
+
+### Objetivo
+De las ideas propuestas, el usuario pidió añadir a Buggy Time SomaFM Mission Control y el grupo de terror y ciencia ficción, y dejar fuera lo que se había descartado.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Buggy Time pasa de 7 a 13 emisoras. Se añaden SomaFM Mission Control, Strange Radio (Pumpkin FM), 50's Science Fiction KOTR, Nightride FM Horrorsynth, Radio M00 Dark Ambient y Kobold.FM. Big Calm no cambia.
+
+### Motivo
+Son las emisoras que eligió el usuario. Todas usan HTTPS para que el navegador no las bloquee.
+
+### Validaciones
+- Las 6 webs de las fichas respondieron correctamente.
+- App real en una copia servida en local, con Chrome sin ventana y audio silenciado: se pulsaron las 18 tarjetas, sin errores de JavaScript. Big Calm muestra 5 y Buggy Time 13, y ninguna tarjeta de Buggy Time lleva etiqueta de afinación.
+- 16 quedaron en "EN DIRECTO" a la primera, con el tiempo avanzando. Mission Control y Radio M00 quedaron en "RECONECTANDO" a los 6 segundos.
+- Radio M00 solo tarda en arrancar: entró en directo antes de 10 segundos y siguió estable durante 30 segundos más.
+- Mission Control dio error 403 porque SomaFM rechaza el identificador "HeadlessChrome" del navegador de prueba. Con un identificador de Chrome normal sonó en directo durante 15 segundos.
+- No probado: escucha humana de las emisoras, un móvil físico y la app instalada. Tampoco se ejecutó `scripts/check-streams.mjs`, para no alterar `stream-health.json`.
+
+### Riesgos o pendientes
+- Las descripciones salen de las fichas y etiquetas de cada emisora, no de haberlas escuchado.
+- Radio M00 tarda unos segundos en arrancar, así que puede mostrar "RECONECTANDO" al principio.
+
+### Cómo revertir
+En `emisoras-modos.json`, borrar de `modos.buggy.emisoras` las 6 emisoras indicadas. Este archivo aún no está en git, así que `git checkout` no sirve para restaurarlo.
+
+---
+
+## 2026-10-30 10:43 — Listas de emisoras para Big Calm y Buggy Time
+
+### Objetivo
+El usuario pidió dos listas para los modos nuevos. Una con emisoras online que lleven 432 Hz o 528 Hz en el título. La otra, para Buggy Time, a partir de un documento de texto con unas 20 emisoras raras y un enlace a un hilo de Reddit.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Big Calm pasa de 1 a 5 emisoras: se añaden Positively Rejuvenate 528 Hz, 432Hz Radio, Radio 432 y Musica a 432 Hz (Musicavera).
+- Buggy Time pasa de 0 a 7 emisoras: Shirley & Spinoza, Radio Aporee, Datafruits, Substrate Radio, Fogpoint Radio, Nightwave Plaza y Birdsong Radio.
+- Solo Positively Peaceful 432Hz conserva la etiqueta de afinación. Las emisoras nuevas no la llevan porque ninguna la ha confirmado en la medición.
+- Las descripciones del documento se han corregido cuando no coincidían con lo comprobado. Substrate Radio es de Alabama, no de Atlanta, y en lo consultado Fogpoint no consta como emisora ficticia.
+
+### Motivo
+- La lista de Big Calm se eligió por el título, como pidió el usuario. El README exige que la etiqueta solo se ponga si la afinación se ha medido.
+- Todas las direcciones son HTTPS, porque el navegador bloquea un stream `http://` dentro de una web HTTPS.
+- Quedan fuera de Buggy Time:
+  - SLAY Radio y White Noise Radio: solo funcionan por `http://`.
+  - UVB-76: no se encontró stream directo. Sigue en la web como detalle oculto, por YouTube.
+  - WebSDR: es un receptor, no una emisora.
+  - Pink Unicorn, Screaming Duck, Hellscream, Psychedelia Online, Lofi Rain, The Ghost Station, The Pip, The Squeaky Wheel y Space Weather Audio: no se encontró emisora ni stream con esos nombres.
+- "Vaporwave Radio" no se identificó como una emisora concreta. Se usa en su lugar Nightwave Plaza, que está dedicada a ese género.
+
+### Validaciones
+- Búsqueda de candidatas en radio-browser, Shoutcast, directorio Icecast, laut.fm, internet-radio.com y buscadores web. Para 528 Hz solo apareció una emisora en activo. Las entradas de Shoutcast con 432 o 528 en el nombre apuntan a Radionomy o no conectaron.
+- Lectura de audio real durante 8 segundos con Node: las 12 emisoras entregaron datos de audio.
+- App real en una copia servida en local, con Chrome sin ventana y audio silenciado: se pulsaron las 12 tarjetas. Las 12 quedaron en "EN DIRECTO" con el tiempo de reproducción avanzando y sin errores de JavaScript. Big Calm muestra 5 tarjetas y 1 etiqueta de afinación; Buggy Time, 7 tarjetas y ninguna.
+- Afinación medida con dos tomas de unos 45 s separadas 4 minutos, analizando la desviación de los picos del sonido. El método acertó con tonos de prueba a 432, 440 y 444 Hz. Resultado de cada emisora (La de referencia):
+  - Positively Peaceful 432Hz: 432,6 y 432,6 Hz. Confirmada; coincide con la medición anterior.
+  - Positively Rejuvenate 528 Hz: 432,1 y 445,9 Hz. Sin confirmar (528 Hz equivaldría a un La de unos 444 Hz).
+  - Radio 432: 438,0 y 431,4 Hz. Sin confirmar.
+  - 432Hz Radio: 444,6 y 447,4 Hz. No coincide con 432 Hz.
+  - Musica a 432 Hz (Musicavera): 448,4 y 449,9 Hz. No coincide con 432 Hz.
+- No probado: escucha humana de cada emisora, un móvil físico, la app instalada y la revisión semanal `scripts/check-streams.mjs`, que no se ejecutó para no alterar `stream-health.json`.
+- No se pudo leer el hilo de Reddit: Reddit bloqueó el acceso (error 403).
+
+### Riesgos o pendientes
+- En `app.js`, Big Calm sigue diciendo "AFINADA A 432 HZ" y "Solo emisoras con la afinación comprobada". Ya no es cierto con esta lista. El texto no se ha cambiado.
+- 432Hz Radio y Musica a 432 Hz emiten música variada; en Musicavera apareció Fatboy Slim. Puede no encajar con un modo de calma.
+- Dos tomas cortas son una muestra pequeña. Sirven como indicio, no como prueba definitiva de lo que emite cada emisora a lo largo del día.
+- Birdsong Radio está también en el modo dormir.
+- La web de Radio 432 (`radio432.com`) no respondió, y en la ficha se usa su reproductor de RadioKing. Esa dirección devolvió error 502 en una comprobación automática, así que el enlace "web" de esa tarjeta puede fallar. El stream funciona.
+- `pais` no se ha rellenado en tres emisoras de Buggy Time por no estar claro. La web no lo usa.
+
+### Cómo revertir
+En `emisoras-modos.json`, borrar las 4 emisoras añadidas en `modos.calm.emisoras` y dejar `modos.buggy.emisoras` como `[]`. Este archivo aún no está en git, así que `git checkout` no sirve para restaurarlo.
+
+---
+
+## 2026-10-30 10:34 — Modos Big Calm y Buggy Time
+
+### Objetivo
+El usuario pidió dos modos nuevos: Big Calm, para las emisoras confirmadas a 432 Hz y con una marca visible, y un segundo modo que primero llamó Freak Time y luego renombró Buggy Time. Más adelante aportará más emisoras para ambos.
+
+### Archivos afectados
+- `emisoras-modos.json`: creado.
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v8` a `v9`).
+- `scripts/check-streams.mjs`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- El botón único "Modo dormir" se sustituye por cuatro botones: Normal, Dormir, Big Calm y Buggy Time.
+- Cada modo nuevo tiene sus colores, títulos, orden y podio propios. La web recuerda el último modo usado, y quien tuviera activo el modo dormir sigue entrando en él.
+- Las listas de los dos modos están en `emisoras-modos.json`, un único archivo fácil de ampliar.
+- Big Calm tiene una emisora: Positively Peaceful 432Hz. Es la única que dio cerca de 432 Hz en la medición de esta sesión (unos 433 Hz en dos tomas).
+- Las emisoras con el campo `afinacion` muestran una etiqueta "🎵 432 Hz" y un borde destacado en la tarjeta, y el dato también aparece en el reproductor.
+- Buggy Time empieza vacío: muestra un aviso y oculta el podio. Su texto de cabecera ("Sin parches" y la frase inferior) es provisional, porque el usuario no lo indicó.
+- La revisión semanal de emisoras también comprueba `emisoras-modos.json`.
+- "Ver más" se oculta cuando no hace falta y el degradado inferior deja de tapar las tarjetas si todo cabe. Al cambiar de modo, la lista vuelve a plegarse.
+- La cabecera reduce su margen superior para compensar la fila de botones, y Big Calm no muestra la luna porque tapaba el subtítulo.
+
+### Motivo
+- El temporizador, los filtros y la pantalla atenuada siguen siendo exclusivos del modo dormir, porque no se pidieron para los modos nuevos.
+- La etiqueta depende de un campo de datos y no del nombre, porque 432hz Radio y Radio 432hz llevan "432" en el nombre y midieron unos 444-445 Hz.
+- "Ver más" nunca se ocultaba por un fallo anterior: su `display: block` anulaba el atributo `hidden`. Con listas cortas se notaba mucho.
+- Las pruebas revelaron que, al cambiar de modo muy deprisa, el orden de un modo se guardaba como si fuera el de otro. Ahora solo se guarda el orden del modo que está realmente pintado, y una lista que termina de cargar tarde ya no sustituye a la del modo activo.
+
+### Validaciones
+- `node --check` de `app.js`, `sw.js` y `scripts/check-streams.mjs`: sin errores.
+- `emisoras-modos.json` se lee correctamente: 1 emisora en Big Calm y 0 en Buggy Time.
+- App real en una copia temporal con Chrome sin ventana a 1184 px: recorrido por los cuatro modos, sin errores de JavaScript; 48, 62, 1 y 0 tarjetas en Normal, Dormir, Big Calm y Buggy Time.
+- Etiqueta "432 Hz" visible en la tarjeta y en el reproductor; el reproductor se cierra al cambiar de modo.
+- Cambio rápido entre modos: el orden guardado de Big Calm solo contiene su emisora y el modo normal conserva sus 48. Antes de la corrección fallaba.
+- "Ver más": visible en Normal y Dormir, oculto en Big Calm y Buggy Time, y la lista se pliega al salir de un modo expandido.
+- Capturas de Big Calm y Buggy Time a 1200 px revisadas. Big Calm también se vio a 390 px antes de los últimos ajustes visuales.
+- `scripts/check-streams.mjs` sobre una copia: Positively Peaceful 432Hz responde 200 y aparece como `[modos]`.
+- No probado: sonido real de la emisora, un móvil físico, arrastrar tarjetas en los modos nuevos, la app instalada con `v9`, Buggy Time con emisoras reales y la captura final a 390 px.
+- No comprobado: que "Ver más" se oculte al filtrar por temática en el modo dormir. El navegador de prueba no llegó a ejecutar ese fotograma; en un navegador normal debería funcionar.
+
+### Riesgos o pendientes
+- La medición de Big Calm se hizo sobre unos 4 minutos de emisión. No garantiza que todo lo que emita esa emisora esté a 432 Hz.
+- Las emisoras nuevas para Big Calm conviene medirlas antes de ponerles la etiqueta.
+- El historial de `stream-health.json` empezará a incluir la emisora nueva en la próxima revisión.
+- Los cambios no se han subido a GitHub, así que aún no están publicados en Vercel.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- app.js index.html styles.css sw.js scripts/check-streams.mjs README.md` y borrar `emisoras-modos.json`. Ese comando también deshace las tarjetas compactas de la entrada siguiente, porque aún están sin confirmar en los mismos archivos; para conservarlas, hay que quitar a mano solo los cambios de esta entrada. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
+## 2026-10-30 10:21 — Tarjetas de emisora más pequeñas (opción A, compacta)
+
+### Objetivo
+El usuario pidió reducir el tamaño de las pastillas de las radios. Vio una maqueta con dos opciones y eligió la opción A, la compacta.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v7` a `v8`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Cada tarjeta muestra la frecuencia una sola vez. Antes salía dos veces seguidas. Mientras suena una emisora, el estado ocupa ese lugar; al pararla, la frecuencia vuelve a aparecer.
+- Los iconos de arrastrar y de añadir al podio flotan en la esquina superior derecha, en vez de ocupar una fila entera.
+- Se han reducido márgenes, separaciones y el tamaño del nombre, y el ancho mínimo de la tarjeta baja de 230 a 190 px. En escritorio caben 5 columnas en lugar de 4.
+- En pantallas táctiles, el botón de la estrella pasa de 44×44 a 40×44 px para dejar espacio al nombre, y el área de toque del icono de arrastre sigue ampliada.
+- Se ha quitado el estilo `.station-freq`, que ya no se usa.
+
+### Motivo
+- La frecuencia duplicada y la fila de iconos eran lo que más altura gastaba.
+- El nombre lleva un hueco a la derecha para no pisar los iconos. El estado no lo lleva, porque va debajo de ellos, y así los textos largos como "TOCA PARA REANUDAR" caben en una línea.
+- Hay que subir `CACHE_VERSION` para que quien tenga la app instalada reciba el diseño nuevo.
+
+### Validaciones
+- `node --check app.js`: sin errores.
+- App real en una copia temporal, con Chrome sin ventana a 1184 px y a 390 px con pantalla táctil simulada: 48 tarjetas y ningún error de JavaScript.
+- Resultado a 1184 px: 5 columnas, altura típica de 80 px y lista completa de 869 px. Referencia de la maqueta para el diseño anterior: 137 px y 1821 px.
+- Resultado a 390 px: 2 columnas, altura típica de 80 px, lista completa de 2050 px y estrella de 40×44 px. Referencia de la maqueta para el diseño anterior: 145 px y 3849 px.
+- En ambos anchos: ningún nombre se solapa con los iconos, pulsar una tarjeta cambia su estado, la estrella la lleva al podio y el modo dormir abre sus 62 emisoras.
+- A 1184 px, sin este último ajuste, el estado "TOCA PARA REANUDAR" ocupaba dos líneas. Tras el ajuste no se ha revisado en captura a ese ancho; a 390 px sí cabe en una línea.
+- No probado: un móvil físico, el arrastre de tarjetas con el dedo o el ratón, y la actualización de la app instalada con la nueva versión de caché.
+
+### Riesgos o pendientes
+- Las emisoras de blues internacional son algo más altas que el resto por su rótulo "Blues internacional", que la maqueta no incluía. En escritorio la tarjeta más alta mide 101 px y en móvil 122 px.
+- En el modo dormir las tarjetas siguen siendo más altas (116 px de media) porque llevan temática, votos y kbps.
+- El cambio no se ha subido a GitHub, así que aún no está publicado en Vercel.
+
+### Cómo revertir
+Ejecutar `git checkout -- app.js styles.css sw.js` si el cambio aún no se ha confirmado. Si ya se confirmó, usar `git revert` sobre ese commit. En ambos casos, borrar esta entrada de `CAMBIOS_IA.md` solo si se quiere dejar el registro como estaba.
+
+---
+
 ## 2026-10-30 10:10 — Arreglo de la revisión semanal de emisoras y aviso con la lista de caídas
 
 ### Objetivo

@@ -30,7 +30,13 @@
   </div>
 
   <header class="site-header">
-    <button type="button" id="sleep-mode-toggle" class="sleep-mode-toggle" aria-pressed="false" aria-label="Activar modo dormir">🌙 Modo dormir</button>
+    <div class="mode-switch" role="group" aria-label="Modo de escucha">
+      <button type="button" class="mode-btn" data-mode="normal" aria-pressed="false">☀️ Normal</button>
+      <button type="button" class="mode-btn" data-mode="sleep" aria-pressed="false">🌙 Dormir</button>
+      <button type="button" class="mode-btn" data-mode="calm" aria-pressed="false">🧘 Big Calm</button>
+      <button type="button" class="mode-btn" data-mode="music" aria-pressed="false">🎸 Music Time</button>
+      <button type="button" class="mode-btn" data-mode="buggy" aria-pressed="false">🐞 Buggy Time</button>
+    </div>
     <h1 class="title">
       <span class="title-main">RADIOS DE ESPAÑA</span>
       <span class="title-sub">SIN MICROCORTES</span>

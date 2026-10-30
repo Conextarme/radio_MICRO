@@ -36,9 +36,63 @@
     lofi: { icon: '🎧', label: 'Lo-fi' }
   };
 
+  /* --- Modos de escucha --- */
+  var MODE_KEY = 'radioMicroMode';
+  var EXTRA_MODES_FILE = 'emisoras-modos.json';
+  var MODE_STORAGE_KEYS = {
+    normal: STORAGE_KEY,
+    sleep: SLEEP_STORAGE_KEY,
+    calm: 'radioMicroCalmState',
+    music: 'radioMicroMusicState',
+    buggy: 'radioMicroBuggyState'
+  };
+  var MODE_UI = {
+    normal: {
+      titleMain: 'RADIOS DE ESPAÑA',
+      titleSub: 'SIN MICROCORTES',
+      tagline: 'Elige tu emisora y suena, aunque falle la conexión.',
+      top3: '🏆 TOP 3',
+      themeColor: '#1a0b2e'
+    },
+    sleep: {
+      titleMain: 'SONIDOS',
+      titleSub: 'PARA DORMIR',
+      tagline: 'Cierra los ojos y déjate llevar.',
+      top3: '🌙 TOP 3 PARA DORMIR',
+      themeColor: '#0b1026'
+    },
+    calm: {
+      titleMain: 'BIG CALM',
+      titleSub: 'AFINADA A 432 HZ',
+      tagline: 'Solo emisoras con la afinación comprobada.',
+      top3: '🧘 TOP 3 BIG CALM',
+      themeColor: '#0a2326',
+      empty: 'Todavía no hay emisoras en Big Calm.'
+    },
+    music: {
+      titleMain: 'MUSIC TIME',
+      titleSub: 'BLUES, ROCK Y METAL',
+      tagline: 'Sube el volumen.',
+      top3: '🎸 TOP 3 MUSIC TIME',
+      themeColor: '#1a0d08',
+      empty: 'Todavía no hay emisoras en Music Time.'
+    },
+    buggy: {
+      titleMain: 'BUGGY TIME',
+      titleSub: 'SIN PARCHES',
+      tagline: 'Tus emisoras más raras, todas juntas.',
+      top3: '🐞 TOP 3 BUGGY',
+      themeColor: '#0e120a',
+      empty: 'Todavía no hay emisoras en Buggy Time.'
+    }
+  };
+
+  var appMode = 'normal';
+  var renderedMode = null;
   var sleepMode = false;
   var normalStationsCache = null;
   var sleepStationsCache = null;
+  var extraModesCache = null;
   var rankByName = null;
   var activeCategoryFilter = 'all';
   var wakeLockSentinel = null;
@@ -83,7 +137,8 @@
   var easterEggTrigger = document.getElementById('easter-egg-trigger');
   var easterEggVideoWrap = document.getElementById('easter-egg-video-wrap');
 
-  var sleepModeToggle = document.getElementById('sleep-mode-toggle');
+  var modeButtons = Array.prototype.slice.call(document.querySelectorAll('.mode-btn'));
+  var top3Section = document.querySelector('.top3-section');
   var titleMainEl = document.querySelector('.title-main');
   var titleSubEl = document.querySelector('.title-sub');
   var taglineEl = document.querySelector('.tagline');
@@ -185,7 +240,7 @@
     }
 
     miniPlayer.hidden = false;
-    miniPlayerName.textContent = station.name;
+    miniPlayerName.textContent = station.afinacion ? station.name + ' · ' + station.afinacion : station.name;
     if (station.lang) {
       miniPlayerName.lang = station.lang;
     } else {
@@ -736,7 +791,8 @@
     var unavailable = isUnavailable(station);
     var card = document.createElement('div');
     card.className = 'station-card' + (unavailable ? ' is-unavailable' : '') +
-      (station.category ? ' category-' + station.category : '');
+      (station.category ? ' category-' + station.category : '') +
+      (station.afinacion ? ' has-tuning' : '');
     card.dataset.name = station.name;
     if (station.category) {
       card.dataset.category = station.category;
@@ -798,10 +854,15 @@
     }
     content.appendChild(name);
 
-    var freq = document.createElement('div');
-    freq.className = 'station-freq';
-    freq.textContent = station.freq;
-    content.appendChild(freq);
+    if (station.afinacion) {
+      var tuning = document.createElement('div');
+      tuning.className = 'station-tuning';
+      tuning.textContent = '🎵 ' + station.afinacion;
+      if (station.afinacionNota) {
+        tuning.title = station.afinacionNota;
+      }
+      content.appendChild(tuning);
+    }
 
     var status = document.createElement('div');
     status.className = 'station-status ' + (unavailable ? 'status-unavailable' : 'status-idle');
@@ -853,11 +914,21 @@
     // quedan las del modo anterior y se mezclan o duplican.
     podiumSlots.forEach(function (slot) { slot.innerHTML = ''; });
     grid.innerHTML = '';
+    renderedMode = appMode;
     cards = stations.map(function (station, index) {
       var card = createCard(station, index);
       grid.appendChild(card);
       return card;
     });
+    if (top3Section) {
+      top3Section.hidden = !stations.length;
+    }
+    if (!stations.length) {
+      var empty = document.createElement('div');
+      empty.className = 'stations-empty';
+      empty.textContent = MODE_UI[appMode].empty || '';
+      grid.appendChild(empty);
+    }
     updateGridToggleVisibility();
   }
 
@@ -878,6 +949,7 @@
     requestAnimationFrame(function () {
       var overflows = grid.scrollHeight > gridWrap.clientHeight + 4;
       toggleGridBtn.hidden = !overflows;
+      gridWrap.classList.toggle('fits-all', !overflows);
     });
   }
 
@@ -913,7 +985,7 @@
   }
 
   function currentStorageKey() {
-    return sleepMode ? SLEEP_STORAGE_KEY : STORAGE_KEY;
+    return MODE_STORAGE_KEYS[appMode];
   }
 
   function loadState() {
@@ -927,8 +999,8 @@
         };
       }
     } catch (e) { /* noop */ }
-    if (sleepMode) {
-      // El modo dormir no tiene claves antiguas que migrar: empieza vacío.
+    if (appMode !== 'normal') {
+      // Solo el modo normal tiene claves antiguas que migrar: el resto empieza vacío.
       return { order: [], top3: [] };
     }
     // Sin datos en la clave actual: se migran (si existen) las claves antiguas
@@ -947,7 +1019,7 @@
         return occupant ? occupant.dataset.name : null;
       });
       window.localStorage.setItem(currentStorageKey(), JSON.stringify({ order: order, top3: top3 }));
-      if (!sleepMode) {
+      if (appMode === 'normal') {
         window.localStorage.removeItem(LEGACY_ORDER_KEY);
         window.localStorage.removeItem(LEGACY_TOP3_KEY);
       }
@@ -1234,12 +1306,21 @@
     return map;
   }
 
-  function saveSleepModePref() {
-    try { window.localStorage.setItem(SLEEP_MODE_KEY, sleepMode ? '1' : '0'); } catch (e) { /* noop */ }
+  function saveModePref() {
+    try { window.localStorage.setItem(MODE_KEY, appMode); } catch (e) { /* noop */ }
   }
 
-  function loadSleepModePref() {
-    try { return window.localStorage.getItem(SLEEP_MODE_KEY) === '1'; } catch (e) { return false; }
+  function loadModePref() {
+    try {
+      var saved = window.localStorage.getItem(MODE_KEY);
+      if (MODE_STORAGE_KEYS[saved]) {
+        return saved;
+      }
+      // Versiones anteriores solo guardaban si el modo dormir estaba activo.
+      return window.localStorage.getItem(SLEEP_MODE_KEY) === '1' ? 'sleep' : 'normal';
+    } catch (e) {
+      return 'normal';
+    }
   }
 
   function saveLastSleepStation(name) {
@@ -1247,27 +1328,24 @@
   }
 
   function updateModeUI() {
-    if (sleepModeToggle) {
-      sleepModeToggle.textContent = sleepMode ? '☀️ Modo normal' : '🌙 Modo dormir';
-      sleepModeToggle.setAttribute('aria-pressed', sleepMode ? 'true' : 'false');
-      sleepModeToggle.setAttribute('aria-label', sleepMode ? 'Volver al modo normal' : 'Activar modo dormir');
-    }
+    var ui = MODE_UI[appMode];
+    modeButtons.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.dataset.mode === appMode ? 'true' : 'false');
+    });
     if (titleMainEl) {
-      titleMainEl.textContent = sleepMode ? 'SONIDOS' : 'RADIOS DE ESPAÑA';
+      titleMainEl.textContent = ui.titleMain;
     }
     if (titleSubEl) {
-      titleSubEl.textContent = sleepMode ? 'PARA DORMIR' : 'SIN MICROCORTES';
+      titleSubEl.textContent = ui.titleSub;
     }
     if (taglineEl) {
-      taglineEl.textContent = sleepMode
-        ? 'Cierra los ojos y déjate llevar.'
-        : 'Elige tu emisora y suena, aunque falle la conexión.';
+      taglineEl.textContent = ui.tagline;
     }
     if (top3TitleEl) {
-      top3TitleEl.textContent = sleepMode ? '🌙 TOP 3 PARA DORMIR' : '🏆 TOP 3';
+      top3TitleEl.textContent = ui.top3;
     }
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', sleepMode ? '#0b1026' : '#1a0b2e');
+      themeColorMeta.setAttribute('content', ui.themeColor);
     }
     if (sleepTimerWrap) {
       sleepTimerWrap.hidden = !sleepMode;
@@ -1594,14 +1672,39 @@
 
   /* --- Cambio de modo --- */
 
-  function setSleepMode(enabled, skipSave) {
-    if (sleepMode === enabled) {
+  function applyModeClasses() {
+    document.body.classList.toggle('sleep-mode', appMode === 'sleep');
+    document.body.classList.toggle('calm-mode', appMode === 'calm');
+    document.body.classList.toggle('music-mode', appMode === 'music');
+    document.body.classList.toggle('buggy-mode', appMode === 'buggy');
+  }
+
+  function collapseGrid() {
+    gridExpanded = false;
+    if (gridWrap && toggleGridBtn) {
+      gridWrap.classList.remove('is-expanded');
+      toggleGridBtn.textContent = 'Ver más ▾';
+    }
+  }
+
+  function initCurrentMode() {
+    if (appMode === 'sleep') {
+      return initSleepMode();
+    }
+    if (appMode === 'normal') {
+      return initNormalMode();
+    }
+    return initExtraMode();
+  }
+
+  function setMode(mode, skipSave) {
+    if (appMode === mode) {
       return;
     }
     // Se guarda el orden y el podio del modo que se abandona, con su propia
-    // clave, antes de cambiar. Solo si ya hay tarjetas pintadas: si la carga
-    // anterior no había terminado se guardaría un estado vacío.
-    if (cards.length) {
+    // clave, antes de cambiar. Solo si sus tarjetas ya están pintadas: si la
+    // carga no había terminado se guardaría un estado vacío o el de otro modo.
+    if (cards.length && renderedMode === appMode) {
       saveState();
     }
     stopPlayback();
@@ -1616,25 +1719,23 @@
     }
     document.body.classList.remove('has-mini-player');
 
-    sleepMode = enabled;
-    document.body.classList.toggle('sleep-mode', sleepMode);
+    appMode = mode;
+    sleepMode = appMode === 'sleep';
+    collapseGrid();
+    applyModeClasses();
     updateModeUI();
     if (!skipSave) {
-      saveSleepModePref();
+      saveModePref();
     }
 
-    if (sleepMode) {
-      initSleepMode();
-    } else {
-      initNormalMode();
-    }
+    initCurrentMode();
   }
 
-  if (sleepModeToggle) {
-    sleepModeToggle.addEventListener('click', function () {
-      setSleepMode(!sleepMode);
+  modeButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setMode(btn.dataset.mode);
     });
-  }
+  });
 
   /* --- Carga de datos por modo --- */
 
@@ -1645,6 +1746,10 @@
 
     return fetchPromise.then(function (data) {
       normalStationsCache = data;
+      // Si se ha cambiado de modo mientras cargaba, esta lista ya no toca pintarla.
+      if (appMode !== 'normal') {
+        return;
+      }
       rankByName = null;
       var savedState = loadState();
       var withDefaultOrder = applySavedOrder(data, DEFAULT_ORDER);
@@ -1669,6 +1774,9 @@
 
     return fetchPromise.then(function (flat) {
       sleepStationsCache = flat;
+      if (appMode !== 'sleep') {
+        return;
+      }
       rankByName = computeRankMap(flat);
       var savedState = loadState();
       var defaultOrder = defaultSleepOrder(flat);
@@ -1680,8 +1788,60 @@
       showContinueButtonIfAny();
       restoreSleepTimer();
     }).catch(function () {
+      if (appMode !== 'sleep') {
+        return;
+      }
       grid.textContent = 'No se pudieron cargar las emisoras para dormir. Volviendo al modo normal…';
-      setSleepMode(false, true);
+      setMode('normal', true);
+    });
+  }
+
+  function flattenExtraMode(data, mode) {
+    var modo = (data.modos || {})[mode] || {};
+    return (modo.emisoras || []).map(function (e) {
+      return {
+        name: e.nombre,
+        freq: 'Stream',
+        streamUrl: e.stream,
+        streamType: (e.codec || 'mp3').toLowerCase(),
+        officialUrl: e.web,
+        notes: e.descripcion,
+        bitrate: e.bitrate,
+        pais: e.pais,
+        afinacion: e.afinacion,
+        afinacionNota: e.afinacionNota
+      };
+    });
+  }
+
+  function initExtraMode() {
+    var mode = appMode;
+    var fetchPromise = extraModesCache
+      ? Promise.resolve(extraModesCache)
+      : fetch(EXTRA_MODES_FILE).then(function (res) {
+        if (!res.ok) {
+          throw new Error('No se pudo cargar ' + EXTRA_MODES_FILE);
+        }
+        return res.json();
+      });
+
+    return fetchPromise.then(function (data) {
+      extraModesCache = data;
+      if (appMode !== mode) {
+        return;
+      }
+      rankByName = null;
+      var savedState = loadState();
+      stations = applySavedOrder(flattenExtraMode(data, mode), savedState.order);
+      renderGrid();
+      applyTop3ToDom(savedState.top3);
+      updateGridToggleVisibility();
+    }).catch(function () {
+      if (appMode !== mode) {
+        return;
+      }
+      grid.textContent = 'No se pudieron cargar las emisoras de este modo. Volviendo al modo normal…';
+      setMode('normal', true);
     });
   }
 
@@ -1691,12 +1851,9 @@
 
   /* --- Arranque --- */
 
-  sleepMode = loadSleepModePref();
-  document.body.classList.toggle('sleep-mode', sleepMode);
+  appMode = loadModePref();
+  sleepMode = appMode === 'sleep';
+  applyModeClasses();
   updateModeUI();
-  if (sleepMode) {
-    initSleepMode();
-  } else {
-    initNormalMode();
-  }
+  initCurrentMode();
 })();

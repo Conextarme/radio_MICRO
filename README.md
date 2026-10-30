@@ -37,6 +37,14 @@ Todas las emisoras están en [`stations.json`](stations.json). Cada entrada admi
 
 No hace falta tocar `index.html`, `styles.css` ni `app.js` para añadir o quitar emisoras.
 
+### Modos Big Calm, Music Time y Buggy Time
+
+Sus emisoras están en [`emisoras-modos.json`](emisoras-modos.json), en `modos.calm.emisoras`, `modos.music.emisoras` y `modos.buggy.emisoras`. Usan los mismos campos que `emisoras-relax.json` (`nombre`, `codec`, `bitrate`, `stream`, `web`, `descripcion`).
+
+- `afinacion` (opcional) muestra una etiqueta en la tarjeta y en el reproductor, por ejemplo `"432 Hz"`. En Big Calm solo debe ponerse si la afinación se ha medido: un nombre con "432" no garantiza que suene así.
+- `afinacionNota` (opcional) es el texto que aparece al pasar el ratón por la etiqueta.
+- Si un modo no tiene emisoras, muestra un aviso y oculta el podio.
+
 ## Notas técnicas
 
 - HTML + CSS + JavaScript vanilla, sin build step.

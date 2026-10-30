@@ -1,0 +1,202 @@
+{
+  "fuente": "Listas de los modos Big Calm y Buggy Time. El campo afinacion muestra una etiqueta en la tarjeta: ponlo solo si se ha medido.",
+  "modos": {
+    "calm": {
+      "emisoras": [
+        {
+          "nombre": "Positively Peaceful 432Hz",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.positivity.radio/pr/posipeaceful/icecast.audio",
+          "web": "https://streema.com/radios/Peaceful_432Hz",
+          "descripcion": "Música de meditación y ambient",
+          "afinacion": "432 Hz",
+          "afinacionNota": "Afinación medida: unos 433 Hz en dos tomas, el 30 oct 2026"
+        },
+        {
+          "nombre": "Positively Rejuvenate 528 Hz",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.positivity.radio/pr/rejuvenate/icecast.audio",
+          "web": "https://mytuner-radio.com/radio/positively-rejuvinate-528-hz-471562/",
+          "descripcion": "Música de relajación y sanación"
+        },
+        {
+          "nombre": "432Hz Radio",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://stream.zeno.fm/er3nkny6fd0uv",
+          "web": "https://axelaime432hzradio.synergize.co/",
+          "descripcion": "Música variada anunciada a 432 Hz"
+        },
+        {
+          "nombre": "Radio 432",
+          "pais": "AU",
+          "codec": "AAC",
+          "bitrate": 64,
+          "stream": "https://play.radioking.io/radio432/849906",
+          "web": "https://play.radioking.io/radio432",
+          "descripcion": "Música anunciada a 432 Hz"
+        },
+        {
+          "nombre": "Musica a 432 Hz (Musicavera)",
+          "pais": "IT",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://nr12.newradio.it:8818/stream",
+          "web": "https://dir.xiph.org/search?q=Musica%20a%20432",
+          "descripcion": "Música variada anunciada a 432 Hz"
+        }
+      ]
+    },
+    "music": {
+      "emisoras": [
+        {
+          "nombre": "RADIO BOB! Blues",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.radiobob.de/blues/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Blues"
+        },
+        {
+          "nombre": "JZR Blues",
+          "pais": "CH",
+          "codec": "MP3",
+          "stream": "https://jazzblues.ice.infomaniak.ch/jazzblues-high.mp3",
+          "web": "https://jazzradio.ch/",
+          "descripcion": "Blues y jazz"
+        },
+        {
+          "nombre": "Carbon Radio (Psych Blues)",
+          "codec": "MP3",
+          "stream": "https://radio.carbonradio.live/listen/carbonradio/radio.mp3",
+          "web": "https://carbonradio.live/",
+          "descripcion": "Blues psicodélico, southern rock y blues rock"
+        }
+      ]
+    },
+    "buggy": {
+      "emisoras": [
+        {
+          "nombre": "Shirley & Spinoza",
+          "codec": "AAC",
+          "bitrate": 192,
+          "stream": "https://s2.radio.co/sec5fa6199/listen",
+          "web": "https://www.shirleyandspinoza.radio/",
+          "descripcion": "Collages de audio y radio libre de culto"
+        },
+        {
+          "nombre": "Radio Aporee",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://radio.aporee.org:8443/aporee",
+          "web": "https://radio.aporee.org/",
+          "descripcion": "Grabaciones de campo de todo el mundo"
+        },
+        {
+          "nombre": "Datafruits",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streampusher-relay.club/datafruits.mp3",
+          "web": "https://www.datafruits.fm/",
+          "descripcion": "Electrónica experimental hecha por su comunidad"
+        },
+        {
+          "nombre": "Substrate Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://cast4.asurahosting.com/proxy/jason126/stream",
+          "web": "https://substrateradio.com/",
+          "descripcion": "Radio libre desde Alabama: ambient, drone, punk y shoegaze"
+        },
+        {
+          "nombre": "Fogpoint Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://s4.radio.co/s3ff272827/listen",
+          "web": "https://fogpointradio.com/",
+          "descripcion": "Emisión continua de música de los años 30, 40 y 50"
+        },
+        {
+          "nombre": "Nightwave Plaza",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://radio.plaza.one/mp3",
+          "web": "https://plaza.one/",
+          "descripcion": "Vaporwave a todas horas"
+        },
+        {
+          "nombre": "Birdsong Radio",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://a1.radio.co/s5c5da6a36/listen",
+          "web": "https://www.birdsong.fm/",
+          "descripcion": "Canto de pájaros, sin música"
+        },
+        {
+          "nombre": "SomaFM Mission Control",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ice2.somafm.com/missioncontrol-128-mp3",
+          "web": "https://somafm.com/missioncontrol/",
+          "descripcion": "Comunicaciones de la NASA sobre música ambient"
+        },
+        {
+          "nombre": "Strange Radio (Pumpkin FM)",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 64,
+          "stream": "https://cast2.asurahosting.com/proxy/strangeradio/stream",
+          "web": "https://pumpkinfm.com/",
+          "descripcion": "Relatos de terror, misterio y ciencia ficción"
+        },
+        {
+          "nombre": "50's Science Fiction KOTR",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 64,
+          "stream": "https://stream.kf7k.com/listen/scifi/radio.mp3",
+          "web": "https://stream.kf7k.com/public/scifi",
+          "descripcion": "Radioteatro antiguo de ciencia ficción"
+        },
+        {
+          "nombre": "Nightride FM Horrorsynth",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://stream.nightride.fm/horrorsynth.mp3",
+          "web": "https://nightride.fm/",
+          "descripcion": "Sintetizadores de terror"
+        },
+        {
+          "nombre": "Radio M00 Dark Ambient",
+          "pais": "RU",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://radio.m00.su:8000/darkambient.mp3",
+          "web": "https://radio.m00.su/",
+          "descripcion": "Dark ambient"
+        },
+        {
+          "nombre": "Kobold.FM",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://kobold.messy.quest/listen/kobold.fm/radio.mp3",
+          "web": "https://kobold.messy.quest/",
+          "descripcion": "Dungeon synth, música de mazmorras"
+        }
+      ]
+    }
+  }
+}
