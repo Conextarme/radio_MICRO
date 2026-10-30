@@ -668,10 +668,33 @@ main {
 }
 
 .station-card.dragging {
+  z-index: 1000;
+  pointer-events: none;
   border-color: var(--neon-cyan);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(45, 226, 230, 0.5);
   transform: scale(1.03);
+}
+
+/* Con ratón se arrastra desde cualquier punto de la tarjeta */
+@media (hover: hover) and (pointer: fine) {
+  .station-card {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+body.is-dragging,
+body.is-dragging .card-content {
   cursor: grabbing;
+}
+
+/* backdrop-filter en el podio haría que la tarjeta arrastrada se posicione
+   respecto a su plaza y no a la ventana. Quitarlo también aligera el repintado. */
+body.is-dragging .station-card,
+body.is-dragging .podium-drop {
+  backdrop-filter: none;
+  transition: none;
 }
 
 .drag-placeholder {
@@ -683,6 +706,7 @@ main {
 /* Los iconos flotan en la esquina para no gastar una fila entera de la tarjeta */
 .card-toolbar {
   position: absolute;
+  z-index: 1;
   top: 0.25rem;
   right: 0.3rem;
   display: flex;

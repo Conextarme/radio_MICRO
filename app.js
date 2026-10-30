@@ -826,7 +826,7 @@
     handle.title = 'Arrastra para reordenar';
     handle.textContent = '⠿';
     toolbar.appendChild(handle);
-    attachDragHandle(card, handle);
+    attachDragHandle(card);
 
     if (!unavailable) {
       var podiumBtn = document.createElement('button');
@@ -837,7 +837,7 @@
       podiumBtn.textContent = '⭐';
       podiumBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        addToPodium(card);
+        togglePodium(card);
       });
       toolbar.appendChild(podiumBtn);
     }
@@ -1046,21 +1046,41 @@
 
   /* --- Alternativa táctil al arrastrar: botón "Al podio" en cada tarjeta --- */
 
-  function addToPodium(card) {
-    if (card.parentNode && card.parentNode.classList && card.parentNode.classList.contains('podium-drop')) {
-      return;
-    }
-    var sorted = podiumSlots.slice().sort(function (a, b) {
-      return (parseInt(a.dataset.rank, 10) || 9) - (parseInt(b.dataset.rank, 10) || 9);
+  function isInPodium(card) {
+    return !!(card.parentNode && card.parentNode.classList && card.parentNode.classList.contains('podium-drop'));
+  }
+
+  function updatePodiumButtons() {
+    cards.forEach(function (card, i) {
+      var btn = card.querySelector('.podium-add-btn');
+      if (!btn) {
+        return;
+      }
+      var inPodium = isInPodium(card);
+      btn.title = inPodium ? 'Quitar del podio' : 'Al podio';
+      btn.setAttribute('aria-label', (inPodium ? 'Quitar ' : 'Añadir ') + stations[i].name + (inPodium ? ' del podio' : ' al podio'));
     });
-    var emptySlot = sorted.filter(function (s) { return !s.querySelector('.station-card'); })[0];
-    var slot = emptySlot || sorted[0];
-    var occupant = slot.querySelector('.station-card');
-    if (occupant) {
-      grid.insertBefore(occupant, grid.firstChild);
+  }
+
+  /* La estrella alterna: sube la emisora al podio o la devuelve a la lista.
+     Con el podio lleno sustituye al 3.º, para no perder la favorita. */
+  function togglePodium(card) {
+    if (isInPodium(card)) {
+      grid.insertBefore(card, grid.firstChild);
+    } else {
+      var sorted = podiumSlots.slice().sort(function (a, b) {
+        return (parseInt(a.dataset.rank, 10) || 9) - (parseInt(b.dataset.rank, 10) || 9);
+      });
+      var emptySlot = sorted.filter(function (s) { return !s.querySelector('.station-card'); })[0];
+      var slot = emptySlot || sorted[sorted.length - 1];
+      var occupant = slot.querySelector('.station-card');
+      if (occupant) {
+        grid.insertBefore(occupant, grid.firstChild);
+      }
+      slot.appendChild(card);
     }
-    slot.appendChild(card);
     applyCategoryFilter();
+    updatePodiumButtons();
     saveState();
   }
 
@@ -1074,6 +1094,7 @@
         podiumSlots[i].appendChild(card);
       }
     });
+    updatePodiumButtons();
   }
 
   function findPodiumSlotAt(clientX, clientY) {
@@ -1163,8 +1184,11 @@
     return ordered;
   }
 
-  function attachDragHandle(card, handle) {
+  function attachDragHandle(card) {
+    var DRAG_THRESHOLD_PX = 6;
     var state = null;
+    var pending = null;
+    var suppressClick = false;
 
     function updateCardPosition(clientX, clientY) {
       card.style.left = (clientX - state.offsetX) + 'px';
@@ -1177,6 +1201,10 @@
       var targetRect = null;
       var closestDist = Infinity;
       siblings.forEach(function (sib) {
+        // Las tarjetas ocultas por el filtro miden 0 y no son un destino válido.
+        if (sib.style.display === 'none') {
+          return;
+        }
         var r = sib.getBoundingClientRect();
         var cx = r.left + r.width / 2;
         var cy = r.top + r.height / 2;
@@ -1187,9 +1215,17 @@
           targetRect = r;
         }
       });
-      if (target) {
-        var before = clientX < targetRect.left + targetRect.width / 2;
-        grid.insertBefore(state.placeholder, before ? target : target.nextSibling);
+      if (!target) {
+        if (state.placeholder.parentNode !== grid) {
+          grid.appendChild(state.placeholder);
+        }
+        return;
+      }
+      var before = clientX < targetRect.left + targetRect.width / 2;
+      var reference = before ? target : target.nextSibling;
+      // Mover el hueco solo si cambia de sitio evita recolocar la cuadrícula en cada movimiento.
+      if (reference !== state.placeholder && state.placeholder.nextSibling !== reference) {
+        grid.insertBefore(state.placeholder, reference);
       }
     }
 
@@ -1205,11 +1241,7 @@
       }
     }
 
-    function onPointerDown(e) {
-      if (e.pointerType === 'mouse' && e.button !== 0) {
-        return;
-      }
-      e.preventDefault();
+    function beginDrag(pointerId, startX, startY, clientX, clientY) {
       var rect = card.getBoundingClientRect();
       var placeholder = document.createElement('div');
       placeholder.className = 'drag-placeholder';
@@ -1218,24 +1250,49 @@
       card.parentNode.insertBefore(placeholder, card);
 
       state = {
-        pointerId: e.pointerId,
-        offsetX: e.clientX - rect.left,
-        offsetY: e.clientY - rect.top,
+        pointerId: pointerId,
+        offsetX: startX - rect.left,
+        offsetY: startY - rect.top,
         placeholder: placeholder
       };
 
+      document.body.classList.add('is-dragging');
       card.classList.add('dragging');
       card.style.position = 'fixed';
       card.style.width = rect.width + 'px';
       card.style.height = rect.height + 'px';
-      updateCardPosition(e.clientX, e.clientY);
+      updateCardPosition(clientX, clientY);
       activeDragUpdate = updateDragTarget;
-      startAutoScroll(e.clientX, e.clientY);
+      startAutoScroll(clientX, clientY);
 
-      try { handle.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
+      try { card.setPointerCapture(pointerId); } catch (err) { /* noop */ }
+    }
+
+    function onPointerDown(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) {
+        return;
+      }
+      if (e.target.closest('.podium-add-btn, a')) {
+        return;
+      }
+      if (e.target.closest('.drag-handle')) {
+        e.preventDefault();
+        beginDrag(e.pointerId, e.clientX, e.clientY, e.clientX, e.clientY);
+      } else if (e.pointerType === 'mouse') {
+        // Con ratón el arrastre empieza al moverse: sin movimiento sigue siendo un clic.
+        pending = { pointerId: e.pointerId, x: e.clientX, y: e.clientY };
+      }
     }
 
     function onPointerMove(e) {
+      if (pending && e.pointerId === pending.pointerId) {
+        if (Math.hypot(e.clientX - pending.x, e.clientY - pending.y) < DRAG_THRESHOLD_PX) {
+          return;
+        }
+        var start = pending;
+        pending = null;
+        beginDrag(e.pointerId, start.x, start.y, e.clientX, e.clientY);
+      }
       if (!state || e.pointerId !== state.pointerId) {
         return;
       }
@@ -1244,9 +1301,15 @@
     }
 
     function onPointerEnd(e) {
+      if (pending && e.pointerId === pending.pointerId) {
+        pending = null;
+      }
       if (!state || e.pointerId !== state.pointerId) {
         return;
       }
+      suppressClick = true;
+      setTimeout(function () { suppressClick = false; }, 0);
+      document.body.classList.remove('is-dragging');
       stopAutoScroll();
       activeDragUpdate = null;
       clearPodiumHighlight();
@@ -1269,16 +1332,24 @@
       card.style.top = '';
       card.style.width = '';
       card.style.height = '';
-      try { handle.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
+      try { card.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
       state = null;
       applyCategoryFilter();
+      updatePodiumButtons();
       saveState();
     }
 
-    handle.addEventListener('pointerdown', onPointerDown);
-    handle.addEventListener('pointermove', onPointerMove);
-    handle.addEventListener('pointerup', onPointerEnd);
-    handle.addEventListener('pointercancel', onPointerEnd);
+    card.addEventListener('pointerdown', onPointerDown);
+    card.addEventListener('pointermove', onPointerMove);
+    card.addEventListener('pointerup', onPointerEnd);
+    card.addEventListener('pointercancel', onPointerEnd);
+    // Soltar una tarjeta arrastrada no debe contar como clic para reproducirla.
+    card.addEventListener('click', function (e) {
+      if (suppressClick) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }, true);
   }
 
   /* =========================================================================
@@ -1408,8 +1479,7 @@
     cards.forEach(function (card, i) {
       var station = stations[i];
       // El podio siempre se ve entero, sea cual sea la temática elegida.
-      var inPodium = card.parentNode && card.parentNode.classList.contains('podium-drop');
-      var show = inPodium || (station && station.category === activeCategoryFilter);
+      var show = isInPodium(card) || (station && station.category === activeCategoryFilter);
       card.style.display = show ? '' : 'none';
     });
     updateGridToggleVisibility();

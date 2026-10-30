@@ -87,6 +87,51 @@ En `emisoras-modos.json`, borrar las 4 emisoras añadidas en `modos.calm.emisora
 
 ---
 
+## 2026-10-30 12:00 — Podio: arrastre con ratón desde toda la tarjeta y estrella reparada
+
+### Objetivo
+El usuario pidió revisar cómo se suben las emisoras al podio, porque unas funcionaban y otras no y arrastrarlas costaba. Preguntó si se pueden mover las tarjetas con el ratón, si eso saturaría la web y si convenía otro sistema.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `index.html`: modificado (texto de ayuda).
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v16` a `v17`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Los iconos ⠿ y ⭐ vuelven a recibir los clics en Dormir y Music Time.
+- Con ratón, la tarjeta se arrastra desde cualquier punto. El arrastre empieza al mover 6 px; un clic sin mover sigue reproduciendo. Soltar una tarjeta arrastrada no la reproduce.
+- En móvil se sigue arrastrando desde ⠿, para no impedir el desplazamiento de la página, y sigue disponible la estrella.
+- La estrella ahora alterna: sobre una tarjeta del podio la devuelve a la lista.
+- Con el podio lleno, la estrella sustituye al 3.º. Antes sustituía al 1.º, la favorita.
+- Las tarjetas ocultas por el filtro ya no cuentan como destino al arrastrar.
+- Durante el arrastre se desactivan los desenfoques y transiciones de tarjetas y podio, y el hueco solo se mueve si cambia de sitio.
+- La tarjeta arrastrada desde el podio sigue al ratón; antes `backdrop-filter` en la plaza alteraba su posición.
+
+### Motivo
+- Causa principal: al compactar las tarjetas (entrada "Tarjetas de emisora más pequeñas"), los iconos pasaron a flotar y la etiqueta de temática quedó encima de ellos. Afectaba al 100 % de las tarjetas probadas de Dormir y Music Time, y por eso unos modos funcionaban y otros no. Las pruebas de entonces pulsaban por código y no lo detectaron.
+- No hacía falta otro sistema. En la medición, la maquetación más el recálculo de estilos sumaron unos 30-50 ms en cada arrastre de 24 movimientos, repartidos en todo el gesto.
+
+### Validaciones
+- Pruebas con eventos de ratón reales mediante el protocolo de Chrome sin ventana, a 1400×900.
+- Antes del cambio: ⠿ al podio 4 de 4 en Normal y 0 de 4 en Music Time; arrastrar desde el cuerpo de la tarjeta, 0 de 8.
+- Elemento que recibe el clic: antes, 0 de 5 en Dormir y 0 de 10 en Music Time; después, ⠿ y ⭐ correctos en las tarjetas probadas de los cinco modos.
+- Después del cambio: ⠿ al podio 8 de 8 y tarjeta entera al podio 8 de 8 en Normal y Music Time, sin reproducir por accidente. Reordenar funciona 6 de 6.
+- Clic sin mover: reproduce. Estrella: sube, sustituye al 3.º con el podio lleno y devuelve a la lista.
+- Arrastre desde el podio: la tarjeta queda bajo el puntero y pasa a otra plaza. Arrastre en Dormir con filtro: correcto. Cada modo conserva su podio.
+- Sin errores de JavaScript.
+- No probado: arrastre real en un móvil físico, navegadores distintos de Chrome y la app instalada con `v17`. Las medidas de rendimiento son de Chrome sin ventana, no del móvil.
+
+### Riesgos o pendientes
+- En móvil el área de arrastre sigue siendo el icono ⠿, a propósito.
+- Los cambios no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- styles.css app.js index.html sw.js`. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
 ## 2026-10-30 11:46 — Sin filtro "Todas" y etiquetas de ranking sin cortar
 
 ### Objetivo
