@@ -14,7 +14,7 @@
   { "name": "Cope FM", "freq": "100.7 FM", "streamUrl": "https://net1-cope-rrcast.flumotion.com/cope/net1-low.mp3", "streamType": "mp3", "officialUrl": "https://www.cope.es/emisoras/comunidad-de-madrid/madrid-provincia/madrid" },
   { "name": "Dance Radio", "freq": "Stream", "streamUrl": "https://c3.auracast.net/listen/1_radio_dance/radio.mp3", "streamType": "mp3", "officialUrl": "https://www.radiodance.net/" },
   { "name": "esRadio", "freq": "99.1 FM", "streamUrl": "https://libertaddigital-radio-live1.flumotion.com/libertaddigital/ld-live1-low.mp3", "streamType": "mp3", "officialUrl": "https://esradio.libertaddigital.com/" },
-  { "name": "Europa FM", "freq": "91.0 FM", "streamUrl": "https://radio-atres-live.ondacero.es/api/livestream-redirect/EFMAAC.aac", "streamType": "aac", "officialUrl": "https://www.europafm.com/" },
+  { "name": "Europa FM", "freq": "91.0 FM", "streamUrl": "https://radio-atres-live.ondacero.es/api/livestream-redirect/EFMAAC.aac", "streamType": "aac", "officialUrl": "https://www.europafm.com/", "geoRestricted": true, "notes": "Responde bien desde España pero da 403 a los servidores de GitHub Actions." },
   { "name": "Flaix FM", "freq": "105.7 FM", "streamUrl": "https://stream.flaixfm.cat/icecast", "streamType": "aac", "officialUrl": "https://www.flaixfm.cat/", "lang": "ca" },
   { "name": "Flamenco Radio", "freq": "Stream", "streamUrl": "https://rtva-live-radio.flumotion.com/rtva/flamenco.mp3", "streamType": "mp3", "officialUrl": "https://www.canalsur.es/radio/flamenco-radio/" },
   { "name": "Ibiza Global", "freq": "97.6 FM", "streamUrl": "https://cdn-peer022.streaming-pro.com:8025/ibizaglobalradio.mp3", "streamType": "mp3", "officialUrl": "https://www.ibizaglobalradio.com/" },

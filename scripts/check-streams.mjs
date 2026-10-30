@@ -26,6 +26,9 @@ const TIMEOUT_MS = 10000;
 const RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 const CONCURRENCY = 10;
+/* Algunos servidores (SomaFM) devuelven 403 al User-Agent por defecto de Node.
+   Se usa el de un navegador, que es lo que envía la app al reproducir. */
+const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 
 async function checkUrlOnce(url) {
   const controller = new AbortController();
@@ -35,7 +38,7 @@ async function checkUrlOnce(url) {
       method: 'GET',
       redirect: 'follow',
       signal: controller.signal,
-      headers: { Range: 'bytes=0-1024' }
+      headers: { Range: 'bytes=0-1024', 'User-Agent': USER_AGENT }
     });
     // No hace falta leer el cuerpo entero: en cuanto llegan cabeceras válidas
     // ya sabemos si el stream responde. Se cancela la conexión igualmente.
@@ -104,7 +107,7 @@ async function loadStations() {
   const rawNormal = await readFile(STATIONS_PATH, 'utf8');
   const normal = JSON.parse(rawNormal)
     .filter((s) => s.streamUrl)
-    .map((s) => ({ name: s.name, streamUrl: s.streamUrl, reliable: s.reliable !== false, source: 'normal', file: 'stations.json' }));
+    .map((s) => ({ name: s.name, streamUrl: s.streamUrl, reliable: s.reliable !== false, geoRestricted: s.geoRestricted === true, source: 'normal', file: 'stations.json' }));
 
   const rawSleep = await readFile(SLEEP_STATIONS_PATH, 'utf8');
   const sleep = flattenSleepStations(JSON.parse(rawSleep))
@@ -167,6 +170,24 @@ function printFailureRanking(health) {
   });
 }
 
+/* Informe en Markdown de las emisoras caídas. El workflow lo publica como issue
+   para que el aviso por email incluya la lista. */
+async function writeFailureReport(reportPath, failed, health) {
+  const rows = failed.map((r) => {
+    const entry = health.stations[`${r.file}|${r.name}`];
+    return `| ${r.name} | ${r.file} | ${r.status} | ${entry.consecutiveFailures} | ${r.streamUrl} |`;
+  });
+  const report = [
+    `${failed.length} emisora(s) fiable(s) han fallado la comprobación:`,
+    '',
+    '| Emisora | Archivo | Resultado | Semanas seguidas | Stream |',
+    '| --- | --- | --- | --- | --- |',
+    ...rows,
+    ''
+  ].join('\n');
+  await writeFile(reportPath, report, 'utf8');
+}
+
 async function main() {
   const withStream = await loadStations();
 
@@ -184,9 +205,14 @@ async function main() {
   for (const r of results) {
     const flag = r.ok ? 'OK  ' : 'FAIL';
     const prefix = r.source === 'dormir' ? '[dormir]' : '[normal]';
-    const reliableNote = r.reliable === false ? ' (ya marcada como no fiable)' : '';
-    console.log(`[${flag}] ${prefix} ${r.name} — ${r.status}${reliableNote}`);
-    if (!r.ok && r.reliable !== false) {
+    // Un 403 en una emisora geoRestricted es el bloqueo a los servidores de
+    // GitHub, no una caída; cualquier otro error sí cuenta como fallo.
+    const geoBlocked = r.geoRestricted && r.status === 403;
+    let note = '';
+    if (r.reliable === false) note = ' (ya marcada como no fiable)';
+    else if (geoBlocked) note = ' (bloqueo geográfico conocido, no cuenta como fallo)';
+    console.log(`[${flag}] ${prefix} ${r.name} — ${r.status}${note}`);
+    if (!r.ok && r.reliable !== false && !geoBlocked) {
       failed.push(r);
     }
   }
@@ -196,6 +222,9 @@ async function main() {
     console.log(`${failed.length} emisora(s) fiable(s) han fallado la comprobación:`);
     failed.forEach((r) => console.log(`  - ${r.name} (revisar en ${r.file})`));
     console.log('\nRevisa su streamUrl en el archivo indicado (puede que la emisora haya cambiado de servidor o esté caída temporalmente).');
+    if (process.env.FAILURE_REPORT_PATH) {
+      await writeFailureReport(process.env.FAILURE_REPORT_PATH, failed, health);
+    }
     process.exitCode = 1;
   } else {
     console.log('Todas las emisoras fiables han respondido correctamente.');

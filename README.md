@@ -31,6 +31,7 @@ Todas las emisoras están en [`stations.json`](stations.json). Cada entrada admi
 - `streamType` puede ser `"mp3"`, `"aac"` o `"hls"`. Las emisoras `"hls"` cargan `hls.js` automáticamente solo cuando se seleccionan.
 - Si no existe un stream de audio directo, pon `"streamUrl": null` y `"streamType": null`; la tarjeta mostrará el aviso "NO DISPONIBLE AQUÍ" con un enlace a `officialUrl`.
 - Si el stream es HTTP (no HTTPS) o poco fiable, añade `"reliable": false`; se tratará igual que si no tuviera stream, para evitar el bloqueo por contenido mixto en una web servida por HTTPS.
+- `geoRestricted` es opcional y solo lo usa la revisión semanal: con `true`, un 403 no cuenta como caída (la emisora bloquea a los servidores de GitHub, pero funciona desde España). No afecta a la web.
 - `lang` es opcional: indica el idioma del nombre de la emisora (p. ej. `"ca"` para catalán) para que los lectores de pantalla lo pronuncien correctamente. Si no se indica, se usa el idioma general de la web (español).
 - `notes` es solo informativo, no se muestra en la web.
 

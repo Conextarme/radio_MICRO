@@ -4,6 +4,49 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-10-30 10:10 — Arreglo de la revisión semanal de emisoras y aviso con la lista de caídas
+
+### Objetivo
+La tarea automática de los lunes ("Comprobar streams de emisoras") aparecía siempre en rojo en GitHub. El usuario pidió averiguar el motivo y que el email del error indicara qué emisoras fallan.
+
+### Archivos afectados
+- `scripts/check-streams.mjs`: modificado.
+- `.github/workflows/check-streams.yml`: modificado.
+- `stations.json`: modificado (solo la entrada de Europa FM).
+- `README.md`: modificado.
+
+### Cambios realizados
+- La comprobación se identifica ahora como un navegador. SomaFM rechazaba (error 403) el identificador por defecto de Node.
+- Europa FM lleva un campo nuevo, `geoRestricted: true`, y una nota. Para esa emisora, un 403 ya no cuenta como caída; cualquier otro error sí. La web ignora este campo y Europa FM sigue sonando igual.
+- Cuando hay emisoras caídas, el script genera una tabla con emisora, archivo, resultado, semanas seguidas y dirección del stream.
+- Un paso nuevo del workflow copia esa tabla al resumen de la ejecución y abre con ella un issue en GitHub, que GitHub envía por email. Se abre un issue por cada ejecución con fallos; no se cierran solos.
+- El README explica el campo `geoRestricted`.
+
+### Motivo
+- El rojo no era una avería de la tarea: falla a propósito si cae alguna emisora marcada como fiable. Según el historial, Europa FM dio 403 en todas las ejecuciones desde el 5 de octubre y SomaFM el 26 de octubre.
+- `reliable: false` no servía para Europa FM porque la app trata esas emisoras como si no tuvieran stream y dejaría de reproducirse.
+- El email automático de GitHub no se puede personalizar. El issue permite incluir la lista sin guardar contraseñas de correo en el repositorio.
+
+### Validaciones
+- Comprobación de SomaFM con y sin identificador de navegador: 403 sin él y 206 con él.
+- Comprobación de Europa FM desde este equipo (España): 206. No se ha podido probar desde los servidores de GitHub; que sea un bloqueo geográfico es una deducción.
+- Script corregido sobre una copia con todas las emisoras: 105 correctas y 5 fallos, ninguno de SomaFM ni Europa FM, con el informe generado.
+- Fallo forzado sobre una copia: un 404 aparece en el informe y un 403 con `geoRestricted` queda fuera de él.
+- `stations.json` y el YAML del workflow se leen sin errores.
+- No probado: el paso del issue y el email, porque solo funcionan en GitHub tras subir el cambio.
+
+### Riesgos o pendientes
+- MegaStar FM da 404 desde este equipo (`stations.json`), repetido en dos comprobaciones más; el 26 de octubre funcionaba. Si sigue así, el lunes habrá aviso. No se ha cambiado su dirección.
+- RADIO BOB! Blues, Radio María, Otsuchi y CyberForest Fuji fallan desde este equipo, pero funcionaron desde GitHub el 26 de octubre.
+- La tarea puede seguir en rojo por caídas puntuales: pasó el 19 de octubre con myNoise Pure Nature y Enigmatic Immersion.
+- Si Europa FM dejara de funcionar con un 403 de verdad, no habría aviso.
+- El aviso `Node.js 20 is deprecated` no se ha tocado; no causa el fallo.
+
+### Cómo revertir
+Ejecutar `git checkout -- scripts/check-streams.mjs .github/workflows/check-streams.yml stations.json README.md` si no se ha hecho commit, o `git revert` del commit correspondiente si ya se ha hecho. Después, quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-09-25 11:30 — Historial de fallos de streams para el cron de revisión
 
 ### Objetivo

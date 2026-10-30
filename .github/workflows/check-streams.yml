@@ -7,9 +7,10 @@ on:
     - cron: '0 7 * * 1'
   workflow_dispatch: {}
 
-# Necesario para que el workflow pueda guardar el historial de fallos.
+# contents: guardar el historial de fallos. issues: avisar de las emisoras caídas.
 permissions:
   contents: write
+  issues: write
 
 jobs:
   check-streams:
@@ -21,6 +22,8 @@ jobs:
           node-version: '20'
       - name: Comprobar URLs de streaming
         run: node scripts/check-streams.mjs
+        env:
+          FAILURE_REPORT_PATH: ${{ runner.temp }}/stream-failures.md
       # Se ejecuta siempre (también si la comprobación falla) para no perder
       # el registro justo de las semanas en que hay emisoras caídas.
       - name: Guardar historial de fallos
@@ -32,4 +35,16 @@ jobs:
             git add stream-health.json
             git commit -m "actualizar historial de fallos de streams"
             git push
+          fi
+      # El email automático de GitHub no se puede personalizar. El issue sí: al
+      # abrirlo, GitHub envía por email su texto con la lista de emisoras.
+      - name: Avisar de las emisoras caídas
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT: ${{ runner.temp }}/stream-failures.md
+        run: |
+          if [ -f "$REPORT" ]; then
+            cat "$REPORT" >> "$GITHUB_STEP_SUMMARY"
+            gh issue create --title "Emisoras caídas ($(date +%F))" --body-file "$REPORT"
           fi
