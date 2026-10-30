@@ -15,7 +15,6 @@
 
   /* --- Modo dormir --- */
   var SLEEP_STORAGE_KEY = 'radioMicroSleepState';
-  var SLEEP_MODE_KEY = 'radioMicroSleepMode';
   var SLEEP_TIMER_KEY = 'radioMicroSleepTimerEnd';
   var SLEEP_TIMER_MIN_KEY = 'radioMicroSleepTimerMinutes';
   var SLEEP_LAST_KEY = 'radioMicroSleepLast';
@@ -37,7 +36,6 @@
   };
 
   /* --- Modos de escucha --- */
-  var MODE_KEY = 'radioMicroMode';
   var EXTRA_MODES_FILE = 'emisoras-modos.json';
   var MODE_STORAGE_KEYS = {
     normal: STORAGE_KEY,
@@ -137,7 +135,7 @@
   var easterEggTrigger = document.getElementById('easter-egg-trigger');
   var easterEggVideoWrap = document.getElementById('easter-egg-video-wrap');
 
-  var modeButtons = Array.prototype.slice.call(document.querySelectorAll('.mode-btn'));
+  var modeSelect = document.getElementById('mode-select');
   var top3Section = document.querySelector('.top3-section');
   var titleMainEl = document.querySelector('.title-main');
   var titleSubEl = document.querySelector('.title-sub');
@@ -943,14 +941,11 @@
       toggleGridBtn.hidden = false;
       return;
     }
-    // Se comprueba tras el siguiente frame para que el navegador ya haya
-    // calculado el alto real de la cuadrícula (scrollHeight) con las tarjetas
-    // recién insertadas.
-    requestAnimationFrame(function () {
-      var overflows = grid.scrollHeight > gridWrap.clientHeight + 4;
-      toggleGridBtn.hidden = !overflows;
-      gridWrap.classList.toggle('fits-all', !overflows);
-    });
+    // Leer scrollHeight obliga al navegador a calcular el alto real de la
+    // cuadrícula con las tarjetas recién insertadas.
+    var overflows = grid.scrollHeight > gridWrap.clientHeight + 4;
+    toggleGridBtn.hidden = !overflows;
+    gridWrap.classList.toggle('fits-all', !overflows);
   }
 
   if (toggleGridBtn) {
@@ -1306,32 +1301,15 @@
     return map;
   }
 
-  function saveModePref() {
-    try { window.localStorage.setItem(MODE_KEY, appMode); } catch (e) { /* noop */ }
-  }
-
-  function loadModePref() {
-    try {
-      var saved = window.localStorage.getItem(MODE_KEY);
-      if (MODE_STORAGE_KEYS[saved]) {
-        return saved;
-      }
-      // Versiones anteriores solo guardaban si el modo dormir estaba activo.
-      return window.localStorage.getItem(SLEEP_MODE_KEY) === '1' ? 'sleep' : 'normal';
-    } catch (e) {
-      return 'normal';
-    }
-  }
-
   function saveLastSleepStation(name) {
     try { window.localStorage.setItem(SLEEP_LAST_KEY, name); } catch (e) { /* noop */ }
   }
 
   function updateModeUI() {
     var ui = MODE_UI[appMode];
-    modeButtons.forEach(function (btn) {
-      btn.setAttribute('aria-pressed', btn.dataset.mode === appMode ? 'true' : 'false');
-    });
+    if (modeSelect) {
+      modeSelect.value = appMode;
+    }
     if (titleMainEl) {
       titleMainEl.textContent = ui.titleMain;
     }
@@ -1697,7 +1675,7 @@
     return initExtraMode();
   }
 
-  function setMode(mode, skipSave) {
+  function setMode(mode) {
     if (appMode === mode) {
       return;
     }
@@ -1724,18 +1702,15 @@
     collapseGrid();
     applyModeClasses();
     updateModeUI();
-    if (!skipSave) {
-      saveModePref();
-    }
 
     initCurrentMode();
   }
 
-  modeButtons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      setMode(btn.dataset.mode);
+  if (modeSelect) {
+    modeSelect.addEventListener('change', function () {
+      setMode(modeSelect.value);
     });
-  });
+  }
 
   /* --- Carga de datos por modo --- */
 
@@ -1792,7 +1767,7 @@
         return;
       }
       grid.textContent = 'No se pudieron cargar las emisoras para dormir. Volviendo al modo normal…';
-      setMode('normal', true);
+      setMode('normal');
     });
   }
 
@@ -1841,7 +1816,7 @@
         return;
       }
       grid.textContent = 'No se pudieron cargar las emisoras de este modo. Volviendo al modo normal…';
-      setMode('normal', true);
+      setMode('normal');
     });
   }
 
@@ -1849,10 +1824,8 @@
     document.body.classList.toggle('tab-hidden', document.hidden);
   });
 
-  /* --- Arranque --- */
+  /* --- Arranque: la web entra siempre en el modo normal --- */
 
-  appMode = loadModePref();
-  sleepMode = appMode === 'sleep';
   applyModeClasses();
   updateModeUI();
   initCurrentMode();

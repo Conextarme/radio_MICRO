@@ -77,6 +77,470 @@
           "stream": "https://radio.carbonradio.live/listen/carbonradio/radio.mp3",
           "web": "https://carbonradio.live/",
           "descripcion": "Blues psicodélico, southern rock y blues rock"
+        },
+        {
+          "nombre": "181.FM True Blues",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://listen.181fm.com/181-blues_128k.mp3",
+          "web": "http://www.181.fm/",
+          "descripcion": "Blues"
+        },
+        {
+          "nombre": "OUI FM Blues'n'Rock",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ouifmbluesnrock.ice.infomaniak.ch/ouifmbluesnrock-128.mp3",
+          "web": "https://www.ouifm.fr/",
+          "descripcion": "Blues y rock"
+        },
+        {
+          "nombre": "Radio Art Acoustic Blues",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 96,
+          "stream": "https://live.radioart.com/fAcoustic_blues.mp3",
+          "web": "https://radioart.com/",
+          "descripcion": "Blues acústico"
+        },
+        {
+          "nombre": "A Mississippi Blues",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://cast1.torontocast.com:4450/;?type=http&nocache=1745625391",
+          "web": "https://radiosuitenetwork.torontocast.stream/amississippiblues/",
+          "descripcion": "Blues"
+        },
+        {
+          "nombre": "#joint radio Blues Rock",
+          "pais": "IL",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://jointil.com/stream-blues",
+          "web": "https://www.jointil.com/",
+          "descripcion": "Blues rock"
+        },
+        {
+          "nombre": "Gritty Rock Radio",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://listen.radioking.com/radio/10713/stream/224413",
+          "web": "https://www.grittyrockradio.com/",
+          "descripcion": "Blues rock y southern rock"
+        },
+        {
+          "nombre": "Monte Carlo Wonderful Blues",
+          "pais": "RU",
+          "codec": "AAC",
+          "bitrate": 96,
+          "stream": "https://mc-blues.hostingradio.ru/blues96.aacp",
+          "web": "https://montecarlo.ru/online/%20wonderful_blues",
+          "descripcion": "Blues"
+        },
+        {
+          "nombre": "SomaFM Left Coast 70s",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ice2.somafm.com/seventies-128-mp3",
+          "web": "https://somafm.com/seventies/",
+          "descripcion": "Rock suave de los 70"
+        },
+        {
+          "nombre": "0N 70s",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://0n-70s.radionetz.de/0n-70s.mp3",
+          "web": "http://www.0nradio.com/",
+          "descripcion": "Años 70"
+        },
+        {
+          "nombre": "0N Classic Rock",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://0n-classicrock.radionetz.de/0n-classicrock.mp3",
+          "web": "http://www.0nradio.com/",
+          "descripcion": "Rock clásico"
+        },
+        {
+          "nombre": "181.FM The Eagle",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://listen.181fm.com/181-eagle_128k.mp3",
+          "web": "http://www.181.fm/",
+          "descripcion": "Rock clásico"
+        },
+        {
+          "nombre": "Megarock Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://stream3.megarockradio.net:80/",
+          "web": "https://megarockradio.net/",
+          "descripcion": "Rock clásico y hard rock"
+        },
+        {
+          "nombre": "Exclusively Pink Floyd",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/pinkfloyd/icecast.audio",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Pink Floyd"
+        },
+        {
+          "nombre": "Exclusively Deep Purple",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/deeppurple/icecast.audio",
+          "web": "https://play.exclusive.radio/",
+          "descripcion": "Solo Deep Purple"
+        },
+        {
+          "nombre": "Exclusively Led Zeppelin",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er-app/ledzeppelin/icecast.audio",
+          "web": "https://play.exclusive.radio/",
+          "descripcion": "Solo Led Zeppelin"
+        },
+        {
+          "nombre": "Radio Bob Rockabilly",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://streams.radiobob.de/bob-rockabilly/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/rockabilly-stream",
+          "descripcion": "Rockabilly"
+        },
+        {
+          "nombre": "181.FM Rock 40",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://listen.181fm.com/181-rock40_128k.mp3",
+          "web": "http://www.181.fm/",
+          "descripcion": "Rock'n'roll"
+        },
+        {
+          "nombre": "50s 60s Retro Hits",
+          "pais": "IT",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.zeno.fm/pxzwykxbluitv",
+          "web": "https://zeno.fm/radio/50s-60s-retro-hits/",
+          "descripcion": "Éxitos de los 50 y 60"
+        },
+        {
+          "nombre": "0N 60s",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://0n-60s.radionetz.de/0n-60s.mp3",
+          "web": "http://www.0nradio.com/",
+          "descripcion": "Años 60"
+        },
+        {
+          "nombre": "Classic Vinyl HD",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://icecast.walmradio.com:8443/classic",
+          "web": "https://walmradio.com/classic",
+          "descripcion": "Vinilos de los años 40 y 50"
+        },
+        {
+          "nombre": "Exclusively Creedence Clearwater Revival",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/creedence/icecast.audio",
+          "web": "https://play.exclusive.radio/",
+          "descripcion": "Solo Creedence Clearwater Revival"
+        },
+        {
+          "nombre": "SomaFM Underground 80s",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ice2.somafm.com/u80s-128-mp3",
+          "web": "https://somafm.com/u80s/",
+          "descripcion": "New wave y synthpop de los 80"
+        },
+        {
+          "nombre": "RADIO BOB! 80er Rock",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.radiobob.de/bob-80srock/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Rock de los 80"
+        },
+        {
+          "nombre": "80's New Wave Radio",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://puma.streemlion.com:2910/stream",
+          "web": "https://newwaveradio.org/",
+          "descripcion": "New wave de los 80"
+        },
+        {
+          "nombre": "80s Forever",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 256,
+          "stream": "https://premium.shoutcastsolutions.com/radio/8050/256.mp3",
+          "web": "https://www.80sforever.radio/",
+          "descripcion": "Años 80"
+        },
+        {
+          "nombre": "100 Greatest of the 80's",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://maggie.torontocast.com:2020/stream/100greatestofthe80s",
+          "web": "https://100-greatest-network.torontocast.stream/",
+          "descripcion": "Éxitos de los 80"
+        },
+        {
+          "nombre": "Rock Antenne Hair Metal",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.rockantenne.de/hair-metal/stream/mp3",
+          "web": "https://www.rockantenne.de/",
+          "descripcion": "Hair metal"
+        },
+        {
+          "nombre": "Cinemix",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://kathy.torontocast.com:1825/stream",
+          "web": "https://www.cinemix.us/",
+          "descripcion": "Bandas sonoras de cine"
+        },
+        {
+          "nombre": "CINEMUSIC Radio",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://listen.radioking.com/radio/422/stream/62785",
+          "web": "https://cinemusic.fr/",
+          "descripcion": "Bandas sonoras de cine, series y videojuegos"
+        },
+        {
+          "nombre": "Filmradio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://filmradio.stream.laut.fm/filmradio?t302=2018-03-10_04-44-05&uuid=59ca68e0-84a4-492d-9b0b-36c45690cd59",
+          "web": "https://laut.fm/filmradio",
+          "descripcion": "Bandas sonoras de cine"
+        },
+        {
+          "nombre": "Classic FM Movies",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://media-ice.musicradio.com/ClassicFMMoviesMP3",
+          "web": "https://www.classicfm.com/movies/",
+          "descripcion": "Bandas sonoras de cine"
+        },
+        {
+          "nombre": "0N Movies",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://0n-movies.radionetz.de/0n-movies.mp3",
+          "web": "http://www.0nradio.com/",
+          "descripcion": "Bandas sonoras de cine"
+        },
+        {
+          "nombre": "Movie Soundtracks Hits 1.fm",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 256,
+          "stream": "https://strm112.1.fm/moviesoundtracks_mobile_mp3",
+          "web": "https://www.1.fm/station/moviesoundtracks",
+          "descripcion": "Canciones de películas"
+        },
+        {
+          "nombre": "United Music Cinema",
+          "pais": "IT",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://icy.unitedradio.it/um058.mp3",
+          "web": "https://www.unitedmusic.com/",
+          "descripcion": "Bandas sonoras de cine"
+        },
+        {
+          "nombre": "The Base",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://listen.thebase.sc/",
+          "web": "https://thebase.sc/",
+          "descripcion": "Bandas sonoras"
+        },
+        {
+          "nombre": "SomaFM Metal Detector",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ice2.somafm.com/metal-128-mp3",
+          "web": "https://somafm.com/metal/",
+          "descripcion": "Metal"
+        },
+        {
+          "nombre": "RADIO BOB! Metal",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.radiobob.de/bob-metal/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Metal"
+        },
+        {
+          "nombre": "Rock Antenne Heavy Metal",
+          "pais": "DE",
+          "codec": "AAC",
+          "stream": "https://stream.rockantenne.de/heavy-metal/stream/aacp",
+          "web": "https://www.rockantenne.de/",
+          "descripcion": "Heavy metal"
+        },
+        {
+          "nombre": "Radio Heavy Metal",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://manager7.streamradio.fr:1435/stream",
+          "web": "https://radioheavymetal76.wixsite.com/monsite",
+          "descripcion": "Heavy metal"
+        },
+        {
+          "nombre": "Metal Invasion Radio",
+          "pais": "FR",
+          "codec": "AAC",
+          "bitrate": 96,
+          "stream": "https://radio.metal-invasion.fr/radio/8000/stream96",
+          "web": "https://metal-invasion.fr/",
+          "descripcion": "Metal"
+        },
+        {
+          "nombre": "METAL ZONE",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://neos.win:48282/stream",
+          "web": "https://www.metalzone.gr/",
+          "descripcion": "Metal"
+        },
+        {
+          "nombre": "100 Greatest Heavy Metal",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://cast1.torontocast.com:4660/stream",
+          "web": "https://100-greatest-network.torontocast.stream/",
+          "descripcion": "Heavy metal"
+        },
+        {
+          "nombre": "Exclusively Iron Maiden",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/ironmaiden/icecast.audio",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Iron Maiden"
+        },
+        {
+          "nombre": "Exclusive Radio Black Sabbath",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/blacksabbath/icecast.audio",
+          "web": "https://play.exclusive.radio/station/51/318",
+          "descripcion": "Solo Black Sabbath"
+        },
+        {
+          "nombre": "Epic Rock Radio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://securestreams6.autopo.st:2222/stream",
+          "web": "https://www.epicrockradio.com/",
+          "descripcion": "Metal melódico, power y sinfónico"
+        },
+        {
+          "nombre": "RADIO BOB! Power Metal",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.radiobob.de/powermetal/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Power metal"
+        },
+        {
+          "nombre": "RADIO BOB! Symphonic Metal",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://streams.radiobob.de/symphmetal/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Metal sinfónico"
+        },
+        {
+          "nombre": "Prog Palace The Armory",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://cheetah.streemlion.com/progpalace64",
+          "web": "https://www.progpalaceradio.com/the-armory/",
+          "descripcion": "Power metal y metal progresivo"
+        },
+        {
+          "nombre": "Hedgehog Radio",
+          "pais": "TR",
+          "codec": "MP3",
+          "stream": "https://stream.hedgehogradio.com/radio.mp3",
+          "web": "https://hedgehogradio.com/",
+          "descripcion": "Metal gótico y sinfónico"
+        },
+        {
+          "nombre": "Pinguin Aardschok",
+          "pais": "NL",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.pinguinradio.com/Aardschok192.mp3",
+          "web": "https://pinguinradio.com/",
+          "descripcion": "Hard rock y metal"
+        },
+        {
+          "nombre": "Rock Melodic Radio",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://i4.streams.ovh:2200/ssl/rockmelo?mp=/stream",
+          "web": "https://rockmelodic-radio.com/",
+          "descripcion": "Rock melódico y AOR"
+        },
+        {
+          "nombre": "Melodic Radio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://www.tunefm.de:2000/stream/melodicradio",
+          "web": "https://melodicradio.eu/",
+          "descripcion": "Rock melódico"
         }
       ]
     },

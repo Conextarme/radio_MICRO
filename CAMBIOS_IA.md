@@ -87,6 +87,98 @@ En `emisoras-modos.json`, borrar las 4 emisoras añadidas en `modos.calm.emisora
 
 ---
 
+## 2026-10-30 11:18 — 52 emisoras en Music Time, selector desplegable y arranque en modo normal
+
+### Objetivo
+El usuario pidió añadir las emisoras de la lista a Music Time, cambiar la fila de botones por un selector desplegable arriba a la derecha y que la web entre por defecto en el modo normal.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado (52 emisoras nuevas en `modos.music.emisoras`).
+- `index.html`: modificado.
+- `app.js`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v10` a `v11`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time pasa de 3 a 55 emisoras, ordenadas por género: blues, rock de los 70, rock'n'roll, años 80, bandas sonoras, metal y metal melódico.
+- Los cinco botones se sustituyen por un desplegable arriba a la derecha con los cinco modos. Usa la lista nativa del navegador o del móvil.
+- Por debajo de 1000 px de ancho, el selector va centrado encima del título.
+- La web arranca siempre en el modo normal. Ya no recuerda el último modo; orden y podio de cada modo sí se conservan.
+- La cabecera recupera su margen superior original.
+
+### Motivo
+- A 700 px el selector tapaba parte del título, por eso se coloca a la derecha solo cuando hay sitio.
+- El texto del selector mide 1rem porque, con menos, iOS amplía la página al tocarlo.
+- Si no se recuerda el modo, las claves `radioMicroMode` y `radioMicroSleepMode` que queden en un navegador se ignoran sin causar problemas.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores.
+- App real en una copia temporal con Chrome sin ventana a 1184 px, con `radioMicroMode` en `calm` y el modo dormir antiguo activados a propósito: la web entró en el modo normal, con el selector en esa opción.
+- Selector probado en los cinco modos, sin errores de JavaScript: 45, 55, 5, 13 y 62 tarjetas, sin nombres repetidos. El reproductor se cierra al cambiar de modo.
+- Capturas a 390, 700, 1010 y 1200 px revisadas: el selector no tapa el título.
+- `scripts/check-streams.mjs` sobre una copia: 180 emisoras comprobadas y 8 fallos. MegaStar FM da 404 (ya conocido), CyberForest Fuji agota el tiempo (ya conocido) y las 6 emisoras de RADIO BOB! dan "fetch failed".
+- `curl` recibió audio con certificado válido de RADIO BOB! Blues, RADIO BOB! Rockabilly y Epic Rock Radio. El resto de emisoras de RADIO BOB! dieron audio en la prueba de la búsqueda.
+- La lista desplegable abierta no se ha podido ver en capturas. No probado: sonido real, un móvil físico y la app instalada con `v11`.
+
+### Riesgos o pendientes
+- Las 6 emisoras de RADIO BOB! pueden provocar avisos en la revisión del lunes si GitHub obtiene el mismo fallo que este equipo. El 26 de octubre RADIO BOB! Blues funcionó desde GitHub. No se ha averiguado por qué falla solo con el script.
+- MegaStar FM sigue dando 404 y puede generar aviso.
+- Los cambios de esta entrada y el ajuste de "Ver más" de la anterior no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- emisoras-modos.json index.html styles.css sw.js app.js`. Eso también deshace el ajuste de "Ver más" de la entrada anterior, que está sin confirmar en `app.js`. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
+## 2026-10-30 11:08 — Modo Music Time con las emisoras de blues
+
+### Objetivo
+El usuario pidió crear el modo Music Time, buscar una lista de emisoras de varios géneros (de momento solo la lista) y pasar a ese modo las emisoras de blues que ya existían.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `stations.json`: modificado (salen las tres emisoras de blues).
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v9` a `v10`).
+- `scripts/check-streams.mjs`: modificado (solo el comentario inicial).
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Se añade un quinto botón, "🎸 Music Time", con colores ámbar y rojo y su propio orden y podio.
+- RADIO BOB! Blues, JZR Blues y Carbon Radio (Psych Blues) pasan de `stations.json` a `modos.music.emisoras`. El modo normal se queda con 45 emisoras.
+- Se quitan los estilos del bloque "Blues internacional", que ya no se usan.
+- "Ver más" se calcula en el momento, sin esperar al siguiente fotograma.
+- La lista de emisoras de la búsqueda no se ha añadido a la web: solo se ha entregado al usuario.
+- El subtítulo "Blues, rock y metal" y la frase "Sube el volumen." son textos provisionales propuestos por la IA.
+
+### Motivo
+- Mover las emisoras exigía que el modo existiera, aunque el resto de la búsqueda quedara pendiente.
+- Al leer el alto de la cuadrícula el navegador ya lo calcula, así que esperar un fotograma no aportaba nada y dejaba el botón con un valor antiguo en las pruebas.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores. Listas leídas: 45 en normal, 5 en Big Calm, 3 en Music Time y 13 en Buggy Time.
+- App real en una copia temporal con Chrome sin ventana a 1184 px: sin errores de JavaScript; las tres emisoras salen en Music Time y no en el modo normal; la primera abre el reproductor; orden y podio se guardan aparte.
+- Podio antiguo con una emisora movida: la web la ignora sin fallar y conserva el resto.
+- "Ver más": visible en Normal y Dormir, oculto en Big Calm, Music Time y Buggy Time, y también al filtrar por Meditación. Esto resuelve la comprobación que quedó pendiente en la entrada anterior.
+- Captura de Music Time a 1200 px revisada.
+- `scripts/check-streams.mjs` sobre una copia: 128 emisoras comprobadas. JZR Blues y Carbon Radio responden. RADIO BOB! Blues da "fetch failed" en ese script desde este equipo, como en revisiones anteriores, pero `curl` recibió audio de ella con certificado válido.
+- Búsqueda: emisoras probadas con descarga real de audio por HTTPS y lectura del título en emisión cuando la emisora lo publica.
+- No probado: sonido real, un móvil físico, la fila de cinco botones a 390 px y la app instalada con `v10`.
+
+### Riesgos o pendientes
+- Al salir de `stations.json`, las tres emisoras empezarán un historial nuevo en `stream-health.json`.
+- Quien tuviera alguna de las tres en el podio del modo normal deberá añadirla al podio de Music Time.
+- El usuario subió el commit `37ebd6c` durante este trabajo. Queda sin confirmar el ajuste de "Ver más" en `app.js`, junto con esta entrada del registro.
+
+### Cómo revertir
+Si no se ha confirmado, devolver las tres líneas de blues al principio de `stations.json`, quitar el bloque `music` de `emisoras-modos.json`, el botón de `index.html`, las entradas `music` de `app.js` y los estilos `music-mode` de `styles.css`, y restaurar los estilos `category-blues-internacional` y el `requestAnimationFrame` de `updateGridToggleVisibility` desde esta entrada o desde `git diff`. No conviene usar `git checkout`, porque desharía también las entradas anteriores aún sin confirmar. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
 ## 2026-10-30 10:34 — Modos Big Calm y Buggy Time
 
 ### Objetivo

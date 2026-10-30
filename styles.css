@@ -292,42 +292,52 @@ body.tab-hidden .moon {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 1rem 1rem 1.5rem;
+  padding: 3rem 1rem 1.5rem;
 }
 
-.mode-switch {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem;
+/* 1rem de letra: con menos, iOS amplía la página al tocar el selector */
+.mode-select {
+  display: block;
   margin: 0 auto 1.1rem;
-}
-
-.mode-btn {
   min-height: 44px;
-  padding: 0.5rem 0.9rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   color: var(--text-main);
+  color-scheme: dark;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.mode-btn:hover,
-.mode-btn:focus-visible {
+.mode-select option {
+  background: var(--bg-deep);
+  color: var(--text-main);
+}
+
+.mode-select:hover,
+.mode-select:focus-visible {
   border-color: var(--neon-cyan);
 }
 
-.mode-btn[aria-pressed="true"] {
-  border-color: var(--neon-cyan);
-  background: var(--neon-cyan);
-  color: var(--bg-deep);
+.mode-select:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Por debajo de este ancho taparía el título, y va centrado encima de él */
+@media (min-width: 1000px) {
+  .mode-select {
+    position: absolute;
+    top: 0.9rem;
+    right: 1.25rem;
+    margin: 0;
+  }
 }
 
 .title {
