@@ -1060,6 +1060,7 @@
       grid.insertBefore(occupant, grid.firstChild);
     }
     slot.appendChild(card);
+    applyCategoryFilter();
     saveState();
   }
 
@@ -1270,6 +1271,7 @@
       card.style.height = '';
       try { handle.releasePointerCapture(state.pointerId); } catch (err) { /* noop */ }
       state = null;
+      applyCategoryFilter();
       saveState();
     }
 
@@ -1371,8 +1373,7 @@
     if (!modeCategories) {
       return;
     }
-    activeCategoryFilter = 'all';
-    sleepChipsWrap.appendChild(makeCategoryChip('all', 'Todas'));
+    activeCategoryFilter = modeCategories.order[0];
     modeCategories.order.forEach(function (id) {
       var meta = modeCategories.meta[id];
       sleepChipsWrap.appendChild(makeCategoryChip(id, meta.icon + ' ' + meta.label));
@@ -1384,20 +1385,31 @@
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'sleep-chip' + (activeCategoryFilter === id ? ' is-active' : '');
+    btn.dataset.category = id;
     btn.textContent = label;
     btn.addEventListener('click', function () {
-      activeCategoryFilter = id;
-      Array.prototype.forEach.call(sleepChipsWrap.children, function (c) { c.classList.remove('is-active'); });
-      btn.classList.add('is-active');
-      applyCategoryFilter();
+      selectCategory(id);
     });
     return btn;
   }
 
+  function selectCategory(id) {
+    activeCategoryFilter = id;
+    Array.prototype.forEach.call(sleepChipsWrap.children, function (c) {
+      c.classList.toggle('is-active', c.dataset.category === id);
+    });
+    applyCategoryFilter();
+  }
+
   function applyCategoryFilter() {
+    if (!MODE_CATEGORIES[appMode]) {
+      return;
+    }
     cards.forEach(function (card, i) {
       var station = stations[i];
-      var show = activeCategoryFilter === 'all' || (station && station.category === activeCategoryFilter);
+      // El podio siempre se ve entero, sea cual sea la temática elegida.
+      var inPodium = card.parentNode && card.parentNode.classList.contains('podium-drop');
+      var show = inPodium || (station && station.category === activeCategoryFilter);
       card.style.display = show ? '' : 'none';
     });
     updateGridToggleVisibility();
@@ -1430,6 +1442,7 @@
     sleepContinueBtn.textContent = '▶ Continuar: ' + name;
     sleepContinueBtn.onclick = function () {
       sleepContinueBtn.hidden = true;
+      selectCategory(stations[idx].category);
       playStation(idx);
     };
   }

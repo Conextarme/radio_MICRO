@@ -594,9 +594,13 @@ main {
   gap: 0.6rem;
 }
 
+/* El relleno compensado con margen negativo deja sitio a lo que sobresale de
+   las tarjetas (etiqueta de ranking, brillo), que overflow: hidden recortaría. */
 .stations-grid-wrap {
   position: relative;
   overflow: hidden;
+  padding: 10px 10px 0;
+  margin: -10px -10px 0;
   max-height: 620px;
   transition: max-height 0.35s ease;
 }

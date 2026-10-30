@@ -87,6 +87,48 @@ En `emisoras-modos.json`, borrar las 4 emisoras añadidas en `modos.calm.emisora
 
 ---
 
+## 2026-10-30 11:46 — Sin filtro "Todas" y etiquetas de ranking sin cortar
+
+### Objetivo
+El usuario avisó con una captura de que en el modo dormir se cortaba la primera línea de tarjetas. También pidió quitar el filtro "Todas" en Dormir y en Music Time porque salían demasiadas emisoras en pantalla.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v14` a `v16`).
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- La cuadrícula deja 10 px de margen interior, compensados para que las tarjetas no se muevan. Las etiquetas de ranking y el brillo ya no se recortan.
+- Se quita el filtro "Todas". Dormir abre en Lluvia y Music Time en Blues.
+- Las tarjetas del podio se ven siempre, sea cual sea la temática elegida.
+- El botón "Continuar" salta a la temática de la emisora que retoma.
+- `categoria` pasa a ser obligatoria en Music Time, y el README lo indica.
+
+### Motivo
+- La etiqueta de ranking sobresale 8 px y el contenedor recorta lo que sale de sus bordes.
+- El filtro también ocultaba las tarjetas del podio. Con "Todas" activo no se notaba, pero sin él las favoritas de otra temática habrían desaparecido.
+- Sin "Todas", una emisora sin `categoria` no aparecería en ningún filtro.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores.
+- Medición en la app real en Dormir a 1484 y 390 px: 62 etiquetas de ranking, ninguna fuera del área visible; sin desplazamiento horizontal. La captura de esa prueba salió en blanco por un fallo del navegador de prueba, así que el resultado viene de la medición.
+- Recorrido a 1484 px, sin errores de JavaScript: ningún modo muestra "Todas"; 11 filtros en Dormir y 11 en Music Time; Music Time abre en Blues con 10 emisoras y Dormir en Lluvia con 5.
+- Podio: una emisora de Blues sigue visible al filtrar por Metal, y una emisora desplazada del podio vuelve a su temática.
+- "Continuar" retomó una emisora de Piano desde Lluvia y activó el filtro Piano.
+- El modo normal sigue mostrando sus 45 emisoras tras salir de Dormir y Music Time.
+- No probado: arrastre real de tarjetas, un móvil físico y la app instalada con `v16`.
+
+### Riesgos o pendientes
+- Ya no se pueden ver todas las emisoras de un modo a la vez.
+- Los cambios no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- styles.css app.js sw.js README.md`. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
 ## 2026-10-30 11:38 — Temática Rock en español en Music Time
 
 ### Objetivo
