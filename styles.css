@@ -546,6 +546,14 @@ body.tab-hidden .moon {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Con ratón es incómodo deslizar la fila: en pantalla grande pasan a otra línea */
+@media (min-width: 769px) {
+  .sleep-chips {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+
 .sleep-chip {
   flex: 0 0 auto;
   min-height: 44px;

@@ -87,6 +87,128 @@ En `emisoras-modos.json`, borrar las 4 emisoras añadidas en `modos.calm.emisora
 
 ---
 
+## 2026-10-30 11:38 — Temática Rock en español en Music Time
+
+### Objetivo
+El usuario aceptó crear una temática de rock en español, como alternativa a una emisora propia de Héroes del Silencio.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado (8 emisoras nuevas).
+- `app.js`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v13` a `v14`).
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time tiene la temática "🎤 Rock en español", colocada después de Años 80, y pasa a 98 emisoras.
+- Añadidas: Mariskal Rock, Rock en Español, Rock En Español Chile, Isla Rock, Pobre Johnny, La Ñ, Solo Rock Nacional y La 100 Rock Nacional.
+- Por encima de 768 px, los filtros de Music Time y Dormir pasan a una segunda línea en vez de quedar ocultos a la derecha. En móvil siguen deslizándose.
+
+### Motivo
+- Rock En Español Chile y La Ñ aparecían en el directorio con direcciones temporales que caducan. Se ha guardado su dirección estable de zeno.fm.
+- Rock en Español y La 100 Rock Nacional usan la dirección de redirección de StreamTheWorld, que sobrevive a cambios de servidor.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores.
+- Las 8 emisoras entregaron audio con certificado válido. Durante la prueba sonaban Caifanes en Rock en Español y Los Prisioneros en La Ñ; varias no publican el título.
+- App real en una copia temporal con Chrome sin ventana a 1184 px, sin errores de JavaScript: 98 emisoras y 12 filtros, cada uno con su número esperado y la etiqueta correcta. Esta prueba incluye las 3 emisoras de Folk metal que quedaron sin recorrer en la entrada anterior.
+- Captura de la fila de filtros a 1200 px revisada.
+- No se ha ejecutado `scripts/check-streams.mjs` tras este cambio. No probado: sonido real, un móvil físico y la app instalada con `v14`.
+
+### Riesgos o pendientes
+- No hay garantía de que suene Héroes del Silencio. Mariskal Rock, la única emisora española, mezcla rock de varios estilos; tres son de rock argentino.
+- Los cambios no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, quitar las 8 emisoras con `"categoria": "rockespanol"` de `emisoras-modos.json`, la temática `rockespanol` de `app.js`, su mención en `README.md`, y devolver `CACHE_VERSION` a `v13`. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
+## 2026-10-30 11:32 — Temáticas Crooners, Folk metal y New age, y más emisoras en Music Time y Buggy Time
+
+### Objetivo
+El usuario pidió emisoras de Elvis, Sinatra, Rat Pack y similares, música de videojuegos estilo BioShock para Buggy Time, música celta y escocesa, Loreena McKennitt, Mike Oldfield, Bear McCreary, Enya, folk metal y viking metal, Faith No More y Héroes del Silencio. También pidió crear las temáticas Folk metal y New age en Music Time.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v12` a `v13`).
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time pasa de 55 a 90 emisoras y añade tres temáticas: Crooners (11), Folk metal (8) y New age (16).
+- Crooners incluye las emisoras de Elvis, Sinatra y Dean Martin, y otras de estilo crooner.
+- New age incluye también las emisoras celtas, irlandesas y escocesas, porque el usuario pidió meterlas en esta temática o en Folk metal.
+- Folk metal incluye rock medieval, folk rock, Radio Skald y dos emisoras generales de metal nórdico y melódico.
+- Buggy Time pasa de 13 a 18 emisoras: dos de los años 40, dos de Fallout y Flash FM de GTA Vice City.
+
+### Motivo
+- Con 90 emisoras, cada estilo nuevo necesita su filtro.
+- No existe una emisora propia de Enya, Loreena McKennitt, Bear McCreary, Faith No More ni Héroes del Silencio, o no se encontró ninguna en servicio. Por eso no se han añadido emisoras a su nombre.
+- No hay emisoras alternativas añadidas para Faith No More ni Héroes del Silencio: las encontradas no garantizan que suenen esos grupos, y el rock en español no tiene temática propia.
+- No se ha encontrado ninguna emisora solo de viking metal. Radio Skald es la más cercana por su etiqueta.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores.
+- Todas las emisoras nuevas se probaron con descarga de audio por HTTPS. El título en emisión se leyó en las que lo publican.
+- App real en una copia temporal con Chrome sin ventana a 1184 px, con 87 emisoras en Music Time y sin errores de JavaScript: los 11 filtros muestran su número esperado de emisoras con la etiqueta correcta; Buggy Time muestra 18 tarjetas y ningún filtro.
+- Las tres últimas emisoras de Folk metal se añadieron después y se probaron con `curl`, pero no se repitió el recorrido por la app.
+- `scripts/check-streams.mjs` sobre una copia, antes de esas tres emisoras: 217 comprobadas y 11 fallos. MegaStar FM da 404, Otsuchi y CyberForest agotan el tiempo, y las 8 emisoras de RADIO BOB! dan "fetch failed".
+- `curl` recibió audio de RADIO BOB! en esta sesión; el motivo del fallo solo en el script sigue sin aclararse.
+- No probado: sonido real de las emisoras nuevas, un móvil físico, las emisoras OGG de Fallout en iPhone, la captura de la fila de 11 filtros y la app instalada con `v13`.
+
+### Riesgos o pendientes
+- Las dos emisoras de Fallout usan formato OGG, que puede no sonar en iPhone.
+- Las 8 emisoras de RADIO BOB! pueden provocar avisos en la revisión del lunes si GitHub obtiene el mismo fallo.
+- El nombre de la temática New age no refleja que también contiene música celta.
+- Los cambios de esta entrada y de la anterior no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- app.js emisoras-modos.json sw.js README.md`. Eso también deshace las temáticas de la entrada anterior, porque están en los mismos archivos sin confirmar. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
+## 2026-10-30 11:24 — Temáticas en Music Time
+
+### Objetivo
+El usuario pidió crear temáticas en el modo Music Time.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado (campo `categoria` en las 55 emisoras de Music Time).
+- `app.js`: modificado.
+- `sw.js`: modificado (`CACHE_VERSION` pasa de `v11` a `v12`).
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time tiene ahora filtros: Todas, Blues (10), Rock años 70 (8), Rock'n'roll clásico (6), Años 80 (6), Soundtracks (8), Metal (9) y Metal melódico (8).
+- Cada tarjeta de Music Time muestra su temática encima del nombre.
+- Los filtros reutilizan los del modo dormir, que siguen igual.
+
+### Motivo
+- Con 55 emisoras hacía falta poder ir directamente a un género.
+- Reutilizar los filtros existentes evita mantener dos versiones. Las temáticas de cada modo se definen en `MODE_CATEGORIES`, y así Big Calm o Buggy Time podrían tener las suyas añadiendo una entrada.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores.
+- App real en una copia temporal con Chrome sin ventana a 1184 px, sin errores de JavaScript: cada filtro muestra el número esperado de emisoras, todas con su etiqueta correcta, y "Ver más" se oculta cuando la lista filtrada cabe.
+- Una emisora filtrada se reproduce desde su tarjeta; el filtro vuelve a "Todas" al salir y entrar en el modo.
+- Normal, Big Calm y Buggy Time no muestran filtros; Dormir conserva sus 12.
+- Capturas de Music Time a 1200 y 390 px revisadas.
+- El usuario indicó durante el trabajo que lo existente le funciona. No se ha probado el sonido real desde esta sesión ni un móvil físico.
+
+### Riesgos o pendientes
+- Algunas emisoras son mixtas y la temática es una decisión aproximada: Classic Vinyl HD va en Rock'n'roll clásico aunque emite sobre todo música de los años 40 y 50.
+- Las tarjetas de Music Time son unos 20 px más altas por la etiqueta de temática.
+- Los cambios de esta entrada no están confirmados ni subidos a GitHub.
+
+### Cómo revertir
+Si no se ha confirmado, ejecutar `git checkout -- app.js emisoras-modos.json sw.js README.md`. Si ya se confirmó, usar `git revert` sobre ese commit.
+
+---
+
 ## 2026-10-30 11:18 — 52 emisoras en Music Time, selector desplegable y arranque en modo normal
 
 ### Objetivo

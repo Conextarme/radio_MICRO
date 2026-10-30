@@ -61,7 +61,8 @@
           "bitrate": 192,
           "stream": "https://streams.radiobob.de/blues/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/",
-          "descripcion": "Blues"
+          "descripcion": "Blues",
+          "categoria": "blues"
         },
         {
           "nombre": "JZR Blues",
@@ -69,14 +70,16 @@
           "codec": "MP3",
           "stream": "https://jazzblues.ice.infomaniak.ch/jazzblues-high.mp3",
           "web": "https://jazzradio.ch/",
-          "descripcion": "Blues y jazz"
+          "descripcion": "Blues y jazz",
+          "categoria": "blues"
         },
         {
           "nombre": "Carbon Radio (Psych Blues)",
           "codec": "MP3",
           "stream": "https://radio.carbonradio.live/listen/carbonradio/radio.mp3",
           "web": "https://carbonradio.live/",
-          "descripcion": "Blues psicodélico, southern rock y blues rock"
+          "descripcion": "Blues psicodélico, southern rock y blues rock",
+          "categoria": "blues"
         },
         {
           "nombre": "181.FM True Blues",
@@ -85,7 +88,8 @@
           "bitrate": 128,
           "stream": "https://listen.181fm.com/181-blues_128k.mp3",
           "web": "http://www.181.fm/",
-          "descripcion": "Blues"
+          "descripcion": "Blues",
+          "categoria": "blues"
         },
         {
           "nombre": "OUI FM Blues'n'Rock",
@@ -94,7 +98,8 @@
           "bitrate": 128,
           "stream": "https://ouifmbluesnrock.ice.infomaniak.ch/ouifmbluesnrock-128.mp3",
           "web": "https://www.ouifm.fr/",
-          "descripcion": "Blues y rock"
+          "descripcion": "Blues y rock",
+          "categoria": "blues"
         },
         {
           "nombre": "Radio Art Acoustic Blues",
@@ -103,7 +108,8 @@
           "bitrate": 96,
           "stream": "https://live.radioart.com/fAcoustic_blues.mp3",
           "web": "https://radioart.com/",
-          "descripcion": "Blues acústico"
+          "descripcion": "Blues acústico",
+          "categoria": "blues"
         },
         {
           "nombre": "A Mississippi Blues",
@@ -112,7 +118,8 @@
           "bitrate": 320,
           "stream": "https://cast1.torontocast.com:4450/;?type=http&nocache=1745625391",
           "web": "https://radiosuitenetwork.torontocast.stream/amississippiblues/",
-          "descripcion": "Blues"
+          "descripcion": "Blues",
+          "categoria": "blues"
         },
         {
           "nombre": "#joint radio Blues Rock",
@@ -121,7 +128,8 @@
           "bitrate": 320,
           "stream": "https://jointil.com/stream-blues",
           "web": "https://www.jointil.com/",
-          "descripcion": "Blues rock"
+          "descripcion": "Blues rock",
+          "categoria": "blues"
         },
         {
           "nombre": "Gritty Rock Radio",
@@ -130,7 +138,8 @@
           "bitrate": 192,
           "stream": "https://listen.radioking.com/radio/10713/stream/224413",
           "web": "https://www.grittyrockradio.com/",
-          "descripcion": "Blues rock y southern rock"
+          "descripcion": "Blues rock y southern rock",
+          "categoria": "blues"
         },
         {
           "nombre": "Monte Carlo Wonderful Blues",
@@ -139,7 +148,8 @@
           "bitrate": 96,
           "stream": "https://mc-blues.hostingradio.ru/blues96.aacp",
           "web": "https://montecarlo.ru/online/%20wonderful_blues",
-          "descripcion": "Blues"
+          "descripcion": "Blues",
+          "categoria": "blues"
         },
         {
           "nombre": "SomaFM Left Coast 70s",
@@ -148,7 +158,8 @@
           "bitrate": 128,
           "stream": "https://ice2.somafm.com/seventies-128-mp3",
           "web": "https://somafm.com/seventies/",
-          "descripcion": "Rock suave de los 70"
+          "descripcion": "Rock suave de los 70",
+          "categoria": "rock70"
         },
         {
           "nombre": "0N 70s",
@@ -157,7 +168,8 @@
           "bitrate": 128,
           "stream": "https://0n-70s.radionetz.de/0n-70s.mp3",
           "web": "http://www.0nradio.com/",
-          "descripcion": "Años 70"
+          "descripcion": "Años 70",
+          "categoria": "rock70"
         },
         {
           "nombre": "0N Classic Rock",
@@ -166,7 +178,8 @@
           "bitrate": 128,
           "stream": "https://0n-classicrock.radionetz.de/0n-classicrock.mp3",
           "web": "http://www.0nradio.com/",
-          "descripcion": "Rock clásico"
+          "descripcion": "Rock clásico",
+          "categoria": "rock70"
         },
         {
           "nombre": "181.FM The Eagle",
@@ -175,7 +188,8 @@
           "bitrate": 128,
           "stream": "https://listen.181fm.com/181-eagle_128k.mp3",
           "web": "http://www.181.fm/",
-          "descripcion": "Rock clásico"
+          "descripcion": "Rock clásico",
+          "categoria": "rock70"
         },
         {
           "nombre": "Megarock Radio",
@@ -184,7 +198,8 @@
           "bitrate": 320,
           "stream": "https://stream3.megarockradio.net:80/",
           "web": "https://megarockradio.net/",
-          "descripcion": "Rock clásico y hard rock"
+          "descripcion": "Rock clásico y hard rock",
+          "categoria": "rock70"
         },
         {
           "nombre": "Exclusively Pink Floyd",
@@ -193,7 +208,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er/pinkfloyd/icecast.audio",
           "web": "https://exclusive.radio/",
-          "descripcion": "Solo Pink Floyd"
+          "descripcion": "Solo Pink Floyd",
+          "categoria": "rock70"
         },
         {
           "nombre": "Exclusively Deep Purple",
@@ -202,7 +218,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er/deeppurple/icecast.audio",
           "web": "https://play.exclusive.radio/",
-          "descripcion": "Solo Deep Purple"
+          "descripcion": "Solo Deep Purple",
+          "categoria": "rock70"
         },
         {
           "nombre": "Exclusively Led Zeppelin",
@@ -211,7 +228,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er-app/ledzeppelin/icecast.audio",
           "web": "https://play.exclusive.radio/",
-          "descripcion": "Solo Led Zeppelin"
+          "descripcion": "Solo Led Zeppelin",
+          "categoria": "rock70"
         },
         {
           "nombre": "Radio Bob Rockabilly",
@@ -219,7 +237,8 @@
           "codec": "MP3",
           "stream": "https://streams.radiobob.de/bob-rockabilly/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/rockabilly-stream",
-          "descripcion": "Rockabilly"
+          "descripcion": "Rockabilly",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "181.FM Rock 40",
@@ -228,7 +247,8 @@
           "bitrate": 128,
           "stream": "https://listen.181fm.com/181-rock40_128k.mp3",
           "web": "http://www.181.fm/",
-          "descripcion": "Rock'n'roll"
+          "descripcion": "Rock'n'roll",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "50s 60s Retro Hits",
@@ -237,7 +257,8 @@
           "bitrate": 128,
           "stream": "https://stream.zeno.fm/pxzwykxbluitv",
           "web": "https://zeno.fm/radio/50s-60s-retro-hits/",
-          "descripcion": "Éxitos de los 50 y 60"
+          "descripcion": "Éxitos de los 50 y 60",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "0N 60s",
@@ -246,7 +267,8 @@
           "bitrate": 128,
           "stream": "https://0n-60s.radionetz.de/0n-60s.mp3",
           "web": "http://www.0nradio.com/",
-          "descripcion": "Años 60"
+          "descripcion": "Años 60",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "Classic Vinyl HD",
@@ -255,7 +277,8 @@
           "bitrate": 320,
           "stream": "https://icecast.walmradio.com:8443/classic",
           "web": "https://walmradio.com/classic",
-          "descripcion": "Vinilos de los años 40 y 50"
+          "descripcion": "Vinilos de los años 40 y 50",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "Exclusively Creedence Clearwater Revival",
@@ -264,7 +287,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er/creedence/icecast.audio",
           "web": "https://play.exclusive.radio/",
-          "descripcion": "Solo Creedence Clearwater Revival"
+          "descripcion": "Solo Creedence Clearwater Revival",
+          "categoria": "rocknroll"
         },
         {
           "nombre": "SomaFM Underground 80s",
@@ -273,7 +297,8 @@
           "bitrate": 128,
           "stream": "https://ice2.somafm.com/u80s-128-mp3",
           "web": "https://somafm.com/u80s/",
-          "descripcion": "New wave y synthpop de los 80"
+          "descripcion": "New wave y synthpop de los 80",
+          "categoria": "ochentas"
         },
         {
           "nombre": "RADIO BOB! 80er Rock",
@@ -282,7 +307,8 @@
           "bitrate": 192,
           "stream": "https://streams.radiobob.de/bob-80srock/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/",
-          "descripcion": "Rock de los 80"
+          "descripcion": "Rock de los 80",
+          "categoria": "ochentas"
         },
         {
           "nombre": "80's New Wave Radio",
@@ -291,7 +317,8 @@
           "bitrate": 192,
           "stream": "https://puma.streemlion.com:2910/stream",
           "web": "https://newwaveradio.org/",
-          "descripcion": "New wave de los 80"
+          "descripcion": "New wave de los 80",
+          "categoria": "ochentas"
         },
         {
           "nombre": "80s Forever",
@@ -300,7 +327,8 @@
           "bitrate": 256,
           "stream": "https://premium.shoutcastsolutions.com/radio/8050/256.mp3",
           "web": "https://www.80sforever.radio/",
-          "descripcion": "Años 80"
+          "descripcion": "Años 80",
+          "categoria": "ochentas"
         },
         {
           "nombre": "100 Greatest of the 80's",
@@ -309,7 +337,8 @@
           "bitrate": 192,
           "stream": "https://maggie.torontocast.com:2020/stream/100greatestofthe80s",
           "web": "https://100-greatest-network.torontocast.stream/",
-          "descripcion": "Éxitos de los 80"
+          "descripcion": "Éxitos de los 80",
+          "categoria": "ochentas"
         },
         {
           "nombre": "Rock Antenne Hair Metal",
@@ -318,7 +347,8 @@
           "bitrate": 128,
           "stream": "https://stream.rockantenne.de/hair-metal/stream/mp3",
           "web": "https://www.rockantenne.de/",
-          "descripcion": "Hair metal"
+          "descripcion": "Hair metal",
+          "categoria": "ochentas"
         },
         {
           "nombre": "Cinemix",
@@ -327,7 +357,8 @@
           "bitrate": 128,
           "stream": "https://kathy.torontocast.com:1825/stream",
           "web": "https://www.cinemix.us/",
-          "descripcion": "Bandas sonoras de cine"
+          "descripcion": "Bandas sonoras de cine",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "CINEMUSIC Radio",
@@ -336,7 +367,8 @@
           "bitrate": 192,
           "stream": "https://listen.radioking.com/radio/422/stream/62785",
           "web": "https://cinemusic.fr/",
-          "descripcion": "Bandas sonoras de cine, series y videojuegos"
+          "descripcion": "Bandas sonoras de cine, series y videojuegos",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "Filmradio",
@@ -345,7 +377,8 @@
           "bitrate": 128,
           "stream": "https://filmradio.stream.laut.fm/filmradio?t302=2018-03-10_04-44-05&uuid=59ca68e0-84a4-492d-9b0b-36c45690cd59",
           "web": "https://laut.fm/filmradio",
-          "descripcion": "Bandas sonoras de cine"
+          "descripcion": "Bandas sonoras de cine",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "Classic FM Movies",
@@ -354,7 +387,8 @@
           "bitrate": 128,
           "stream": "https://media-ice.musicradio.com/ClassicFMMoviesMP3",
           "web": "https://www.classicfm.com/movies/",
-          "descripcion": "Bandas sonoras de cine"
+          "descripcion": "Bandas sonoras de cine",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "0N Movies",
@@ -363,7 +397,8 @@
           "bitrate": 128,
           "stream": "https://0n-movies.radionetz.de/0n-movies.mp3",
           "web": "http://www.0nradio.com/",
-          "descripcion": "Bandas sonoras de cine"
+          "descripcion": "Bandas sonoras de cine",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "Movie Soundtracks Hits 1.fm",
@@ -372,7 +407,8 @@
           "bitrate": 256,
           "stream": "https://strm112.1.fm/moviesoundtracks_mobile_mp3",
           "web": "https://www.1.fm/station/moviesoundtracks",
-          "descripcion": "Canciones de películas"
+          "descripcion": "Canciones de películas",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "United Music Cinema",
@@ -381,7 +417,8 @@
           "bitrate": 128,
           "stream": "https://icy.unitedradio.it/um058.mp3",
           "web": "https://www.unitedmusic.com/",
-          "descripcion": "Bandas sonoras de cine"
+          "descripcion": "Bandas sonoras de cine",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "The Base",
@@ -390,7 +427,8 @@
           "bitrate": 192,
           "stream": "https://listen.thebase.sc/",
           "web": "https://thebase.sc/",
-          "descripcion": "Bandas sonoras"
+          "descripcion": "Bandas sonoras",
+          "categoria": "soundtracks"
         },
         {
           "nombre": "SomaFM Metal Detector",
@@ -399,7 +437,8 @@
           "bitrate": 128,
           "stream": "https://ice2.somafm.com/metal-128-mp3",
           "web": "https://somafm.com/metal/",
-          "descripcion": "Metal"
+          "descripcion": "Metal",
+          "categoria": "metal"
         },
         {
           "nombre": "RADIO BOB! Metal",
@@ -408,7 +447,8 @@
           "bitrate": 192,
           "stream": "https://streams.radiobob.de/bob-metal/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/",
-          "descripcion": "Metal"
+          "descripcion": "Metal",
+          "categoria": "metal"
         },
         {
           "nombre": "Rock Antenne Heavy Metal",
@@ -416,7 +456,8 @@
           "codec": "AAC",
           "stream": "https://stream.rockantenne.de/heavy-metal/stream/aacp",
           "web": "https://www.rockantenne.de/",
-          "descripcion": "Heavy metal"
+          "descripcion": "Heavy metal",
+          "categoria": "metal"
         },
         {
           "nombre": "Radio Heavy Metal",
@@ -425,7 +466,8 @@
           "bitrate": 320,
           "stream": "https://manager7.streamradio.fr:1435/stream",
           "web": "https://radioheavymetal76.wixsite.com/monsite",
-          "descripcion": "Heavy metal"
+          "descripcion": "Heavy metal",
+          "categoria": "metal"
         },
         {
           "nombre": "Metal Invasion Radio",
@@ -434,7 +476,8 @@
           "bitrate": 96,
           "stream": "https://radio.metal-invasion.fr/radio/8000/stream96",
           "web": "https://metal-invasion.fr/",
-          "descripcion": "Metal"
+          "descripcion": "Metal",
+          "categoria": "metal"
         },
         {
           "nombre": "METAL ZONE",
@@ -443,7 +486,8 @@
           "bitrate": 128,
           "stream": "https://neos.win:48282/stream",
           "web": "https://www.metalzone.gr/",
-          "descripcion": "Metal"
+          "descripcion": "Metal",
+          "categoria": "metal"
         },
         {
           "nombre": "100 Greatest Heavy Metal",
@@ -452,7 +496,8 @@
           "bitrate": 192,
           "stream": "https://cast1.torontocast.com:4660/stream",
           "web": "https://100-greatest-network.torontocast.stream/",
-          "descripcion": "Heavy metal"
+          "descripcion": "Heavy metal",
+          "categoria": "metal"
         },
         {
           "nombre": "Exclusively Iron Maiden",
@@ -461,7 +506,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er/ironmaiden/icecast.audio",
           "web": "https://exclusive.radio/",
-          "descripcion": "Solo Iron Maiden"
+          "descripcion": "Solo Iron Maiden",
+          "categoria": "metal"
         },
         {
           "nombre": "Exclusive Radio Black Sabbath",
@@ -470,7 +516,8 @@
           "bitrate": 128,
           "stream": "https://streaming.exclusive.radio/er/blacksabbath/icecast.audio",
           "web": "https://play.exclusive.radio/station/51/318",
-          "descripcion": "Solo Black Sabbath"
+          "descripcion": "Solo Black Sabbath",
+          "categoria": "metal"
         },
         {
           "nombre": "Epic Rock Radio",
@@ -479,7 +526,8 @@
           "bitrate": 128,
           "stream": "https://securestreams6.autopo.st:2222/stream",
           "web": "https://www.epicrockradio.com/",
-          "descripcion": "Metal melódico, power y sinfónico"
+          "descripcion": "Metal melódico, power y sinfónico",
+          "categoria": "melodico"
         },
         {
           "nombre": "RADIO BOB! Power Metal",
@@ -488,7 +536,8 @@
           "bitrate": 192,
           "stream": "https://streams.radiobob.de/powermetal/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/",
-          "descripcion": "Power metal"
+          "descripcion": "Power metal",
+          "categoria": "melodico"
         },
         {
           "nombre": "RADIO BOB! Symphonic Metal",
@@ -496,7 +545,8 @@
           "codec": "MP3",
           "stream": "https://streams.radiobob.de/symphmetal/mp3-192/streams.radiobob.de/",
           "web": "https://www.radiobob.de/",
-          "descripcion": "Metal sinfónico"
+          "descripcion": "Metal sinfónico",
+          "categoria": "melodico"
         },
         {
           "nombre": "Prog Palace The Armory",
@@ -505,7 +555,8 @@
           "bitrate": 320,
           "stream": "https://cheetah.streemlion.com/progpalace64",
           "web": "https://www.progpalaceradio.com/the-armory/",
-          "descripcion": "Power metal y metal progresivo"
+          "descripcion": "Power metal y metal progresivo",
+          "categoria": "melodico"
         },
         {
           "nombre": "Hedgehog Radio",
@@ -513,7 +564,8 @@
           "codec": "MP3",
           "stream": "https://stream.hedgehogradio.com/radio.mp3",
           "web": "https://hedgehogradio.com/",
-          "descripcion": "Metal gótico y sinfónico"
+          "descripcion": "Metal gótico y sinfónico",
+          "categoria": "melodico"
         },
         {
           "nombre": "Pinguin Aardschok",
@@ -522,7 +574,8 @@
           "bitrate": 192,
           "stream": "https://streams.pinguinradio.com/Aardschok192.mp3",
           "web": "https://pinguinradio.com/",
-          "descripcion": "Hard rock y metal"
+          "descripcion": "Hard rock y metal",
+          "categoria": "melodico"
         },
         {
           "nombre": "Rock Melodic Radio",
@@ -531,7 +584,8 @@
           "bitrate": 320,
           "stream": "https://i4.streams.ovh:2200/ssl/rockmelo?mp=/stream",
           "web": "https://rockmelodic-radio.com/",
-          "descripcion": "Rock melódico y AOR"
+          "descripcion": "Rock melódico y AOR",
+          "categoria": "melodico"
         },
         {
           "nombre": "Melodic Radio",
@@ -540,7 +594,412 @@
           "bitrate": 192,
           "stream": "https://www.tunefm.de:2000/stream/melodicradio",
           "web": "https://melodicradio.eu/",
-          "descripcion": "Rock melódico"
+          "descripcion": "Rock melódico",
+          "categoria": "melodico"
+        },
+        {
+          "nombre": "Exclusively Elvis Presley",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/elvispresley/icecast.audio",
+          "descripcion": "Solo Elvis Presley",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Always ELVIS Radio",
+          "pais": "DK",
+          "codec": "MP3",
+          "bitrate": 256,
+          "stream": "https://radioserver.dk/alwayselvisradio",
+          "web": "https://www.memphismansion.com/",
+          "descripcion": "Solo Elvis Presley",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "PCRadio Elvis Presley",
+          "pais": "US",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/Elvis_Presley-hi",
+          "web": "https://pcradio.ru/",
+          "descripcion": "Solo Elvis Presley",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Elvis And Company",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://sp0.wlservices.org/9978/stream",
+          "web": "http://www.networkjamz.com/",
+          "descripcion": "Elvis Presley y artistas afines",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Exclusively Frank Sinatra",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://2.mystreaming.net/er/franksinatra/icecast.audio",
+          "web": "https://play.you.radio/station/384",
+          "descripcion": "Solo Frank Sinatra",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Exclusively Dean Martin",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/deanmartin/icecast.audio?_=1407020069",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Dean Martin",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Crooner Radio",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://direct.croonerradio.fr/croonerradio-midfi.mp3",
+          "web": "https://www.croonerradio.fr/",
+          "descripcion": "Crooners",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Easy Crooners",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/uber/easycrooners/icecast.audio",
+          "web": "https://play.easy.radio/",
+          "descripcion": "Crooners",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Radio Art Sinatra Style",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "stream": "https://live.radioart.com/fSinatra_style.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Estilo Sinatra",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Ella Radio Sinatra Style",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://stream.ella-radio.de/ella-sinatra-style/mp3-192/?ref=radio-browser",
+          "web": "https://www.ella-radio.de/",
+          "descripcion": "Estilo Sinatra",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "The Great American Songbook",
+          "pais": "US",
+          "codec": "AAC",
+          "bitrate": 64,
+          "stream": "https://remote.selfip.net:8030/1",
+          "web": "https://greatamericansongbook.info/index.html",
+          "descripcion": "Clásicos del cancionero americano",
+          "categoria": "crooners"
+        },
+        {
+          "nombre": "Celtcast",
+          "pais": "NL",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://caster04.streampakket.com/proxy/8982/CeltCast",
+          "web": "http://celtcast.com/",
+          "descripcion": "Celta, folk y vikingo",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "RADIO BOB! Mittelalter Rock",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://streams.radiobob.de/mittelalter/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Rock medieval",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "RADIO BOB! Folk Rock",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.radiobob.de/folkrock/mp3-192/streams.radiobob.de/",
+          "web": "https://www.radiobob.de/",
+          "descripcion": "Folk rock",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "laut.fm Mittelalter",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://stream.laut.fm/mittelalter",
+          "web": "https://laut.fm/mittelalter",
+          "descripcion": "Música medieval y folk rock",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "Odins Metal Rock Club",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://odinsmetalrockclub.stream.laut.fm/odinsmetalrockclub",
+          "web": "https://stream.laut.fm/odinsmetalrockclub",
+          "descripcion": "Metal y rock",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "Exclusively Mike Oldfield",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/mikeoldfield/icecast.audio",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Mike Oldfield",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "PCRadio Enigma",
+          "pais": "DE",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/Enigma-hi",
+          "web": "https://pcradio.ru/",
+          "descripcion": "Solo Enigma",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "PCRadio Era",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/Era-hi",
+          "descripcion": "Solo Era",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "PCRadio New Age",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/New_Age-hi",
+          "descripcion": "New age",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "laut.fm New Age",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://stream.laut.fm/new-age",
+          "web": "https://laut.fm/new-age",
+          "descripcion": "New age",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Enigmatic Station",
+          "pais": "RU",
+          "codec": "MP3",
+          "bitrate": 256,
+          "stream": "https://listen2.myradio24.com/8226",
+          "web": "https://enigmatic.su/enigmatic-station-1/",
+          "descripcion": "New age y chill",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "KLCBS New Age",
+          "pais": "ID",
+          "codec": "AAC",
+          "bitrate": 192,
+          "stream": "https://streaming.klcbsofficial.com/listen/newage/klcbs-newage",
+          "web": "https://klcbsofficial.com/",
+          "descripcion": "New age",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Gaia FM",
+          "pais": "NZ",
+          "codec": "AAC",
+          "bitrate": 128,
+          "stream": "https://s2.stationplaylist.com:9000/gaiafm.aac",
+          "web": "https://gaiafm.stationplaylist.com/",
+          "descripcion": "New age, celta e instrumental",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "SomaFM ThistleRadio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://ice2.somafm.com/thistle-128-mp3",
+          "web": "https://somafm.com/thistle/",
+          "descripcion": "Música celta",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Folk Alley Irish",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://freshgrass.streamguys1.com/irish-128mp3",
+          "web": "https://www.folkalley.com/music/playlist/today/irish",
+          "descripcion": "Folk irlandés",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Radio Siamsa",
+          "pais": "IE",
+          "codec": "MP3",
+          "bitrate": 256,
+          "stream": "https://cast02.siamsa.ie/radio/8000/radio.mp3",
+          "web": "https://siamsa.ie/",
+          "descripcion": "Música tradicional irlandesa",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Folk57",
+          "pais": "FR",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://manager11.streamradio.fr:2795/stream?x=1789983354990",
+          "web": "https://folk57.com/",
+          "descripcion": "Folk irlandés",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "laut.fm Celtic",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://stream.laut.fm/celtic",
+          "web": "https://laut.fm/celtic",
+          "descripcion": "Música celta",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "laut.fm Irish Folk",
+          "pais": "DE",
+          "codec": "MP3",
+          "stream": "https://stream.laut.fm/irish-folk",
+          "web": "https://laut.fm/irish-folk",
+          "descripcion": "Folk irlandés",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Scotlander Radio",
+          "pais": "ES",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://play.lallans.media/listen/scotlander_radio/radio.mp3",
+          "web": "https://scotlander.es/",
+          "descripcion": "Música escocesa",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Celtic Music Radio",
+          "pais": "GB",
+          "codec": "MP3",
+          "stream": "https://uksoutha.streaming.broadcast.radio/celtic",
+          "web": "https://www.celticmusicradio.net/",
+          "descripcion": "Música celta y escocesa",
+          "categoria": "newage"
+        },
+        {
+          "nombre": "Radio Skald",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/skald",
+          "web": "https://laut.fm/skald",
+          "descripcion": "Música vikinga, pagana y medieval",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "Northern Metal Radio",
+          "pais": "SE",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://dc5.serverse.com/proxy/lvzgnvcj/stream",
+          "descripcion": "Metal nórdico",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "Bear Metal Radio",
+          "pais": "CH",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://cast5.asurahosting.com/proxy/bear?mp=/stream",
+          "descripcion": "Metal y death melódico",
+          "categoria": "folkmetal"
+        },
+        {
+          "nombre": "Mariskal Rock",
+          "pais": "ES",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://media.profesionalhosting.com:8047/stream",
+          "descripcion": "Rock clásico y español",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "Rock en Español",
+          "pais": "MX",
+          "codec": "AAC",
+          "bitrate": 48,
+          "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR20_S01AAC.aac",
+          "descripcion": "Rock de México, España y Argentina",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "Rock En Español Chile",
+          "pais": "CL",
+          "codec": "AAC",
+          "bitrate": 192,
+          "stream": "https://stream.zeno.fm/aaxwtg4w6x1uv",
+          "descripcion": "Rock en español",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "Isla Rock",
+          "pais": "PR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://listen.radioking.com/radio/418162/stream/471250",
+          "descripcion": "Rock en español",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "Pobre Johnny",
+          "pais": "AR",
+          "codec": "AAC",
+          "bitrate": 64,
+          "stream": "https://stream4.suenas.net/pobrejohnny",
+          "descripcion": "Rock argentino",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "La Ñ",
+          "pais": "PE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.zeno.fm/tk4wmqvnnnruv",
+          "descripcion": "Rock latinoamericano",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "Solo Rock Nacional",
+          "pais": "AR",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.zeno.fm/g9purm3158quv",
+          "descripcion": "Rock argentino",
+          "categoria": "rockespanol"
+        },
+        {
+          "nombre": "La 100 Rock Nacional",
+          "pais": "AR",
+          "codec": "AAC",
+          "bitrate": 64,
+          "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/FROCKNAC_56AAC.aac",
+          "descripcion": "Rock argentino",
+          "categoria": "rockespanol"
         }
       ]
     },
@@ -659,6 +1118,47 @@
           "stream": "https://kobold.messy.quest/listen/kobold.fm/radio.mp3",
           "web": "https://kobold.messy.quest/",
           "descripcion": "Dungeon synth, música de mazmorras"
+        },
+        {
+          "nombre": "1940s Radio HS",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://cast2.asurahosting.com/proxy/1940sradio/stream",
+          "web": "https://pumpkinfm.com/",
+          "descripcion": "Música y emisiones de los años 40, ambiente BioShock"
+        },
+        {
+          "nombre": "1940s Light Programme",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://cast2.asurahosting.com/proxy/malvernradiojrs/stream",
+          "web": "https://pumpkinfm.com/",
+          "descripcion": "Música de los años 40, ambiente BioShock"
+        },
+        {
+          "nombre": "Fallout 4 Diamond City Radio",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm6.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio del videojuego Fallout 4"
+        },
+        {
+          "nombre": "Fallout 3 Galaxy News Radio",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm2.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio del videojuego Fallout 3"
+        },
+        {
+          "nombre": "Flash FM (Vice City)",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/vc/flash",
+          "web": "https://www.grandtheftwiki.com/Flash_FM",
+          "descripcion": "Radio del videojuego GTA Vice City"
         }
       ]
     }

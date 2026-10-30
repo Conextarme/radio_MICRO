@@ -35,6 +35,27 @@
     lofi: { icon: '🎧', label: 'Lo-fi' }
   };
 
+  var MUSIC_CATEGORY_ORDER = ['blues', 'crooners', 'rock70', 'rocknroll', 'ochentas', 'rockespanol', 'soundtracks', 'metal', 'melodico', 'folkmetal', 'newage'];
+  var MUSIC_CATEGORY_META = {
+    blues: { icon: '🎷', label: 'Blues' },
+    crooners: { icon: '🎩', label: 'Crooners' },
+    rock70: { icon: '🎸', label: 'Rock años 70' },
+    rocknroll: { icon: '🕺', label: "Rock'n'roll clásico" },
+    ochentas: { icon: '📼', label: 'Años 80' },
+    rockespanol: { icon: '🎤', label: 'Rock en español' },
+    soundtracks: { icon: '🎬', label: 'Soundtracks' },
+    metal: { icon: '🤘', label: 'Metal' },
+    melodico: { icon: '⚔️', label: 'Metal melódico' },
+    folkmetal: { icon: '🍺', label: 'Folk metal' },
+    newage: { icon: '🌿', label: 'New age' }
+  };
+
+  /* Modos con filtro por temática */
+  var MODE_CATEGORIES = {
+    sleep: { order: SLEEP_CATEGORY_ORDER, meta: SLEEP_CATEGORY_META },
+    music: { order: MUSIC_CATEGORY_ORDER, meta: MUSIC_CATEGORY_META }
+  };
+
   /* --- Modos de escucha --- */
   var EXTRA_MODES_FILE = 'emisoras-modos.json';
   var MODE_STORAGE_KEYS = {
@@ -837,10 +858,12 @@
     content.type = 'button';
     content.className = 'card-content';
 
-    if (sleepMode && station.category && SLEEP_CATEGORY_META[station.category]) {
+    var modeCategories = MODE_CATEGORIES[appMode];
+    var categoryMeta = modeCategories && station.category ? modeCategories.meta[station.category] : null;
+    if (categoryMeta) {
       var catTag = document.createElement('div');
       catTag.className = 'station-category-tag';
-      catTag.textContent = SLEEP_CATEGORY_META[station.category].icon + ' ' + SLEEP_CATEGORY_META[station.category].label;
+      catTag.textContent = categoryMeta.icon + ' ' + categoryMeta.label;
       content.appendChild(catTag);
     }
 
@@ -1328,7 +1351,7 @@
     if (sleepTimerWrap) {
       sleepTimerWrap.hidden = !sleepMode;
     }
-    if (!sleepMode && sleepChipsWrap) {
+    if (sleepChipsWrap) {
       sleepChipsWrap.hidden = true;
     }
     if (!sleepMode && sleepContinueBtn) {
@@ -1342,15 +1365,16 @@
     if (!sleepChipsWrap) {
       return;
     }
+    var modeCategories = MODE_CATEGORIES[appMode];
     sleepChipsWrap.innerHTML = '';
-    sleepChipsWrap.hidden = !sleepMode;
-    if (!sleepMode) {
+    sleepChipsWrap.hidden = !modeCategories;
+    if (!modeCategories) {
       return;
     }
     activeCategoryFilter = 'all';
     sleepChipsWrap.appendChild(makeCategoryChip('all', 'Todas'));
-    SLEEP_CATEGORY_ORDER.forEach(function (id) {
-      var meta = SLEEP_CATEGORY_META[id];
+    modeCategories.order.forEach(function (id) {
+      var meta = modeCategories.meta[id];
       sleepChipsWrap.appendChild(makeCategoryChip(id, meta.icon + ' ' + meta.label));
     });
     applyCategoryFilter();
@@ -1783,6 +1807,7 @@
         notes: e.descripcion,
         bitrate: e.bitrate,
         pais: e.pais,
+        category: e.categoria,
         afinacion: e.afinacion,
         afinacionNota: e.afinacionNota
       };
@@ -1811,6 +1836,7 @@
       renderGrid();
       applyTop3ToDom(savedState.top3);
       updateGridToggleVisibility();
+      renderCategoryChips();
     }).catch(function () {
       if (appMode !== mode) {
         return;
