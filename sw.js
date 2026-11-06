@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v21';
+var CACHE_VERSION = 'v22';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [

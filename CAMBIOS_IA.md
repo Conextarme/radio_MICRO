@@ -4,6 +4,41 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 11:56 — Filtros Fallout y GTA en Buggy Time
+
+### Objetivo
+El usuario pidió separar dentro de Games las emisoras de Fallout y de GTA, dejando el resto en Games. Se eligió hacerlo con filtros al mismo nivel que los demás, en lugar de una segunda fila de filtros.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Buggy Time tiene ahora seis filtros: 🛸 Sci-fi, 📻 Oldies, ☢️ Fallout, 🚗 GTA, 🎮 Games y 🐞 Buggy.
+- Fallout (9): Diamond City Radio, Galaxy News Radio y los 7 canales de Fallout.fm.
+- GTA (8): Flash FM (Vice City), NTS The Sound of GTA y las 6 radios de GTA IV.
+- Games se queda con las 9 restantes (Rainwave, Pixel & Plot, SpriteLayer, Gametation, Fluffylandrpg, 80s80s Games y Shoot'em Up Radio).
+- `sw.js`: la versión de caché sube de v21 a v22. `README.md`: se actualiza la lista de categorías de Buggy Time.
+
+### Motivo
+Añadir dos categorías reutiliza el sistema de filtros que ya existe, sin programar una segunda fila de filtros que solo usaría este modo.
+
+### Validaciones
+- `node --check app.js`: sin errores. `emisoras-modos.json` se lee como JSON válido.
+- App real servida en local, en Chrome sin ventana: Buggy Time muestra 42 emisoras y los seis filtros, con Sci-fi 3, Oldies 4, Fallout 9, GTA 8, Games 9 y Buggy 9. Se pulsó una emisora de Fallout, una de GTA y una de Games, y las tres llegaron a "EN DIRECTO". Sin errores de JavaScript.
+- No probado: un móvil físico ni la app instalada.
+
+### Riesgos o pendientes
+- Ninguno detectado.
+
+### Cómo revertir
+En `emisoras-modos.json`, cambiar `"categoria": "fallout"` y `"categoria": "gta"` por `"categoria": "games"`. En `app.js`, quitar `'fallout'` y `'gta'` de `BUGGY_CATEGORY_ORDER` y sus líneas de `BUGGY_CATEGORY_META`. Subir la versión de caché en `sw.js` y volver a dejar en `README.md` la lista de categorías anterior.
+
+---
+
 ## 2026-11-06 11:46 — Categoría Clásica y musicales en Soundtracks (Music Time)
 
 ### Objetivo

@@ -1287,7 +1287,7 @@
           "stream": "https://fallout.fm:8444/falloutfm6.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio del videojuego Fallout 4",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 3 Galaxy News Radio",
@@ -1295,7 +1295,7 @@
           "stream": "https://fallout.fm:8444/falloutfm2.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio del videojuego Fallout 3",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Flash FM (Vice City)",
@@ -1305,7 +1305,7 @@
           "stream": "https://audio.gtaradio.net/vc/flash",
           "web": "https://www.grandtheftwiki.com/Flash_FM",
           "descripcion": "Radio del videojuego GTA Vice City",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "Radio Aurora",
@@ -1411,7 +1411,7 @@
           "stream": "https://stream-mixtape-geo.ntslive.net/mixtape33",
           "web": "https://www.nts.live/infinite-mixtapes/the-sound-of-gta",
           "descripcion": "Mezcla continua de las radios de la saga GTA",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "Liberty Rock Radio 97.8 (GTA IV)",
@@ -1420,7 +1420,7 @@
           "stream": "https://audio.gtaradio.net/4/liberty_rock",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: rock clásico y alternativo",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "The Vibe 98.8 (GTA IV)",
@@ -1429,7 +1429,7 @@
           "stream": "https://audio.gtaradio.net/4/the_vibe",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: R&B y soul",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "K109 The Studio (GTA IV)",
@@ -1438,7 +1438,7 @@
           "stream": "https://audio.gtaradio.net/4/k109_the_studio",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: disco",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "Fusion FM (GTA IV)",
@@ -1447,7 +1447,7 @@
           "stream": "https://audio.gtaradio.net/4/fusion_fm",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: jazz fusión y funk",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "Massive B Soundsystem 96.9 (GTA IV)",
@@ -1456,7 +1456,7 @@
           "stream": "https://audio.gtaradio.net/4/bobby_konders",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: dancehall",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "International Funk 99 (GTA IV)",
@@ -1465,7 +1465,7 @@
           "stream": "https://audio.gtaradio.net/4/afro_beat",
           "web": "https://gtaradio.net/en/4",
           "descripcion": "Radio del videojuego GTA IV: funk y afrobeat",
-          "categoria": "games"
+          "categoria": "gta"
         },
         {
           "nombre": "Fallout.fm (principal)",
@@ -1473,7 +1473,7 @@
           "stream": "https://fallout.fm:8444/falloutfm1.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Mezcla de las radios de toda la saga Fallout",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 1 OST",
@@ -1481,7 +1481,7 @@
           "stream": "https://fallout.fm:8444/falloutfm5.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Banda sonora de Fallout",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 2 OST",
@@ -1489,7 +1489,7 @@
           "stream": "https://fallout.fm:8444/falloutfm4.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Banda sonora de Fallout 2",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout New Vegas Radio",
@@ -1497,7 +1497,7 @@
           "stream": "https://fallout.fm:8444/falloutfm3.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio del videojuego Fallout: New Vegas",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 4 Classical Radio",
@@ -1505,7 +1505,7 @@
           "stream": "https://fallout.fm:8444/falloutfm7.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio clásica del videojuego Fallout 4",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 76 General",
@@ -1513,7 +1513,7 @@
           "stream": "https://fallout.fm:8444/falloutfm10.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio del videojuego Fallout 76",
-          "categoria": "games"
+          "categoria": "fallout"
         },
         {
           "nombre": "Fallout 76 Classical",
@@ -1521,7 +1521,7 @@
           "stream": "https://fallout.fm:8444/falloutfm9.ogg",
           "web": "https://fallout.fm/",
           "descripcion": "Radio clásica del videojuego Fallout 76",
-          "categoria": "games"
+          "categoria": "fallout"
         }
       ]
     }

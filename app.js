@@ -53,10 +53,12 @@
     clasica: { icon: '🎻', label: 'Clásica' }
   };
 
-  var BUGGY_CATEGORY_ORDER = ['scifi', 'oldies', 'games', 'buggy'];
+  var BUGGY_CATEGORY_ORDER = ['scifi', 'oldies', 'fallout', 'gta', 'games', 'buggy'];
   var BUGGY_CATEGORY_META = {
     scifi: { icon: '🛸', label: 'Sci-fi' },
     oldies: { icon: '📻', label: 'Oldies' },
+    fallout: { icon: '☢️', label: 'Fallout' },
+    gta: { icon: '🚗', label: 'GTA' },
     games: { icon: '🎮', label: 'Games' },
     buggy: { icon: '🐞', label: 'Buggy' }
   };
