@@ -65,6 +65,11 @@ El reproductor de abajo muestra la canción en curso y, con el botón de lista, 
 - Cadenas habladas (SER, RNE, COPE, Onda Cero), streams HLS y algunas otras no publican nada: el botón no aparece.
 - En local, con un servidor estático, `/api/` no existe y la función simplemente no se ve. Hace falta `vercel dev` o el despliegue.
 
+## Controles del móvil y temporizador
+
+- En todos los modos, la pantalla de bloqueo, los auriculares y el coche muestran la emisora (o la canción), con el icono de la web como imagen, o la carátula del disco si la emisora la da. Play/pausa funciona desde ahí, y "siguiente / anterior" recorre el TOP 3. Si no hay favoritas en el podio, recorre todas las emisoras del modo en el orden de la pantalla.
+- El temporizador de apagado (botón del reloj en el reproductor de abajo) está en todos los modos y baja el volumen poco a poco antes de pausar. Al cambiar de modo se cancela, salvo el del modo dormir, que se conserva para cuando se vuelva a él.
+
 ## Comprobación automática de emisoras caídas
 
 Con el tiempo, algunas emisoras cambian de servidor o dejan de funcionar. Hay un script que comprueba todas las URLs de `stations.json`:

@@ -1300,16 +1300,46 @@ body.sleep-mode .tracks-panel {
   text-align: right;
 }
 
+/* Mismo aspecto que el botón de canciones; en el modo dormir conserva su tono cálido */
 .sleep-timer-btn {
-  min-width: 44px;
-  min-height: 44px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid var(--card-border);
-  background: rgba(216, 184, 114, 0.12);
+  background: none;
   color: var(--text-main);
-  font-size: 1.1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.sleep-timer-btn:hover,
+.sleep-timer-btn:focus-visible,
+.sleep-timer-btn[aria-expanded="true"] {
+  border-color: var(--neon-cyan);
+  background: rgba(45, 226, 230, 0.12);
+}
+
+body.sleep-mode .sleep-timer-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(216, 184, 114, 0.12);
+}
+
+@media (max-width: 480px) {
+  .sleep-timer-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .sleep-timer-countdown {
+    font-size: 0.72rem;
+    min-width: 2.3em;
+  }
 }
 
 .sleep-timer-menu {

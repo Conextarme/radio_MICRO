@@ -4,6 +4,60 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 15:24 — Controles de pantalla de bloqueo y temporizador de apagado en todos los modos
+
+### Objetivo
+- Que la pantalla de bloqueo, los auriculares y el coche controlen la radio en todos los modos, con "siguiente / anterior" para cambiar entre las emisoras del TOP 3.
+- Que el temporizador de apagado esté disponible en todos los modos, no solo en el modo dormir.
+- Que en la pantalla de bloqueo salga el icono de la web como imagen.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Antes, la pantalla de bloqueo solo recibía el nombre de la emisora y los controles en el modo dormir. Ahora lo hace en todos los modos:
+  - Debajo del nombre aparece la temática (en dormir, Music Time y Buggy Time) o la frecuencia (en el modo normal). Si se conoce la canción, sale la canción.
+  - Como imagen sale el icono de la web, o la carátula del disco cuando la emisora la da.
+  - Play y pausa funcionan bien aunque se pulse dos veces seguidas: antes cada pulsación alternaba el estado. También desbloquean el audio si el navegador lo había bloqueado.
+  - "Siguiente" y "anterior" recorren el TOP 3. Si no hay favoritas en el podio, o la única es la que ya suena, recorren todas las emisoras del modo en el orden de la pantalla. Si la emisora que suena no es favorita, "siguiente" va a la 1ª del podio y "anterior" a la última.
+  - El móvil recibe si la radio está sonando o en pausa, para mostrar el botón correcto.
+  - Al cambiar de modo se borra la información de la pantalla de bloqueo.
+- El botón del temporizador se ve en el reproductor de abajo en todos los modos. Se oculta solo con la zumbadora de YouTube, porque ahí no tiene efecto.
+- Al cambiar de modo, el temporizador del modo dormir se conserva, como antes. El de los demás modos se cancela, porque la radio se detiene.
+- Al volver a la pestaña, la cuenta atrás se actualiza en cualquier modo.
+- El icono ⏱ del temporizador pasa a ser un dibujo SVG, por el mismo motivo que el play/pausa: en el móvil salía como emoji. Fuera del modo dormir, el botón tiene el mismo aspecto que el de canciones; en el modo dormir conserva el tono cálido y su tamaño.
+- `CACHE_VERSION` sube a `v25`.
+
+### Motivo
+Con el móvil bloqueado o en el bolsillo, el único control disponible es el del sistema. Antes solo funcionaba en el modo dormir y sin cambio de emisora. El temporizador también es útil para dormirse con música de otros modos.
+
+### Validaciones
+- `node --check app.js`: sin errores.
+- Prueba en Chrome sin interfaz, con pantalla de 360 px y un servidor local que imita Vercel. Los botones de la pantalla de bloqueo se simularon capturando los que registra la página.
+  - Se registran play, pause, stop, nexttrack y previoustrack.
+  - Con Cadena 100 sonando y el podio vacío, "siguiente" pasa a Aragón Radio y "anterior" vuelve a Cadena 100.
+  - Pausa pone el estado en pausa; una segunda pausa no reanuda. Play reanuda.
+  - En la pantalla de bloqueo sale "Insoportable / El canto del loco · Cadena 100", con `icon-192.png` y `icon-512.png` como imagen.
+  - El temporizador de 15 min en el modo normal muestra la cuenta atrás (14:58). Al pasar a Music Time se cancela y se borra la información de la pantalla de bloqueo.
+  - No hubo errores de JavaScript.
+- Revisión visual a 360 px: el reproductor con cuenta atrás, reloj, lista, play/pausa y volumen cabe. El nombre de la canción queda más recortado.
+- Sin probar: un móvil físico (Android o iPhone), los botones de auriculares o coche y el corte real del temporizador al acabar.
+
+### Riesgos o pendientes
+- iPhone no deja cambiar el volumen de una web: ahí el temporizador no baja el volumen poco a poco y la radio se pausa de golpe al final. Es lo mismo que ya pasaba en el modo dormir.
+- Algunos navegadores no muestran "siguiente / anterior" en la pantalla de bloqueo con radio en directo. Si no aparecen, el resto sigue funcionando.
+- En pantallas muy estrechas, con la cuenta atrás activa queda poco sitio para el nombre de la emisora.
+
+### Cómo revertir
+Deshacer los cambios de este commit en `app.js`, `index.html`, `styles.css`, `sw.js` y `README.md`, por ejemplo con `git checkout <commit-anterior> -- app.js index.html styles.css sw.js README.md`. Si ya estaba publicado, dejar `CACHE_VERSION` en un número mayor (`v26`).
+
+---
+
 ## 2026-11-06 15:13 — Canción en curso, anteriores y próximas; iconos de play/pausa iguales en móvil y ordenador
 
 ### Objetivo

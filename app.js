@@ -259,6 +259,10 @@
 
   function updateMiniPlayer() {
     syncNowPlaying();
+    if (sleepTimerWrap) {
+      // Con la zumbadora (vídeo de YouTube) el temporizador no tiene efecto.
+      sleepTimerWrap.hidden = playerMode === 'buzzer';
+    }
     if (playerMode === 'buzzer') {
       document.body.classList.add('has-mini-player');
       miniPlayer.hidden = false;
@@ -288,6 +292,7 @@
 
     var showResumeIcon = userPaused || currentStatus === STATUS.BLOCKED;
     setToggleIcon(showResumeIcon);
+    updateMediaSessionState();
 
     var nowTrack = currentStatus === STATUS.LIVE ? getCurrentTrack() : null;
     if (nowTrack) {
@@ -391,9 +396,9 @@
     }
     setStatus(STATUS.TUNING);
 
+    updateMediaSession(station);
     if (sleepMode) {
       saveLastSleepStation(station.name);
-      updateMediaSession(station);
       fadeInVolume();
     }
 
@@ -682,10 +687,10 @@
         currentStatus !== STATUS.LIVE && currentStatus !== STATUS.BLOCKED) {
       reconnectNow();
     }
+    if (document.visibilityState === 'visible' && timerEndAt) {
+      tickSleepTimer();
+    }
     if (document.visibilityState === 'visible' && sleepMode) {
-      if (timerEndAt) {
-        tickSleepTimer();
-      }
       if (currentStatus === STATUS.LIVE) {
         requestWakeLock();
       }
@@ -1464,7 +1469,7 @@
       themeColorMeta.setAttribute('content', ui.themeColor);
     }
     if (sleepTimerWrap) {
-      sleepTimerWrap.hidden = !sleepMode;
+      sleepTimerWrap.hidden = false;
     }
     if (sleepChipsWrap) {
       sleepChipsWrap.hidden = true;
@@ -2091,43 +2096,147 @@
         title: t.title,
         artist: t.artist ? t.artist + ' · ' + station.name : station.name
       };
-      if (t.cover && /^https:\/\//.test(t.cover)) {
-        meta.artwork = [{ src: t.cover, sizes: '512x512' }];
-      }
+      meta.artwork = t.cover && /^https:\/\//.test(t.cover)
+        ? [{ src: t.cover, sizes: '512x512' }]
+        : getAppArtwork();
       navigator.mediaSession.metadata = new window.MediaMetadata(meta);
     } catch (e) { /* noop */ }
   }
 
   /* --- Media Session (control desde la pantalla de bloqueo) --- */
 
+  // Controles del móvil (pantalla de bloqueo, auriculares, coche) en todos los
+  // modos. "Siguiente" y "anterior" recorren el TOP 3; si no hay favoritas en
+  // el podio, recorren todas las emisoras del modo en el orden de la pantalla.
+
+  function getMediaSessionArtist(station) {
+    var categories = MODE_CATEGORIES[appMode];
+    var meta = categories && station.category ? categories.meta[station.category] : null;
+    if (meta) {
+      return meta.label;
+    }
+    return station.freq && station.freq !== 'Stream' ? station.freq : 'Radios de España';
+  }
+
+  // Icono de la web para la pantalla de bloqueo cuando no hay carátula del disco.
+  function getAppArtwork() {
+    return [
+      { src: new URL('icons/icon-192.png', window.location.href).href, sizes: '192x192', type: 'image/png' },
+      { src: new URL('icons/icon-512.png', window.location.href).href, sizes: '512x512', type: 'image/png' }
+    ];
+  }
+
   function updateMediaSession(station) {
-    if (!('mediaSession' in navigator)) {
+    if (!('mediaSession' in navigator) || !window.MediaMetadata) {
       return;
     }
     try {
       navigator.mediaSession.metadata = new window.MediaMetadata({
         title: station.name,
-        artist: station.category && SLEEP_CATEGORY_META[station.category]
-          ? SLEEP_CATEGORY_META[station.category].label
-          : 'Radios de España'
-      });
-      navigator.mediaSession.setActionHandler('play', function () {
-        if (currentIndex !== -1) {
-          togglePauseResume();
-        }
-      });
-      navigator.mediaSession.setActionHandler('pause', function () {
-        if (currentIndex !== -1) {
-          togglePauseResume();
-        }
-      });
-      navigator.mediaSession.setActionHandler('stop', function () {
-        if (currentIndex !== -1) {
-          togglePauseResume();
-        }
+        artist: getMediaSessionArtist(station),
+        artwork: getAppArtwork()
       });
     } catch (e) { /* noop: Media Session no disponible en este navegador */ }
   }
+
+  function clearMediaSession() {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+    try {
+      navigator.mediaSession.metadata = null;
+      navigator.mediaSession.playbackState = 'none';
+    } catch (e) { /* noop */ }
+  }
+
+  function updateMediaSessionState() {
+    if (!('mediaSession' in navigator) || playerMode !== 'radio' || currentIndex === -1) {
+      return;
+    }
+    try {
+      navigator.mediaSession.playbackState =
+        userPaused || currentStatus === STATUS.BLOCKED ? 'paused' : 'playing';
+    } catch (e) { /* noop */ }
+  }
+
+  function getSkipList() {
+    var favorites = getTop3IndexesByRank();
+    var others = favorites.filter(function (i) { return i !== currentIndex; });
+    if (others.length) {
+      return favorites;
+    }
+    var all = [];
+    stations.forEach(function (s, i) {
+      if (!isUnavailable(s)) {
+        all.push(i);
+      }
+    });
+    return all;
+  }
+
+  function skipStation(step) {
+    if (playerMode !== 'radio') {
+      return;
+    }
+    var list = getSkipList();
+    if (!list.length) {
+      return;
+    }
+    var pos = list.indexOf(currentIndex);
+    var target;
+    if (pos === -1) {
+      // La emisora que suena no está en la lista (p. ej. no es favorita):
+      // "siguiente" va a la primera y "anterior" a la última.
+      target = step > 0 ? list[0] : list[list.length - 1];
+    } else {
+      target = list[(pos + step + list.length) % list.length];
+    }
+    if (target === currentIndex) {
+      return;
+    }
+    playStation(target);
+  }
+
+  function mediaResume() {
+    if (playerMode !== 'radio' || currentIndex === -1) {
+      return;
+    }
+    if (currentStatus === STATUS.BLOCKED) {
+      setStatus(STATUS.TUNING);
+      reconnectNow();
+    } else if (userPaused) {
+      togglePauseResume();
+    }
+  }
+
+  function mediaPause() {
+    if (playerMode !== 'radio' || currentIndex === -1) {
+      return;
+    }
+    if (!userPaused) {
+      togglePauseResume();
+    }
+  }
+
+  function setupMediaSessionHandlers() {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+    var handlers = {
+      play: mediaResume,
+      pause: mediaPause,
+      stop: mediaPause,
+      nexttrack: function () { skipStation(1); },
+      previoustrack: function () { skipStation(-1); }
+    };
+    Object.keys(handlers).forEach(function (action) {
+      try {
+        navigator.mediaSession.setActionHandler(action, handlers[action]);
+      } catch (e) { /* acción no soportada por este navegador */ }
+    });
+  }
+
+  setupMediaSessionHandlers();
 
   /* --- Cambio de modo --- */
 
@@ -2172,7 +2281,10 @@
     userPaused = false;
     clearScreenDim();
     releaseWakeLock();
-    clearSleepTimer(false);
+    // El temporizador del modo dormir se conserva para restaurarlo al volver
+    // a él; el de los demás modos se cancela, porque la radio se detiene.
+    clearSleepTimer(appMode !== 'sleep');
+    clearMediaSession();
     if (miniPlayer) {
       miniPlayer.hidden = true;
     }
