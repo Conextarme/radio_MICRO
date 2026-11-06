@@ -55,6 +55,16 @@ Sus emisoras están en [`emisoras-modos.json`](emisoras-modos.json), en `modos.c
 - Si el navegador bloquea la reproducción automática (política de autoplay tras varios fallos sin interacción), se muestra el aviso "TOCA PARA REANUDAR" en vez de seguir reintentando en silencio.
 - Si una emisora falla 5 veces seguidas al reconectar, se prueba automáticamente con la siguiente emisora del podio TOP 3 (en orden de puesto), sin necesidad de recargar la página. Esto no aplica al caso de bloqueo por autoplay: ahí hace falta un toque real igualmente, cambiar de emisora por script tampoco lo evitaría.
 
+## Canción que suena, anteriores y próximas
+
+El reproductor de abajo muestra la canción en curso y, con el botón de lista, abre una ventana con las anteriores y (si la emisora las anuncia) las próximas.
+
+- Los datos los da la función de Vercel [`api/now-playing.js`](api/now-playing.js) (`/api/now-playing?url=<stream>`). Usa la API del proveedor cuando existe (Triton/StreamTheWorld, SomaFM, laut.fm, Radio.co, RadioKing, Rainwave, Zeno) y, si no, los metadatos ICY del propio stream o el `status-json.xsl` de Icecast.
+- Solo acepta streams que estén en `stations.json`, `emisoras-relax.json` o `emisoras-modos.json`, así que no sirve como proxy abierto. La CDN de Vercel guarda cada respuesta 15 s.
+- "Próximas" solo existe en RadioKing y Rainwave. Si la emisora no da historial, el navegador guarda en `localStorage` las que han sonado mientras escuchabas.
+- Cadenas habladas (SER, RNE, COPE, Onda Cero), streams HLS y algunas otras no publican nada: el botón no aparece.
+- En local, con un servidor estático, `/api/` no existe y la función simplemente no se ve. Hace falta `vercel dev` o el despliegue.
+
 ## Comprobación automática de emisoras caídas
 
 Con el tiempo, algunas emisoras cambian de servidor o dejan de funcionar. Hay un script que comprueba todas las URLs de `stations.json`:

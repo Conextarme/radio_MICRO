@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v23';
+var CACHE_VERSION = 'v24';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -72,6 +72,11 @@ self.addEventListener('fetch', function (event) {
   // Streams de audio, hls.js del CDN y cualquier otro origen externo:
   // siempre a la red, nunca a caché.
   if (!isAppShellRequest(url)) {
+    return;
+  }
+
+  // La canción que suena (api/now-playing) cambia a cada momento: nunca a caché.
+  if (url.pathname.indexOf('/api/') !== -1) {
     return;
   }
 

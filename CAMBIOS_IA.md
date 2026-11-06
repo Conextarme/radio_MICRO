@@ -4,6 +4,58 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 15:13 — Canción en curso, anteriores y próximas; iconos de play/pausa iguales en móvil y ordenador
+
+### Objetivo
+Mostrar en tiempo real la canción que suena, con un botón en el reproductor inferior (junto a play/pausa) que abra una ventana con las canciones anteriores y las próximas, en las emisoras donde sea posible. Además, explicar y corregir por qué el botón play/pausa se veía distinto en el móvil que en el navegador del ordenador.
+
+### Archivos afectados
+- `api/now-playing.js`: creado.
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Nueva función de servidor (Vercel) `api/now-playing.js`. Recibe la dirección del stream y devuelve la canción actual y, cuando el proveedor lo publica, la lista de anteriores y de próximas. Consulta primero la API de cada proveedor (Triton/StreamTheWorld para Los 40, Dial, Radiolé…; SomaFM; laut.fm; Radio.co; RadioKing; Rainwave; Zeno). Si no hay API, lee el título que va dentro del propio stream (metadatos ICY) o la página de estado de Icecast. Solo atiende streams que están en las listas de emisoras del proyecto.
+- En el reproductor inferior, cuando la emisora está en directo y se conoce la canción, la segunda línea muestra "♪ Artista — Título" en lugar de "EN DIRECTO".
+- Nuevo botón de lista junto a play/pausa. Abre una ventana con "Sonando ahora", "Próximas" (solo si la emisora las anuncia) y "Anteriores" con su hora. Se cierra con la X, con Escape o tocando fuera. Si la emisora no da historial, se muestran las canciones que han sonado mientras escuchabas, guardadas en el navegador (máximo 20 por emisora y 40 emisoras).
+- La página consulta la canción cada 20 s (45 s con la pestaña en segundo plano) y solo mientras suena. Si una emisora no da título en 3 intentos seguidos, deja de preguntar.
+- En la pantalla de bloqueo y en las notificaciones del móvil aparece la canción, con la carátula cuando la hay.
+- El botón play/pausa usa ahora iconos dibujados (SVG) en vez de los caracteres ▶ y ⏸. A los textos de estado "SINTONIZANDO", "EN PAUSA" y "Continuar" se les añade un marcador invisible (U+FE0E) que pide mostrarlos como símbolo y no como emoji.
+- El service worker no guarda en caché las respuestas de `/api/`. `CACHE_VERSION` sube a `v24`.
+
+### Motivo
+- El navegador no puede leer el título desde la propia emisora: los metadatos ICY no son accesibles desde un `<audio>` y casi todos los servidores bloquean la lectura desde otra web (CORS). Por eso se lee desde el servidor de Vercel.
+- La lista blanca de streams evita que la función se use como proxy abierto hacia cualquier dirección.
+- Botón distinto en móvil: los caracteres ▶ y ⏸ tienen versión emoji. Android e iOS los pintan como emoji (cuadradito de color) y Windows como símbolo de texto, así que el aspecto dependía del sistema. Con SVG se ven igual en todas partes.
+
+### Validaciones
+- Prueba de la función contra las 262 URLs de stream del proyecto, ejecutada con Node desde el equipo local. Resultado: 183 devuelven canción (136 por ICY, 9 SomaFM, 10 laut.fm, 6 Radio.co, 6 Triton, 5 Zeno, 7 Icecast, 3 Rainwave, 1 RadioKing). 23 traen historial y 4 traen próximas. 79 no devuelven nada: cadenas habladas (SER, RNE, COPE, Onda Cero), streams HLS, Radio Bob, Klassik Radio y GTA Radio, entre otras.
+- Una URL que no está en las listas devuelve el error 400 "Emisora desconocida".
+- Prueba en Chrome sin interfaz con un servidor local que imita Vercel:
+  - Los 40 Classic en móvil (390 px): título en el reproductor y ventana con 10 anteriores y su hora.
+  - Radio 432 (Big Calm) en escritorio (1280 px): ventana con "Próximas".
+  - Cadena SER: el botón de lista no aparece.
+  - El icono cambia bien entre pausa y play.
+  - No hubo errores de JavaScript en la consola.
+- `node --check` sin errores de sintaxis en `app.js` y `api/now-playing.js`.
+- Sin probar: el despliegue real en Vercel, un móvil físico y el modo dormir con la ventana abierta.
+
+### Riesgos o pendientes
+- Cada consulta sin API propia abre un momento el stream desde Vercel para leer el título (unos pocos KB). La CDN guarda cada respuesta 15 s, pero cuenta en el uso de funciones del plan de Vercel.
+- Algunas emisoras meten anuncios o textos promocionales como título ("Download our free mobile application"). Se filtran los identificadores de cuña más obvios, pero no todos.
+- Si un proveedor cambia su API, esa emisora pasa a usar ICY o deja de mostrar la canción. No rompe la reproducción.
+- En Rainwave, "Próximas" muestra la primera canción de cada votación pendiente. La que suena al final puede ser otra.
+- Comprobar tras publicar que Vercel incluye las listas JSON en la función (se cargan con `require`, que Vercel detecta).
+
+### Cómo revertir
+Borrar la carpeta `api/` y deshacer los cambios de este commit en `app.js`, `index.html`, `styles.css`, `sw.js` y `README.md`. Por ejemplo, `git checkout <commit-anterior> -- app.js index.html styles.css sw.js README.md` y `git rm -r api`. Dejar `CACHE_VERSION` en un número mayor que el publicado (por ejemplo `v25`) para que las PWA instaladas se actualicen.
+
+---
+
 ## 2026-11-06 12:03 — Fallout y GTA no salían en Buggy Time tras publicar
 
 ### Objetivo

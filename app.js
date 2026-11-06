@@ -146,10 +146,10 @@
   };
 
   var STATUS_LABEL = {
-    tuning: '▶ SINTONIZANDO…',
+    tuning: '▶︎ SINTONIZANDO…',
     live: '🔴 EN DIRECTO',
     reconnecting: '🔁 RECONECTANDO…',
-    paused: '⏸ EN PAUSA',
+    paused: '⏸︎ EN PAUSA',
     unavailable: '⚠ NO DISPONIBLE AQUÍ',
     blocked: '👆 TOCA PARA REANUDAR'
   };
@@ -166,6 +166,11 @@
   var miniPlayerStatus = document.getElementById('mini-player-status');
   var miniPlayerToggle = document.getElementById('mini-player-toggle');
   var miniPlayerVolume = document.getElementById('mini-player-volume');
+  var tracksBtn = document.getElementById('mini-player-tracks-btn');
+  var tracksPanel = document.getElementById('tracks-panel');
+  var tracksPanelBody = document.getElementById('tracks-panel-body');
+  var tracksPanelTitle = document.getElementById('tracks-panel-title');
+  var tracksPanelClose = document.getElementById('tracks-panel-close');
 
   var easterEggTrigger = document.getElementById('easter-egg-trigger');
   var easterEggVideoWrap = document.getElementById('easter-egg-video-wrap');
@@ -253,14 +258,14 @@
   }
 
   function updateMiniPlayer() {
+    syncNowPlaying();
     if (playerMode === 'buzzer') {
       document.body.classList.add('has-mini-player');
       miniPlayer.hidden = false;
       miniPlayerName.textContent = BUZZER_NAME;
       miniPlayerName.removeAttribute('lang');
       miniPlayerStatus.textContent = buzzerPaused ? STATUS_LABEL.paused : STATUS_LABEL.live;
-      miniPlayerToggle.textContent = buzzerPaused ? '▶' : '⏸';
-      miniPlayerToggle.setAttribute('aria-label', buzzerPaused ? 'Reanudar' : 'Pausar');
+      setToggleIcon(buzzerPaused);
       return;
     }
 
@@ -282,8 +287,31 @@
     miniPlayerStatus.textContent = STATUS_LABEL[currentStatus] || station.freq;
 
     var showResumeIcon = userPaused || currentStatus === STATUS.BLOCKED;
-    miniPlayerToggle.textContent = showResumeIcon ? '▶' : '⏸';
-    miniPlayerToggle.setAttribute('aria-label', showResumeIcon ? 'Reanudar' : 'Pausar');
+    setToggleIcon(showResumeIcon);
+
+    var nowTrack = currentStatus === STATUS.LIVE ? getCurrentTrack() : null;
+    if (nowTrack) {
+      miniPlayerStatus.textContent = '♪︎ ' + formatTrack(nowTrack);
+      miniPlayerStatus.title = formatTrack(nowTrack);
+    } else {
+      miniPlayerStatus.removeAttribute('title');
+    }
+  }
+
+  // Iconos en SVG y no con los caracteres ▶ / ⏸: en el móvil esos caracteres
+  // se pintan como emoji (cuadrado de color de Android/iOS) y en el ordenador
+  // como un símbolo de texto, así que el botón se veía distinto en cada sitio.
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><rect fill="currentColor" x="6" y="5" width="4.2" height="14" rx="1.2"/><rect fill="currentColor" x="13.8" y="5" width="4.2" height="14" rx="1.2"/></svg>';
+  var toggleIconShown = null;
+
+  function setToggleIcon(showResume) {
+    var key = showResume ? 'play' : 'pause';
+    if (toggleIconShown !== key) {
+      miniPlayerToggle.innerHTML = showResume ? ICON_PLAY : ICON_PAUSE;
+      toggleIconShown = key;
+    }
+    miniPlayerToggle.setAttribute('aria-label', showResume ? 'Reanudar' : 'Pausar');
   }
 
   function renderStatuses() {
@@ -1523,7 +1551,7 @@
       return;
     }
     sleepContinueBtn.hidden = false;
-    sleepContinueBtn.textContent = '▶ Continuar: ' + name;
+    sleepContinueBtn.textContent = '▶︎ Continuar: ' + name;
     sleepContinueBtn.onclick = function () {
       sleepContinueBtn.hidden = true;
       selectCategory(stations[idx].category);
@@ -1737,6 +1765,338 @@
       scheduleScreenDim();
     }
   });
+
+  /* --- Canción que suena ahora, anteriores y próximas --- */
+  //
+  // Los datos vienen de /api/now-playing (función de Vercel en api/), que los
+  // saca de la API del proveedor (Triton, SomaFM, laut.fm, Radio.co,
+  // RadioKing, Rainwave, Zeno) o de los metadatos ICY del propio stream. No
+  // todas las emisoras los publican: si no hay nada, simplemente no se muestra.
+  // "Próximas" solo existe en las pocas que lo anuncian (RadioKing, Rainwave).
+  // Si el proveedor no da historial, se usa el que va guardando el navegador
+  // con las canciones que han sonado mientras escuchabas.
+
+  var NOW_PLAYING_ENDPOINT = 'api/now-playing';
+  var NOW_PLAYING_POLL_MS = 20000;
+  var NOW_PLAYING_POLL_HIDDEN_MS = 45000;
+  var NOW_PLAYING_MAX_MISSES = 3;
+  var TRACK_HISTORY_KEY = 'radioMicroTrackHistory';
+  var TRACK_HISTORY_PER_STATION = 20;
+  var TRACK_HISTORY_MAX_STATIONS = 40;
+
+  var np = { url: null, now: null, history: [], next: [], misses: 0, timer: null, req: 0 };
+
+  function sameTrack(a, b) {
+    return !!a && !!b && a.title === b.title && (a.artist || '') === (b.artist || '');
+  }
+
+  function formatTrack(t) {
+    return t.artist ? t.artist + ' — ' + t.title : t.title;
+  }
+
+  function getCurrentTrack() {
+    var station = stations[currentIndex];
+    return station && np.url === station.streamUrl ? np.now : null;
+  }
+
+  function readAllTrackHistory() {
+    try {
+      var all = JSON.parse(window.localStorage.getItem(TRACK_HISTORY_KEY) || '{}');
+      return all && typeof all === 'object' ? all : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function loadTrackHistory(url) {
+    var list = readAllTrackHistory()[url];
+    return Array.isArray(list) ? list : [];
+  }
+
+  function rememberTrack(url, t) {
+    try {
+      var all = readAllTrackHistory();
+      var list = Array.isArray(all[url]) ? all[url] : [];
+      if (list.length && sameTrack(list[0], t)) {
+        return;
+      }
+      list.unshift({ artist: t.artist || '', title: t.title, at: new Date().toISOString() });
+      delete all[url];
+      all[url] = list.slice(0, TRACK_HISTORY_PER_STATION);
+      var keys = Object.keys(all);
+      // Se conserva solo el historial de las últimas emisoras escuchadas.
+      while (keys.length > TRACK_HISTORY_MAX_STATIONS) {
+        delete all[keys.shift()];
+      }
+      window.localStorage.setItem(TRACK_HISTORY_KEY, JSON.stringify(all));
+    } catch (e) { /* sin localStorage no se guarda historial propio */ }
+  }
+
+  function stopNowPlaying() {
+    if (np.timer) {
+      clearTimeout(np.timer);
+      np.timer = null;
+    }
+    np.req++;
+  }
+
+  function resetNowPlaying() {
+    stopNowPlaying();
+    np.url = null;
+    np.now = null;
+    np.history = [];
+    np.next = [];
+    np.misses = 0;
+    renderTracksButton();
+    closeTracksPanel();
+  }
+
+  function scheduleNowPlaying(ms) {
+    if (np.timer) {
+      clearTimeout(np.timer);
+    }
+    np.timer = setTimeout(fetchNowPlaying, ms);
+  }
+
+  function fetchNowPlaying() {
+    np.timer = null;
+    var station = stations[currentIndex];
+    if (!station || playerMode !== 'radio' || currentStatus !== STATUS.LIVE || np.url !== station.streamUrl) {
+      return;
+    }
+    var reqId = ++np.req;
+    var url = station.streamUrl;
+    fetch(NOW_PLAYING_ENDPOINT + '?url=' + encodeURIComponent(url))
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .catch(function () { return null; })
+      .then(function (data) {
+        if (reqId !== np.req || np.url !== url) {
+          return;
+        }
+        if (data && data.now && data.now.title) {
+          np.misses = 0;
+          if (!sameTrack(np.now, data.now)) {
+            rememberTrack(url, data.now);
+          }
+          np.now = data.now;
+          np.history = Array.isArray(data.history) ? data.history : [];
+          np.next = Array.isArray(data.next) ? data.next : [];
+        } else {
+          np.misses++;
+        }
+        updateMiniPlayer();
+        renderTracksButton();
+        updateMediaSessionTrack();
+        if (!tracksPanel.hidden) {
+          renderTracksPanel();
+        }
+        // Si la emisora no da título tras varios intentos seguidos, se deja de
+        // preguntar hasta que se vuelva a elegir.
+        if (np.misses < NOW_PLAYING_MAX_MISSES) {
+          scheduleNowPlaying(document.hidden ? NOW_PLAYING_POLL_HIDDEN_MS : NOW_PLAYING_POLL_MS);
+        }
+      });
+  }
+
+  // Se llama cada vez que cambia el estado del reproductor.
+  function syncNowPlaying() {
+    var station = stations[currentIndex];
+    if (!station || playerMode !== 'radio') {
+      if (np.url) {
+        resetNowPlaying();
+      }
+      return;
+    }
+    if (np.url !== station.streamUrl) {
+      resetNowPlaying();
+      np.url = station.streamUrl;
+      renderTracksButton();
+    }
+    if (currentStatus === STATUS.LIVE) {
+      if (!np.timer && np.misses < NOW_PLAYING_MAX_MISSES) {
+        scheduleNowPlaying(np.now ? NOW_PLAYING_POLL_MS : 0);
+      }
+    } else {
+      stopNowPlaying();
+    }
+  }
+
+  function getHistoryToShow() {
+    if (np.history.length) {
+      return { list: np.history, own: false };
+    }
+    var own = loadTrackHistory(np.url).filter(function (t) { return !sameTrack(t, np.now); });
+    return { list: own, own: true };
+  }
+
+  function renderTracksButton() {
+    var show = !!getCurrentTrack() || (!!np.url && loadTrackHistory(np.url).length > 0);
+    tracksBtn.hidden = !show;
+  }
+
+  function formatTime(iso) {
+    if (!iso) {
+      return '';
+    }
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) {
+      return '';
+    }
+    return d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function buildTrackItem(t, withTime) {
+    var li = document.createElement('li');
+    li.className = 'tracks-item';
+    var text = document.createElement('div');
+    text.className = 'tracks-item-text';
+    var title = document.createElement('div');
+    title.className = 'tracks-item-title';
+    title.textContent = t.title;
+    text.appendChild(title);
+    if (t.artist) {
+      var artist = document.createElement('div');
+      artist.className = 'tracks-item-artist';
+      artist.textContent = t.artist;
+      text.appendChild(artist);
+    }
+    li.appendChild(text);
+    var time = withTime ? formatTime(t.at) : '';
+    if (time) {
+      var timeEl = document.createElement('time');
+      timeEl.className = 'tracks-item-time';
+      timeEl.dateTime = t.at;
+      timeEl.textContent = time;
+      li.appendChild(timeEl);
+    }
+    return li;
+  }
+
+  function appendTrackNote(parent, text) {
+    var p = document.createElement('p');
+    p.className = 'tracks-note';
+    p.textContent = text;
+    parent.appendChild(p);
+  }
+
+  function appendTrackSection(label, list, options) {
+    options = options || {};
+    var section = document.createElement('section');
+    section.className = 'tracks-section' + (options.className ? ' ' + options.className : '');
+    var h = document.createElement('h3');
+    h.className = 'tracks-section-title';
+    h.textContent = label;
+    section.appendChild(h);
+    var ul = document.createElement('ul');
+    ul.className = 'tracks-list';
+    list.forEach(function (t) { ul.appendChild(buildTrackItem(t, options.withTime)); });
+    section.appendChild(ul);
+    if (options.note) {
+      appendTrackNote(section, options.note);
+    }
+    tracksPanelBody.appendChild(section);
+  }
+
+  function renderTracksPanel() {
+    var station = stations[currentIndex];
+    tracksPanelTitle.textContent = station ? station.name : 'Canciones';
+    if (station && station.lang) {
+      tracksPanelTitle.lang = station.lang;
+    } else {
+      tracksPanelTitle.removeAttribute('lang');
+    }
+    tracksPanelBody.textContent = '';
+    var now = getCurrentTrack();
+    if (now) {
+      appendTrackSection('Sonando ahora', [now], { className: 'is-now' });
+    }
+    if (np.next.length) {
+      appendTrackSection('Próximas', np.next);
+    }
+    var history = getHistoryToShow();
+    if (history.list.length) {
+      appendTrackSection('Anteriores', history.list, {
+        withTime: true,
+        note: history.own ? 'La emisora no publica su historial: estas son las que han sonado mientras la escuchabas.' : null
+      });
+    }
+    if (!now && !history.list.length) {
+      appendTrackNote(tracksPanelBody, 'Esta emisora no publica qué canción está sonando.');
+    } else if (!np.next.length) {
+      appendTrackNote(tracksPanelBody, 'Esta emisora no anuncia las próximas canciones.');
+    }
+  }
+
+  function openTracksPanel() {
+    renderTracksPanel();
+    tracksPanel.hidden = false;
+    tracksBtn.setAttribute('aria-expanded', 'true');
+    tracksPanelClose.focus();
+  }
+
+  function closeTracksPanel() {
+    if (tracksPanel.hidden) {
+      return;
+    }
+    tracksPanel.hidden = true;
+    tracksBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  tracksBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (tracksPanel.hidden) {
+      openTracksPanel();
+    } else {
+      closeTracksPanel();
+    }
+  });
+
+  tracksPanelClose.addEventListener('click', function () {
+    closeTracksPanel();
+    tracksBtn.focus();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !tracksPanel.hidden) {
+      closeTracksPanel();
+      tracksBtn.focus();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!tracksPanel.hidden && !tracksPanel.contains(e.target) && !tracksBtn.contains(e.target)) {
+      closeTracksPanel();
+    }
+  });
+
+  document.addEventListener('visibilitychange', function () {
+    // Al volver a la pestaña se actualiza enseguida en vez de esperar.
+    if (!document.hidden && np.url && currentStatus === STATUS.LIVE && np.misses < NOW_PLAYING_MAX_MISSES) {
+      scheduleNowPlaying(0);
+    }
+  });
+
+  // En la pantalla de bloqueo y en las notificaciones del móvil se ve la canción.
+  function updateMediaSessionTrack() {
+    if (!('mediaSession' in navigator) || !window.MediaMetadata) {
+      return;
+    }
+    var station = stations[currentIndex];
+    var t = getCurrentTrack();
+    if (!station || !t) {
+      return;
+    }
+    try {
+      var meta = {
+        title: t.title,
+        artist: t.artist ? t.artist + ' · ' + station.name : station.name
+      };
+      if (t.cover && /^https:\/\//.test(t.cover)) {
+        meta.artwork = [{ src: t.cover, sizes: '512x512' }];
+      }
+      navigator.mediaSession.metadata = new window.MediaMetadata(meta);
+    } catch (e) { /* noop */ }
+  }
 
   /* --- Media Session (control desde la pantalla de bloqueo) --- */
 
