@@ -4,6 +4,70 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 15:59 — Tarjetas de escritorio menos apretadas
+
+### Objetivo
+En escritorio, aprovechar el hueco libre debajo de los iconos de favorito y arrastrar para el nombre de la emisora, porque las tarjetas con nombres largos quedaban muy compactas.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- El nombre ya no reserva a la derecha el ancho de los iconos en todas sus líneas. Un hueco invisible del tamaño de la estrella y el asa ocupa solo la esquina de arriba. Desde la segunda línea, el texto usa todo el ancho de la tarjeta, también por debajo de los iconos. En pantallas táctiles el hueco es algo mayor, porque los iconos también lo son.
+- El logo y el texto se alinean arriba en vez de al centro, para que la primera línea quede a la altura de los iconos.
+- La cuadrícula pide un mínimo de 240 px por columna (antes, 190 px). En una pantalla de 1280 px salen 4 columnas en vez de 5, y el texto tiene sitio al lado del logo.
+- En el móvil no cambia nada: el texto ya iba debajo del logo, lejos de los iconos. En el podio del móvil, donde el texto va al lado del logo, el hueco se mantiene.
+- `CACHE_VERSION` sube a `v27`.
+
+### Motivo
+Con el logo a la izquierda, cada tarjeta dejaba unos 100 px para el texto, menos los 50 px reservados para los iconos en todas las líneas. Nombres como "Cadena SER (Sevilla)" se partían en tres o cuatro líneas y dejaban mucho hueco vacío debajo de los iconos.
+
+### Validaciones
+- Captura en Chrome sin interfaz a 1280 px, antes y después:
+  - Antes: "Cadena SER (Sevilla)" en 3 líneas; "Catalunya Radio (Barcelona)" y "Canal Sur Radio Andalucía" en 3 o 4.
+  - Después: 4 columnas. "Los 40 Classic", "Cadena 100" y "Canal Fiesta" en una línea; los nombres largos en dos, usando el ancho bajo los iconos.
+- Generada también la captura a 900 px, pero no se ha revisado.
+- Sin probar: un móvil físico ni el modo táctil en escritorio.
+
+### Riesgos o pendientes
+- Con 4 columnas en vez de 5, la cuadrícula plegada ("Ver más") enseña menos emisoras de golpe.
+
+### Cómo revertir
+En `styles.css`, volver `minmax(240px, 1fr)` a `minmax(190px, 1fr)` en `.stations-grid` y borrar el bloque final "Texto de la tarjeta: solo la primera línea esquiva los iconos". Si ya estaba publicado, subir `CACHE_VERSION` a `v28`.
+
+---
+
+## 2026-11-06 15:55 — Lista de pendientes para más adelante
+
+### Objetivo
+Dejar anotada la propuesta de partir `app.js` en módulos, con la explicación de sus riesgos y de cómo hacerlo con seguridad, para retomarla más adelante sin perder la información.
+
+### Archivos afectados
+- `PENDIENTES.md`: creado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Nuevo archivo `PENDIENTES.md` con:
+- La propuesta de partir `app.js`: motivo, riesgos, orden recomendado de los módulos, pruebas previas, lo que hay que tocar en el service worker y un commit por módulo.
+- Las sugerencias de mejora comentadas que aún no se han hecho, tanto de usabilidad como para un nivel profesional.
+- Detalles sueltos detectados durante el trabajo: el espacio del nombre en el reproductor del móvil, las emisoras sin logo y la revisión de la hoja de logos.
+
+### Motivo
+Que las ideas aplazadas no se pierdan entre conversaciones y estén junto al código.
+
+### Validaciones
+- Solo documentación; no se ha tocado código. No hay pruebas que ejecutar.
+
+### Riesgos o pendientes
+- Ninguno detectado.
+
+### Cómo revertir
+Borrar `PENDIENTES.md` y esta entrada.
+
+---
+
 ## 2026-11-06 15:49 — Carátulas de las emisoras y sin votos en el modo dormir
 
 ### Objetivo

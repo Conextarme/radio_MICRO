@@ -590,7 +590,9 @@ main {
 
 .stations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  /* 240px: con el logo a la izquierda, con menos ancho el nombre se partía
+     en tres o cuatro líneas. */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 0.6rem;
 }
 
@@ -1704,5 +1706,62 @@ body.sleep-mode .sleep-timer-btn {
     width: 3rem;
     height: 3rem;
     font-size: 1.2rem;
+  }
+}
+
+/* --- Texto de la tarjeta: solo la primera línea esquiva los iconos ---
+   Antes el nombre reservaba a la derecha el ancho de la estrella y el asa en
+   todas sus líneas, y los nombres largos quedaban en una columna estrecha de
+   tres o cuatro líneas. Ahora un hueco flotante del tamaño de los iconos
+   ocupa solo la esquina de arriba y el resto de líneas usa todo el ancho.
+   (Un hueco flotante solo funciona en un bloque normal, no en flex.) */
+.station-card .card-content {
+  align-items: flex-start;
+}
+
+.station-card .card-text {
+  display: block;
+}
+
+.station-card .card-text::before {
+  content: '';
+  float: right;
+  width: 3rem;
+  height: 1.35rem;
+}
+
+.station-card .card-text > * + * {
+  margin-top: 0.15rem;
+}
+
+.station-card .card-text .station-name,
+.station-card .card-text .station-category-tag {
+  padding-right: 0;
+}
+
+.station-card .card-text .station-tuning {
+  width: fit-content;
+}
+
+@media (pointer: coarse) {
+  .station-card .card-text::before {
+    width: 3.6rem;
+    height: 2.2rem;
+  }
+}
+
+/* En el móvil el texto va debajo del logo, lejos de los iconos: sin hueco.
+   En el podio del móvil el texto sigue al lado del logo y sí lo necesita. */
+@media (max-width: 480px) {
+  .station-card .card-text::before {
+    display: none;
+  }
+
+  .podium-drop .station-card .card-text::before {
+    display: block;
+  }
+
+  .podium-drop .station-card .card-content {
+    align-items: center;
   }
 }
