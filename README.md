@@ -44,7 +44,7 @@ Sus emisoras están en [`emisoras-modos.json`](emisoras-modos.json), en `modos.c
 - `categoria`: en Music Time y Buggy Time decide en qué filtro aparece la emisora. Tiene que ser uno de los definidos en `MUSIC_CATEGORY_META` o `BUGGY_CATEGORY_META` de `app.js` (Buggy Time: `scifi`, `oldies`, `fallout`, `gta`, `games` y `buggy`); si no, la emisora no se ve en ningún filtro.
 - `afinacion` (opcional) muestra una etiqueta en la tarjeta y en el reproductor, por ejemplo `"432 Hz"`. En Big Calm solo debe ponerse si la afinación se ha medido: un nombre con "432" no garantiza que suene así.
 - `afinacionNota` (opcional) es el texto que aparece al pasar el ratón por la etiqueta.
-- `categoria` (obligatoria en Music Time, porque no hay filtro "Todas" y sin ella la emisora no se vería) coloca la emisora en una temática: `blues`, `crooners`, `rock70`, `rocknroll`, `ochentas`, `rockespanol`, `soundtracks`, `fantasia`, `metal`, `melodico`, `folkmetal`, `newage`, `indie`, `cielos` o `clasica`. Las temáticas se definen en `MUSIC_CATEGORY_ORDER` y `MUSIC_CATEGORY_META`, en `app.js`.
+- `categoria` (obligatoria en Music Time, porque no hay filtro "Todas" y sin ella la emisora no se vería) coloca la emisora en una temática: `blues`, `crooners`, `rock70`, `rocknroll`, `ochentas`, `rockespanol`, `soundtracks`, `fantasia`, `metal`, `melodico`, `folkmetal`, `newage`, `indie`, `electronica`, `cielos` o `clasica`. Las temáticas se definen en `MUSIC_CATEGORY_ORDER` y `MUSIC_CATEGORY_META`, en `app.js`.
 - Si un modo no tiene emisoras, muestra un aviso y oculta el podio.
 
 ## Notas técnicas

@@ -35,7 +35,7 @@
     lofi: { icon: '🎧', label: 'Lo-fi' }
   };
 
-  var MUSIC_CATEGORY_ORDER = ['blues', 'crooners', 'rock70', 'rocknroll', 'ochentas', 'rockespanol', 'soundtracks', 'fantasia', 'metal', 'melodico', 'folkmetal', 'newage', 'indie', 'cielos', 'clasica'];
+  var MUSIC_CATEGORY_ORDER = ['blues', 'crooners', 'rock70', 'rocknroll', 'ochentas', 'rockespanol', 'soundtracks', 'fantasia', 'metal', 'melodico', 'folkmetal', 'newage', 'indie', 'electronica', 'cielos', 'clasica'];
   var MUSIC_CATEGORY_META = {
     blues: { icon: '🎷', label: 'Blues' },
     crooners: { icon: '🎩', label: 'Crooners' },
@@ -50,6 +50,7 @@
     folkmetal: { icon: '🍺', label: 'Folk metal' },
     newage: { icon: '🌿', label: 'New age' },
     indie: { icon: '🌌', label: 'Indie y alternativo' },
+    electronica: { icon: '🎛️', label: 'Electrónica' },
     cielos: { icon: '🌠', label: 'Sky y The Expanse' },
     clasica: { icon: '🎻', label: 'Clásica' }
   };

@@ -1246,6 +1246,74 @@
           "web": "https://laut.fm/epicsoundsfm",
           "descripcion": "Música épica de tráiler",
           "categoria": "fantasia"
+        },
+        {
+          "nombre": "Exclusively Daft Punk",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/daftpunk/icecast.audio",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Daft Punk",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "Technolovers Funky House",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://stream.technolovers.fm/funky-house",
+          "web": "https://technolovers.fm/",
+          "descripcion": "House funky y nu disco",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "Radio Record Disco Funk",
+          "pais": "RU",
+          "codec": "AAC",
+          "stream": "https://radiorecord.hostingradio.ru/discofunk96.aacp",
+          "web": "https://www.radiorecord.ru/station/discofunk",
+          "descripcion": "House con aire de disco y funk",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "Hed Kandi Club",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/hedkandiclub",
+          "web": "https://laut.fm/hedkandiclub",
+          "descripcion": "Disco house",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "M Radio French Touch",
+          "pais": "FR",
+          "codec": "MP3",
+          "stream": "https://mfmwr-003.ice.infomaniak.ch/mfmwr-003.mp3",
+          "web": "https://www.mradio.fr/",
+          "descripcion": "Electrónica francesa",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "Nightride FM",
+          "pais": "AU",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://stream.nightride.fm/nightride.mp3",
+          "web": "https://nightride.fm/",
+          "descripcion": "Synthwave",
+          "categoria": "electronica"
+        },
+        {
+          "nombre": "Nightride Chillsynth",
+          "pais": "AU",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://stream.nightride.fm/chillsynth.mp3",
+          "web": "https://nightride.fm/",
+          "descripcion": "Synthwave tranquilo",
+          "categoria": "electronica"
         }
       ]
     },

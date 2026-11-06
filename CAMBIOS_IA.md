@@ -4,6 +4,57 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 17:43 — Nueva temática "Electrónica" con Daft Punk y similares
+
+### Objetivo
+Buscar emisoras de Daft Punk o parecidas, crear una temática nueva para ellas y poner primero la de Daft Punk.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Nueva temática **Electrónica** en Music Time, colocada después de "Indie y alternativo".
+- Siete emisoras, en este orden:
+  1. **Exclusively Daft Punk**: solo Daft Punk.
+  2. **Technolovers Funky House**: house funky y nu disco.
+  3. **Radio Record Disco Funk**: house con aire de disco y funk.
+  4. **Hed Kandi Club** (laut.fm): disco house.
+  5. **M Radio French Touch**: electrónica francesa.
+  6. **Nightride FM**: synthwave.
+  7. **Nightride Chillsynth**: synthwave tranquilo.
+- `CACHE_VERSION` sube a `v30`.
+- El README incluye `electronica` en la lista de temáticas válidas.
+
+### Motivo
+- Music Time no tenía ninguna temática de electrónica.
+- Exclusively Daft Punk es la única emisora dedicada a Daft Punk que se encontró (radio-browser.info). No hay emisoras de Justice, Cassius o Air en radio-browser, laut.fm ni PCRadio. Las de house funky y disco son lo más parecido a la etapa "Discovery", y las de synthwave, a la banda sonora de "Tron: Legacy".
+- Nightride FM ya tenía su canal Horrorsynth en Buggy Time, pero no el principal ni Chillsynth.
+- Las emisoras aparecen en el orden del JSON, por eso Daft Punk va la primera del bloque.
+
+### Validaciones
+- Petición a los 7 streams, leyendo las URLs del JSON: los 7 responden 200 con audio (`audio/mpeg` o `audio/aac`).
+- En Hed Kandi Club se miraron las últimas canciones (Freeez, Dubby Disco Boyz...) para confirmar el estilo.
+- `emisoras-modos.json` carga sin errores con Node y `node --check app.js` no da errores.
+- Ningún nombre ni URL nueva repite uno existente.
+- No se ha probado en el navegador.
+
+### Riesgos o pendientes
+- No se ha comprobado qué pone M Radio French Touch; el estilo se supone por el nombre.
+- Si alguien ya tenía un orden guardado en Music Time, las emisoras nuevas pueden aparecer en otra posición dentro de la temática.
+- Hay que abrir Music Time y escucharlas. No tienen logo propio.
+
+### Cómo revertir
+- En `emisoras-modos.json`, borrar las 7 entradas con `"categoria": "electronica"`.
+- En `app.js`, quitar `'electronica'` de `MUSIC_CATEGORY_ORDER` y la línea `electronica: { icon: '🎛️', label: 'Electrónica' },` de `MUSIC_CATEGORY_META`.
+- En `README.md`, quitar `electronica` de la lista de temáticas.
+- En `sw.js`, subir `CACHE_VERSION` a `v31` (no volver a `v29`).
+
+---
+
 ## 2026-11-06 17:23 — Siete emisoras más en "Fantasía"
 
 ### Objetivo
