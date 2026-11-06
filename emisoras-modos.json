@@ -1178,6 +1178,74 @@
           "web": "https://laut.fm/chromatique-sky",
           "descripcion": "Bandas sonoras épicas",
           "categoria": "fantasia"
+        },
+        {
+          "nombre": "Nightwish Radio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/nightwish-radio",
+          "web": "https://laut.fm/nightwish-radio",
+          "descripcion": "Metal sinfónico: Nightwish, Within Temptation, Epica",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "PCRadio Nightwish",
+          "pais": "DE",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/Nightwish-hi",
+          "web": "https://pcradio.ru/",
+          "descripcion": "Solo Nightwish",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "PCRadio Within Temptation",
+          "pais": "DE",
+          "codec": "AAC",
+          "stream": "https://stream.pcradio.ru/Within_Temptation-hi",
+          "web": "https://pcradio.ru/",
+          "descripcion": "Solo Within Temptation",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Medieval Fantasy",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/medieval-fantasy",
+          "web": "https://laut.fm/medieval-fantasy",
+          "descripcion": "Folk medieval y de fantasía",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Arcano Mundo",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/arcano-mundo",
+          "web": "https://laut.fm/arcano-mundo",
+          "descripcion": "Bandas sonoras de fantasía, series y videojuegos",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Score Radio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/score-radio",
+          "web": "https://laut.fm/score-radio",
+          "descripcion": "Bandas sonoras épicas de cine",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Epic Sounds FM",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/epicsoundsfm",
+          "web": "https://laut.fm/epicsoundsfm",
+          "descripcion": "Música épica de tráiler",
+          "categoria": "fantasia"
         }
       ]
     },

@@ -4,6 +4,50 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 17:23 — Siete emisoras más en "Fantasía"
+
+### Objetivo
+Ampliar la temática "Fantasía" con emisoras de metal sinfónico (Nightwish, Edenbridge, Within Temptation) y bandas sonoras de películas de fantasía o medievales.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+Siete emisoras nuevas en la temática "Fantasía" de Music Time, que pasa de 4 a 11:
+- **Nightwish Radio** (laut.fm): metal sinfónico variado (Nightwish, Within Temptation, Epica, Xandria, Leaves' Eyes...).
+- **PCRadio Nightwish**: solo Nightwish.
+- **PCRadio Within Temptation**: solo Within Temptation.
+- **Medieval Fantasy** (laut.fm): folk medieval y de fantasía (Faun, Ratatosk, Waldkauz...).
+- **Arcano Mundo** (laut.fm): bandas sonoras de fantasía, series y videojuegos (Ramin Djawadi, Assassin's Creed...).
+- **Score Radio** (laut.fm): bandas sonoras épicas de cine (Gladiator, Vangelis, Hans Zimmer...).
+- **Epic Sounds FM** (laut.fm): música épica de tráiler (Two Steps from Hell, Mark Petrie...).
+
+`CACHE_VERSION` sube a `v29`.
+
+### Motivo
+- Se eligieron después de mirar en la API de laut.fm las últimas canciones que había puesto cada emisora, para confirmar que el estilo coincide con lo que anuncia.
+- Edenbridge no tiene emisora propia en radio-browser.info ni en laut.fm. Este tipo de grupos suena en Nightwish Radio.
+- Descartadas: Soundtracks FM y laut.fm Soundtrack (bandas sonoras genéricas, ya cubiertas por "Soundtracks"); Radio Metalkultur (más death y black metal que sinfónico); Drachenfeuer y Radio AENA (rock medieval, parecido a lo que ya hay en "Folk metal"); laut.fm "epic" (no es música épica).
+
+### Validaciones
+- Petición a las 11 emisoras de "Fantasía", leyendo las URLs directamente del JSON: las 11 responden 200 con audio (`audio/mpeg` o `audio/aac`).
+- `emisoras-modos.json` se carga sin errores con Node.
+- Se comprobó que ningún nombre ni URL nueva repite uno existente.
+- No se ha probado en el navegador.
+
+### Riesgos o pendientes
+- Hay que abrir Music Time y escuchar las emisoras nuevas.
+- Las emisoras nuevas no tienen logo propio.
+- La entrada anterior (17:13) dice que, para revertirla, se suba `CACHE_VERSION` a `v29`. Como ese número ya está usado, ahora habría que subir a `v30`.
+
+### Cómo revertir
+- En `emisoras-modos.json`, borrar las entradas "Nightwish Radio", "PCRadio Nightwish", "PCRadio Within Temptation", "Medieval Fantasy", "Arcano Mundo", "Score Radio" y "Epic Sounds FM".
+- En `sw.js`, subir `CACHE_VERSION` a `v30` (no volver a `v28`).
+
+---
+
 ## 2026-11-06 17:13 — Nueva temática "Fantasía" y una emisora más en Folk metal
 
 ### Objetivo
