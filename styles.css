@@ -798,6 +798,111 @@ body.is-dragging .podium-drop {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* --- Carátula de la emisora ---
+   Escritorio: logo a la izquierda y texto a la derecha.
+   Móvil (≤480px): logo arriba, con la estrella y el asa a su derecha, y el
+   texto debajo. Sin logo: iniciales con el color del modo. */
+
+.station-logo {
+  flex: 0 0 auto;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.station-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.station-logo.is-initials {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed var(--card-border);
+  box-shadow: none;
+  color: var(--neon-cyan);
+  font-family: 'Audiowide', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.station-logo[hidden] {
+  display: none;
+}
+
+.card-content {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.podium-drop .station-logo {
+  width: 3.75rem;
+  height: 3.75rem;
+}
+
+.mini-player-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 8px;
+}
+
+.mini-player-logo.is-initials {
+  font-size: 0.85rem;
+}
+
+body.sleep-mode .station-logo:not(.is-initials) {
+  /* De noche el blanco del logo deslumbra: se atenúa un poco. */
+  filter: brightness(0.82);
+}
+
+@media (max-width: 480px) {
+  .card-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  .station-card .station-logo {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .station-card .station-name,
+  .station-card .station-category-tag {
+    padding-right: 0;
+  }
+
+  .podium-drop .card-content {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .podium-drop .station-logo {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .podium-drop .station-name {
+    padding-right: 3.2rem;
+  }
+}
+
 .card-content:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
@@ -1573,4 +1678,31 @@ body.sleep-mode .sleep-timer-btn {
 
 .sleep-chips::-webkit-scrollbar-thumb:hover {
   background: rgba(111, 127, 214, 0.65);
+}
+
+/* Con el logo en el reproductor, en el móvil se recortan un poco los botones
+   grandes del modo dormir para que se lea el nombre. Va al final del archivo
+   para ganar a las reglas del modo dormir definidas antes. En el modo dormir
+   el logo del reproductor no cabe junto a sus botones y se oculta (las
+   tarjetas lo siguen mostrando). */
+@media (max-width: 480px) {
+  .mini-player-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  body.sleep-mode .mini-player-logo {
+    display: none;
+  }
+
+  body.sleep-mode .sleep-timer-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  body.sleep-mode .mini-player-toggle {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.2rem;
+  }
 }

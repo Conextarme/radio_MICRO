@@ -4,6 +4,72 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 15:49 — Carátulas de las emisoras y sin votos en el modo dormir
+
+### Objetivo
+Poner el logo de cada emisora según la maqueta aprobada: en el móvil, el diseño de la maqueta (logo arriba); en escritorio, la variante B (logo a la izquierda) con la C (iniciales cuando no hay logo). Además, quitar los votos de las tarjetas del modo dormir.
+
+### Archivos afectados
+- `scripts/fetch-logos.py`: creado.
+- `logos/`: creada, con 155 imágenes `.webp`, `index.json` y `excluidos.json`.
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `.gitignore`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- **Script de logos.** `scripts/fetch-logos.py` busca el logo de cada emisora, por este orden:
+  1. En radio-browser.info, por la URL del stream.
+  2. En radio-browser.info, por el nombre exacto.
+  3. En el icono de la web oficial de la emisora.
+
+  Descarta las imágenes de menos de 48 px y guarda cada logo a 128×128 sobre fondo blanco en `logos/<slug>.webp`. Genera `logos/index.json` con los logos que existen y una hoja de contacto para revisarlos. Respeta `logos/excluidos.json`.
+- **Revisión de los logos.** Encontró 174. Tras revisar la hoja de contacto se excluyeron 19 que no correspondían:
+  - Dos logos de otra marca: WIX en Gametation y Joomla en Radio Art Acoustic Blues.
+  - Un icono genérico de "play" en cinco emisoras Exclusively.
+  - Logos en blanco en Radio 432 y Shoot'em Up Radio.
+  - Uno ilegible en Scotlander Radio.
+  - La misma foto borrosa en las 9 de SomaFM.
+
+  Quedan 155 logos, unos 657 KB en total.
+- **Tarjetas.** El botón de cada tarjeta lleva el logo y un bloque de texto:
+  - En escritorio, el logo va a la izquierda (3,25 rem).
+  - En el móvil (≤480 px), el logo va arriba, con la estrella y el asa a su derecha, y el texto debajo.
+  - En el podio, el logo es algo más grande.
+  - Sin logo, se muestran las iniciales de la emisora con el color del modo y borde discontinuo.
+  - En el modo dormir, los logos se atenúan un poco para que el blanco no deslumbre.
+- **Reproductor de abajo.** Muestra el logo de la emisora que suena. En el móvil y en el modo dormir el logo se oculta y los botones grandes se reducen un poco, para que se pueda leer el nombre.
+- **Carga de los logos.** La web lee `logos/index.json` al arrancar y solo pide los logos que existen. Si un archivo falla, vuelve a las iniciales.
+- **Modo dormir.** Las tarjetas ya no muestran "N votos"; solo la calidad en kbps. Los votos se siguen usando por dentro para ordenar las emisoras y elegir una de reserva.
+- **Caché.** `CACHE_VERSION` sube a `v26`.
+
+### Motivo
+Los logos permiten reconocer las emisoras de un vistazo. Se guardan dentro del proyecto, en vez de enlazarlos a sus webs, para que carguen rápido, funcionen sin conexión y no dependan de servidores ajenos. El usuario pidió quitar los votos porque no aportan nada.
+
+### Validaciones
+- `node --check app.js`: sin errores.
+- Revisión visual de la hoja de contacto con los 174 logos encontrados. 19 excluidos a mano.
+- Capturas en Chrome sin interfaz, con un servidor local:
+  - Móvil, 390 px, modo normal: igual que la maqueta. Logo arriba, iniciales en las emisoras sin logo y logo en el reproductor.
+  - Escritorio, 1280 px: logo a la izquierda en todas las tarjetas, iniciales en las que no tienen y logo en el reproductor.
+  - Modo dormir, 390 px: antes de los ajustes el nombre del reproductor medía 66 px; después, 114 px y se lee bien.
+- Comprobado por código en el modo dormir: las tarjetas muestran "128 kbps" o "160 kbps" y ninguna contiene "votos". Hay 40 logos y 22 tarjetas con iniciales.
+- Sin probar: un móvil físico, ni la web publicada en Vercel.
+
+### Riesgos o pendientes
+- Algunos logos vienen de terceros y podrían no ser los oficiales actuales. Conviene echar un vistazo a `logos/hoja-de-contacto.png`; para quitar uno, se añade a `excluidos.json`.
+- 107 emisoras no tienen logo (las de Fallout, SomaFM, Los 40 Classic…) y muestran iniciales.
+- En el modo normal del móvil, con el logo y el botón del temporizador, el nombre del reproductor mide unos 70 px. Se lee el nombre corto, pero la canción queda recortada.
+- Los logos son marcas de cada emisora. Para uso personal no hay problema; si la web se hace pública conviene revisarlo.
+
+### Cómo revertir
+Borrar `logos/` y `scripts/fetch-logos.py`. Deshacer los cambios de este commit en `app.js`, `index.html`, `styles.css`, `sw.js`, `.gitignore` y `README.md`, por ejemplo con `git checkout <commit-anterior> -- app.js index.html styles.css sw.js .gitignore README.md`. Si ya estaba publicado, subir `CACHE_VERSION` a `v27`.
+
+---
+
 ## 2026-11-06 15:24 — Controles de pantalla de bloqueo y temporizador de apagado en todos los modos
 
 ### Objetivo

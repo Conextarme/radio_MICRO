@@ -65,6 +65,14 @@ El reproductor de abajo muestra la canción en curso y, con el botón de lista, 
 - Cadenas habladas (SER, RNE, COPE, Onda Cero), streams HLS y algunas otras no publican nada: el botón no aparece.
 - En local, con un servidor estático, `/api/` no existe y la función simplemente no se ve. Hace falta `vercel dev` o el despliegue.
 
+## Carátulas (logos) de las emisoras
+
+Cada tarjeta y el reproductor de abajo muestran el logo de la emisora. En escritorio va a la izquierda del nombre; en el móvil, arriba. Si una emisora no tiene logo, se muestran sus iniciales.
+
+- Los logos están en `logos/<slug>.webp` (128×128) y `logos/index.json` lista los que existen. El slug es el nombre en minúsculas, sin tildes y con guiones (`Cadena SER (Sevilla)` → `cadena-ser-sevilla`).
+- Para conseguir los de emisoras nuevas: `python scripts/fetch-logos.py` (requiere Python y Pillow). Solo busca los que faltan; `--all` los vuelve a descargar todos. Los saca de radio-browser.info o de la web oficial de la emisora.
+- Después, revisa `logos/hoja-de-contacto.png` (no se sube al repositorio). Si un logo no corresponde a su emisora, añade su slug a `logos/excluidos.json` y vuelve a ejecutar el script.
+
 ## Controles del móvil y temporizador
 
 - En todos los modos, la pantalla de bloqueo, los auriculares y el coche muestran la emisora (o la canción), con el icono de la web como imagen, o la carátula del disco si la emisora la da. Play/pausa funciona desde ahí, y "siguiente / anterior" recorre el TOP 3. Si no hay favoritas en el podio, recorre todas las emisoras del modo en el orden de la pantalla.

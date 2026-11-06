@@ -163,6 +163,7 @@
 
   var miniPlayer = document.getElementById('mini-player');
   var miniPlayerName = document.getElementById('mini-player-name');
+  var miniPlayerLogo = document.getElementById('mini-player-logo');
   var miniPlayerStatus = document.getElementById('mini-player-status');
   var miniPlayerToggle = document.getElementById('mini-player-toggle');
   var miniPlayerVolume = document.getElementById('mini-player-volume');
@@ -259,6 +260,7 @@
 
   function updateMiniPlayer() {
     syncNowPlaying();
+    updateMiniPlayerLogo();
     if (sleepTimerWrap) {
       // Con la zumbadora (vídeo de YouTube) el temporizador no tiene efecto.
       sleepTimerWrap.hidden = playerMode === 'buzzer';
@@ -853,6 +855,101 @@
     }
   });
 
+  /* --- Carátulas de las emisoras ---
+   *
+   * Los logos están en logos/<slug>.webp (los descarga scripts/fetch-logos.py)
+   * y logos/index.json dice cuáles existen, para no pedir imágenes que no
+   * hay. Sin logo se pintan las iniciales de la emisora.
+   */
+
+  var LOGO_INDEX_FILE = 'logos/index.json';
+  var logoSet = null;
+
+  function logoSlug(name) {
+    // Debe dar el mismo resultado que slugify() en scripts/fetch-logos.py.
+    return String(name)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function stationInitials(name) {
+    var words = String(name)
+      .replace(/\([^)]*\)/g, ' ')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .split(/[^A-Za-z0-9]+/)
+      .filter(Boolean);
+    if (!words.length) {
+      return '♪';
+    }
+    if (words.length === 1) {
+      return words[0].slice(0, 2).toUpperCase();
+    }
+    return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+  }
+
+  function fillStationLogo(el, station) {
+    el.textContent = '';
+    var slug = logoSlug(station.name);
+    if (logoSet && logoSet[slug]) {
+      el.classList.remove('is-initials');
+      var img = document.createElement('img');
+      img.src = 'logos/' + slug + '.webp';
+      img.alt = '';
+      img.width = 128;
+      img.height = 128;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.addEventListener('error', function () {
+        // Si el archivo falta, se vuelve a las iniciales.
+        el.classList.add('is-initials');
+        el.textContent = stationInitials(station.name);
+      });
+      el.appendChild(img);
+    } else {
+      el.classList.add('is-initials');
+      el.textContent = stationInitials(station.name);
+    }
+  }
+
+  function loadLogoIndex() {
+    fetch(LOGO_INDEX_FILE)
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .catch(function () { return []; })
+      .then(function (list) {
+        logoSet = {};
+        (Array.isArray(list) ? list : []).forEach(function (slug) { logoSet[slug] = true; });
+        // Las tarjetas que ya estaban pintadas cambian las iniciales por el logo.
+        cards.forEach(function (card, i) {
+          var el = card.querySelector('.station-logo');
+          if (el && stations[i]) {
+            fillStationLogo(el, stations[i]);
+          }
+        });
+        updateMiniPlayerLogo();
+      });
+  }
+
+  var miniPlayerLogoFor = null;
+
+  function updateMiniPlayerLogo() {
+    var station = playerMode === 'radio' ? stations[currentIndex] : null;
+    if (!station) {
+      miniPlayerLogo.hidden = true;
+      miniPlayerLogoFor = null;
+      return;
+    }
+    miniPlayerLogo.hidden = false;
+    var key = station.name + '|' + (logoSet ? '1' : '0');
+    if (miniPlayerLogoFor !== key) {
+      fillStationLogo(miniPlayerLogo, station);
+      miniPlayerLogoFor = key;
+    }
+  }
+
   function createCard(station, index) {
     var unavailable = isUnavailable(station);
     var card = document.createElement('div');
@@ -905,6 +1002,20 @@
     content.type = 'button';
     content.className = 'card-content';
 
+    var logo = document.createElement('span');
+    logo.className = 'station-logo';
+    logo.setAttribute('aria-hidden', 'true');
+    fillStationLogo(logo, station);
+    content.appendChild(logo);
+
+    // Todo el texto de la tarjeta va en su propio bloque, a la derecha del
+    // logo en escritorio y debajo en el móvil.
+    var textBox = document.createElement('span');
+    textBox.className = 'card-text';
+    content.appendChild(textBox);
+    var cardContent = content;
+    content = textBox;
+
     var modeCategories = MODE_CATEGORIES[appMode];
     var categoryMeta = modeCategories && station.category ? modeCategories.meta[station.category] : null;
     if (categoryMeta) {
@@ -937,20 +1048,15 @@
     status.textContent = unavailable ? STATUS_LABEL.unavailable : station.freq;
     content.appendChild(status);
 
-    if (sleepMode && (station.votos || station.bitrate)) {
+    // En el modo dormir solo se muestra la calidad; los votos no aportan nada.
+    if (sleepMode && station.bitrate) {
       var meta = document.createElement('div');
       meta.className = 'station-meta';
-      var bits = [];
-      if (station.votos) {
-        bits.push(station.votos.toLocaleString('es-ES') + ' votos');
-      }
-      if (station.bitrate) {
-        bits.push(station.bitrate + ' kbps');
-      }
-      meta.textContent = bits.join(' · ');
+      meta.textContent = station.bitrate + ' kbps';
       content.appendChild(meta);
     }
 
+    content = cardContent;
     card.appendChild(content);
 
     if (unavailable) {
@@ -2471,5 +2577,6 @@
 
   applyModeClasses();
   updateModeUI();
+  loadLogoIndex();
   initCurrentMode();
 })();
