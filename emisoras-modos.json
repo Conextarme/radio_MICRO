@@ -930,6 +930,15 @@
           "categoria": "folkmetal"
         },
         {
+          "nombre": "Rock Antenne Coversongs",
+          "pais": "DE",
+          "codec": "AAC",
+          "stream": "https://stream.rockantenne.de/coversongs/stream/aacp",
+          "web": "https://www.rockantenne.de/",
+          "descripcion": "Versiones en clave rock y metal",
+          "categoria": "folkmetal"
+        },
+        {
           "nombre": "Mariskal Rock",
           "pais": "ES",
           "codec": "MP3",
@@ -1129,6 +1138,46 @@
           "web": "https://boxofficeradio.co.uk/",
           "descripcion": "Musicales del West End y Broadway",
           "categoria": "soundtracks"
+        },
+        {
+          "nombre": "Radio Rivendell",
+          "pais": "SE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://play.radiorivendell.com/radio/8000/radio.mp3",
+          "web": "https://www.radiorivendell.com/",
+          "descripcion": "Música de fantasía y bandas sonoras épicas",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "laut.fm Fantasyradio",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/fantasyradio",
+          "web": "https://laut.fm/fantasyradio",
+          "descripcion": "Fantasía épica, folk y sinfónico",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Explorers Emporium Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://listen.radioking.com/radio/155740/stream/196375",
+          "web": "https://radiohear.com/station/explorers-emporium-radio-us",
+          "descripcion": "Bandas sonoras de fantasía con aire medieval",
+          "categoria": "fantasia"
+        },
+        {
+          "nombre": "Chromatique-Sky",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.laut.fm/chromatique-sky",
+          "web": "https://laut.fm/chromatique-sky",
+          "descripcion": "Bandas sonoras épicas",
+          "categoria": "fantasia"
         }
       ]
     },

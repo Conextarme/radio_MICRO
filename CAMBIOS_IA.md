@@ -4,6 +4,53 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 17:13 — Nueva temática "Fantasía" y una emisora más en Folk metal
+
+### Objetivo
+Buscar emisoras parecidas a la música de Elder Scrolls (Skyrim), El Señor de los Anillos y las versiones metal de Peyton Parrish, y añadir las que valgan: las de metal en "Folk metal" y el resto en una temática nueva de fantasía.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Nueva temática **Fantasía** (icono de dragón) en Music Time, colocada justo después de "Soundtracks".
+- Cuatro emisoras nuevas en Fantasía:
+  - Radio Rivendell (Suecia): música de fantasía y bandas sonoras épicas. Es lo más parecido a Skyrim y El Señor de los Anillos.
+  - laut.fm Fantasyradio (Alemania): fantasía épica, folk y sinfónico.
+  - Explorers Emporium Radio (EE. UU.): bandas sonoras de fantasía con aire medieval.
+  - Chromatique-Sky (Alemania): bandas sonoras épicas.
+- Una emisora nueva en Folk metal: Rock Antenne Coversongs (versiones en clave rock y metal, lo más cercano a las versiones metal de Disney).
+- `CACHE_VERSION` sube a `v28` para que la PWA ya instalada descargue la lista y el código nuevos.
+- El README lista todas las temáticas válidas de Music Time, incluida `fantasia`.
+
+### Motivo
+- No existe ninguna emisora dedicada a Elder Scrolls, a El Señor de los Anillos ni a Peyton Parrish: se buscó en radio-browser.info (nombres y etiquetas "skyrim", "elder scrolls", "tolkien", "lord of the rings", "hobbit", "peyton", "disney"...) y en la web. Middle-earth Radio, una radio de fans de Tolkien, no tiene ningún stream activo localizable (su web devuelve error 403). Por eso se eligieron emisoras de estilo parecido.
+- Radio Bob! Symphonic Metal también encajaba, pero ya estaba en la lista (temática "Metal melódico", por HTTPS), así que no se duplicó.
+- Se descartaron las emisoras de Radio Caprice (Viking Metal, Folk Metal, Dungeon Synth) porque solo funcionan por HTTP, y otras que repetían estilos ya cubiertos.
+
+### Validaciones
+- Petición a cada uno de los 5 streams nuevos, leyendo la URL directamente del JSON: los 5 responden 200 con audio (`audio/mpeg` o `audio/aac`).
+- `emisoras-modos.json` se carga sin errores con Node (`require`).
+- `node --check app.js`: sin errores de sintaxis.
+- Se comprobó que ningún nombre nuevo repite uno existente.
+- No se ha probado la app en el navegador: no se ha comprobado visualmente que el filtro "Fantasía" aparezca y reproduzca.
+
+### Riesgos o pendientes
+- Hay que abrir Music Time y comprobar que el filtro "Fantasía" se ve y que las cuatro emisoras suenan.
+- Las emisoras nuevas no tienen logo propio en `logos/`; se mostrará el logo por defecto que use la app.
+
+### Cómo revertir
+- En `emisoras-modos.json`, borrar las entradas "Radio Rivendell", "laut.fm Fantasyradio", "Explorers Emporium Radio", "Chromatique-Sky" y "Rock Antenne Coversongs".
+- En `app.js`, quitar `'fantasia'` de `MUSIC_CATEGORY_ORDER` y la línea `fantasia: { icon: '🐉', label: 'Fantasía' },` de `MUSIC_CATEGORY_META`.
+- En `README.md`, quitar `fantasia` de la lista de temáticas.
+- En `sw.js`, subir `CACHE_VERSION` otra vez (a `v29`), no volver a `v27`, para que la PWA recoja la vuelta atrás.
+
+---
+
 ## 2026-11-06 15:59 — Tarjetas de escritorio menos apretadas
 
 ### Objetivo
