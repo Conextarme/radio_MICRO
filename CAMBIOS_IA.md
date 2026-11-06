@@ -4,6 +4,44 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 12:03 — Fallout y GTA no salían en Buggy Time tras publicar
+
+### Objetivo
+El usuario avisó de que en Buggy Time no aparecían los filtros Fallout y GTA y que en Games solo salían unas pocas emisoras.
+
+### Archivos afectados
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- La web publicada en Vercel ya tenía el código nuevo. El fallo estaba en el service worker del navegador o del móvil: servía el `app.js` desde su copia guardada ("caché primero"), pero la lista de emisoras la pedía nueva a la red. En la primera carga tras publicar se juntaban el `app.js` viejo, que no conocía las categorías Fallout y GTA, con la lista nueva. Por eso esos dos filtros no salían y Games solo enseñaba sus 9 emisoras.
+- Ahora el service worker pide todo a la red primero (HTML, JS, CSS y listas) y solo usa la copia guardada si no hay conexión. Así el código y las listas siempre llegan de la misma versión.
+- Al instalarse, el service worker descarga los archivos saltándose la caché del navegador (`cache: 'reload'`), para no guardar una copia vieja.
+- Versión de caché de v22 a v23. `README.md` describe el nuevo comportamiento.
+
+### Motivo
+Con "caché primero" cada publicación se ve con una carga de retraso, y si en esa publicación cambian a la vez el código y la lista de emisoras, la app se ve mal durante esa carga. "Red primero" lo evita a cambio de esperar a la red en cada carga, algo que en Vercel apenas se nota.
+
+### Validaciones
+- `node --check sw.js`: sin errores.
+- Comprobado que https://radio-micro.vercel.app ya servía el `app.js` con Fallout y GTA y el `sw.js` v22.
+- Prueba en Chrome sin ventana con un servidor local: primero se carga la versión anterior a Fallout y GTA y después se publica la nueva.
+  - Con la versión publicada (v22), la primera recarga mostró Sci-fi 3, Oldies 4, Games 9 y Buggy 9, sin Fallout ni GTA, igual que vio el usuario. La segunda recarga ya mostró los seis filtros.
+  - Con el arreglo (v23) instalado, se publicó una versión de prueba con los nombres de los filtros cambiados y se vio a la primera recarga.
+  - Sin conexión (simulado en Chrome), la app con v23 abre y muestra Buggy Time con sus seis filtros.
+  - Sin errores de JavaScript en ninguna prueba.
+- No probado: un móvil físico ni la app instalada como PWA.
+
+### Riesgos o pendientes
+- Quien tenga el service worker v22 o anterior en el móvil verá la versión vieja una vez más cuando se publique este cambio, porque esa carga aún la sirve el service worker antiguo. Basta con recargar o cerrar y abrir la app otra vez. Desde v23 los cambios se ven a la primera.
+- Con poca cobertura, la app tarda algo más en abrir que antes, porque espera a la red antes de usar la copia guardada.
+
+### Cómo revertir
+En `sw.js`, poner `CACHE_VERSION` a un número nuevo (no reutilizar v22), volver a `cache.addAll(APP_SHELL)` sin el `map` con `cache: 'reload'`, y recuperar el bloque anterior del evento `fetch` (red primero solo para los `.json`, caché primero para el resto) con `git show efcfc02:sw.js`. Recuperar la línea de `sw.js` de `README.md` con `git show efcfc02:README.md`.
+
+---
+
 ## 2026-11-06 11:56 — Filtros Fallout y GTA en Buggy Time
 
 ### Objetivo

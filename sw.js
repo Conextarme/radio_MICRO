@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v22';
+var CACHE_VERSION = 'v23';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -34,7 +34,8 @@ var APP_SHELL = [
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(APP_SHELL);
+      // cache: 'reload' evita que la caché HTTP del navegador cuele una copia vieja.
+      return cache.addAll(APP_SHELL.map(function (url) { return new Request(url, { cache: 'reload' }); }));
     }).then(function () {
       return self.skipWaiting();
     })
@@ -74,35 +75,22 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
-  // Listas de emisoras e historial de fallos: red primero (para tener la lista más reciente), con
-  // la copia en caché como respaldo si no hay conexión.
-  if (url.pathname.endsWith('/stations.json') || url.pathname.endsWith('/emisoras-relax.json') || url.pathname.endsWith('/emisoras-modos.json') || url.pathname.endsWith('/stream-health.json')) {
-    event.respondWith(
-      fetch(request).then(function (response) {
+  // Todo lo propio (HTML, JS, CSS, listas de emisoras, historial de fallos):
+  // red primero y copia en caché como respaldo si no hay conexión.
+  // Antes el código (app.js, etc.) iba "caché primero": tras publicar, el móvil
+  // juntaba el app.js viejo con la lista de emisoras nueva y las categorías
+  // nuevas (p. ej. Fallout y GTA en Buggy Time) no aparecían.
+  event.respondWith(
+    fetch(request).then(function (response) {
+      if (response && response.ok) {
         var copy = response.clone();
         caches.open(CACHE_NAME).then(function (cache) { cache.put(request, copy); });
-        return response;
-      }).catch(function () {
-        return caches.match(request);
-      })
-    );
-    return;
-  }
-
-  // Resto del app shell: caché primero, red como respaldo y actualización
-  // silenciosa de la caché para la próxima vez.
-  event.respondWith(
-    caches.match(request).then(function (cached) {
-      var networkFetch = fetch(request).then(function (response) {
-        if (response && response.ok) {
-          var copy = response.clone();
-          caches.open(CACHE_NAME).then(function (cache) { cache.put(request, copy); });
-        }
-        return response;
-      }).catch(function () {
-        return cached;
+      }
+      return response;
+    }).catch(function () {
+      return caches.match(request).then(function (cached) {
+        return cached || (request.mode === 'navigate' ? caches.match('./index.html') : undefined);
       });
-      return cached || networkFetch;
     })
   );
 });

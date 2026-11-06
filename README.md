@@ -74,7 +74,7 @@ Cada ejecución guarda el historial de fallos en `stream-health.json`. La app lo
 La web es una PWA: se puede "Añadir a pantalla de inicio" desde el navegador del móvil y se abre como una app, sin barra de direcciones.
 
 - `manifest.json`: nombre, icono y colores de la app instalada.
-- `sw.js`: service worker que cachea el "app shell" (HTML/CSS/JS/iconos) para carga instantánea y uso básico sin conexión. Los streams de audio y `hls.js` **nunca** se cachean, se piden siempre directos a la red.
+- `sw.js`: service worker que guarda una copia del "app shell" (HTML/CSS/JS/iconos) y de las listas de emisoras para uso básico sin conexión. Siempre pide primero a la red y solo usa la copia si no hay conexión, para que tras publicar no se mezcle un `app.js` viejo con una lista de emisoras nueva. Los streams de audio y `hls.js` **nunca** se cachean, se piden siempre directos a la red.
 - `icons/`: iconos generados para la app (192px, 512px, versión "maskable" para Android y `apple-touch-icon` para iOS).
 
 **Importante al modificar `index.html`, `styles.css`, `app.js`, `manifest.json` o los iconos:** sube el número de `CACHE_VERSION` al principio de `sw.js`. Si no lo haces, los usuarios que ya tengan la PWA instalada seguirán viendo la versión antigua cacheada hasta que limpien datos del sitio.
