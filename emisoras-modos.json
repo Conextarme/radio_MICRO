@@ -1000,6 +1000,135 @@
           "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/FROCKNAC_56AAC.aac",
           "descripcion": "Rock argentino",
           "categoria": "rockespanol"
+        },
+        {
+          "nombre": "KEXP 90.3 Seattle",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://kexp-mp3-128.streamguys1.com/kexp128.mp3",
+          "web": "https://www.kexp.org/",
+          "descripcion": "Radio indie de Seattle que pone a AURORA a menudo",
+          "categoria": "indie"
+        },
+        {
+          "nombre": "NRK P1",
+          "pais": "NO",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://cdn0-47115-liveicecast0.dna.contentdelivery.net/p1_mp3_h",
+          "web": "https://radio.nrk.no/direkte/p1",
+          "descripcion": "Radio pública noruega: pop y charla en noruego, con AURORA en rotación",
+          "categoria": "indie"
+        },
+        {
+          "nombre": "Rainwave Chill",
+          "pais": "US",
+          "codec": "MP3",
+          "stream": "https://relay.rainwave.cc/chill.mp3",
+          "web": "https://rainwave.cc/chill/",
+          "descripcion": "Música de videojuegos tranquila",
+          "categoria": "cielos"
+        },
+        {
+          "nombre": "Klassik Radio Games",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.klassikradio.de/games/mp3-128/",
+          "web": "https://www.klassikradio.de/",
+          "descripcion": "Bandas sonoras de videojuegos en versión orquestal",
+          "categoria": "cielos"
+        },
+        {
+          "nombre": "Thermocline Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://playthermocline.com/radio/stream.mp3",
+          "web": "https://playthermocline.com/radio",
+          "descripcion": "Banda sonora orquestal y ambiental del juego de submarinos Thermocline",
+          "categoria": "cielos"
+        },
+        {
+          "nombre": "Classical Radio - Wagner",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://drive.uber.radio/uber/crwagner/icecast.audio",
+          "web": "https://www.classicalradio.com/",
+          "descripcion": "Solo Wagner",
+          "categoria": "clasica"
+        },
+        {
+          "nombre": "Klassik Radio Pure Mozart",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://stream.klassikradio.de/mozart/mp3-128/",
+          "web": "https://www.klassikradio.de/",
+          "descripcion": "Solo Mozart",
+          "categoria": "clasica"
+        },
+        {
+          "nombre": "Ancient FM",
+          "pais": "CA",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://mediaserv73.live-streams.nl:18058/stream",
+          "web": "https://www.ancientfm.com/",
+          "descripcion": "Música medieval y renacentista",
+          "categoria": "clasica"
+        },
+        {
+          "nombre": "Radio Art - Gregorian Chants",
+          "pais": "GR",
+          "codec": "MP3",
+          "bitrate": 96,
+          "stream": "https://air.radioart.com/fGregorian_chants.mp3",
+          "web": "https://www.radioart.com/",
+          "descripcion": "Canto gregoriano",
+          "categoria": "clasica"
+        },
+        {
+          "nombre": "Classical Catholic Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.live365.com/a64105",
+          "web": "https://live365.com/station/Classical-Catholic-Radio-a64105",
+          "descripcion": "Música sacra coral y litúrgica",
+          "categoria": "clasica"
+        },
+        {
+          "nombre": "Sounds of Broadway",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streamer.radio.co/s5cd7204e5/listen",
+          "web": "https://soundsofbroadway.com/",
+          "descripcion": "Musicales de Broadway",
+          "categoria": "soundtracks"
+        },
+        {
+          "nombre": "Heart Musicals",
+          "pais": "GB",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://media-ice.musicradio.com/HeartMusicalsMP3",
+          "web": "https://www.heart.co.uk/musicals/",
+          "descripcion": "Musicales de cine y teatro, con mucho Lloyd Webber",
+          "categoria": "soundtracks"
+        },
+        {
+          "nombre": "Box Office Radio",
+          "pais": "GB",
+          "codec": "AAC",
+          "bitrate": 128,
+          "stream": "https://s2.citrus3.com:8400/stream",
+          "web": "https://boxofficeradio.co.uk/",
+          "descripcion": "Musicales del West End y Broadway",
+          "categoria": "soundtracks"
         }
       ]
     },
@@ -1011,7 +1140,8 @@
           "bitrate": 192,
           "stream": "https://s2.radio.co/sec5fa6199/listen",
           "web": "https://www.shirleyandspinoza.radio/",
-          "descripcion": "Collages de audio y radio libre de culto"
+          "descripcion": "Collages de audio y radio libre de culto",
+          "categoria": "buggy"
         },
         {
           "nombre": "Radio Aporee",
@@ -1020,7 +1150,8 @@
           "bitrate": 128,
           "stream": "https://radio.aporee.org:8443/aporee",
           "web": "https://radio.aporee.org/",
-          "descripcion": "Grabaciones de campo de todo el mundo"
+          "descripcion": "Grabaciones de campo de todo el mundo",
+          "categoria": "buggy"
         },
         {
           "nombre": "Datafruits",
@@ -1028,7 +1159,8 @@
           "bitrate": 128,
           "stream": "https://streampusher-relay.club/datafruits.mp3",
           "web": "https://www.datafruits.fm/",
-          "descripcion": "Electrónica experimental hecha por su comunidad"
+          "descripcion": "Electrónica experimental hecha por su comunidad",
+          "categoria": "buggy"
         },
         {
           "nombre": "Substrate Radio",
@@ -1037,7 +1169,8 @@
           "bitrate": 128,
           "stream": "https://cast4.asurahosting.com/proxy/jason126/stream",
           "web": "https://substrateradio.com/",
-          "descripcion": "Radio libre desde Alabama: ambient, drone, punk y shoegaze"
+          "descripcion": "Radio libre desde Alabama: ambient, drone, punk y shoegaze",
+          "categoria": "buggy"
         },
         {
           "nombre": "Fogpoint Radio",
@@ -1046,7 +1179,8 @@
           "bitrate": 192,
           "stream": "https://s4.radio.co/s3ff272827/listen",
           "web": "https://fogpointradio.com/",
-          "descripcion": "Emisión continua de música de los años 30, 40 y 50"
+          "descripcion": "Emisión continua de música de los años 30, 40 y 50",
+          "categoria": "oldies"
         },
         {
           "nombre": "Nightwave Plaza",
@@ -1054,7 +1188,8 @@
           "bitrate": 128,
           "stream": "https://radio.plaza.one/mp3",
           "web": "https://plaza.one/",
-          "descripcion": "Vaporwave a todas horas"
+          "descripcion": "Vaporwave a todas horas",
+          "categoria": "buggy"
         },
         {
           "nombre": "Birdsong Radio",
@@ -1063,7 +1198,8 @@
           "bitrate": 128,
           "stream": "https://a1.radio.co/s5c5da6a36/listen",
           "web": "https://www.birdsong.fm/",
-          "descripcion": "Canto de pájaros, sin música"
+          "descripcion": "Canto de pájaros, sin música",
+          "categoria": "buggy"
         },
         {
           "nombre": "SomaFM Mission Control",
@@ -1072,7 +1208,8 @@
           "bitrate": 128,
           "stream": "https://ice2.somafm.com/missioncontrol-128-mp3",
           "web": "https://somafm.com/missioncontrol/",
-          "descripcion": "Comunicaciones de la NASA sobre música ambient"
+          "descripcion": "Comunicaciones de la NASA sobre música ambient",
+          "categoria": "scifi"
         },
         {
           "nombre": "Strange Radio (Pumpkin FM)",
@@ -1081,7 +1218,8 @@
           "bitrate": 64,
           "stream": "https://cast2.asurahosting.com/proxy/strangeradio/stream",
           "web": "https://pumpkinfm.com/",
-          "descripcion": "Relatos de terror, misterio y ciencia ficción"
+          "descripcion": "Relatos de terror, misterio y ciencia ficción",
+          "categoria": "scifi"
         },
         {
           "nombre": "50's Science Fiction KOTR",
@@ -1090,7 +1228,8 @@
           "bitrate": 64,
           "stream": "https://stream.kf7k.com/listen/scifi/radio.mp3",
           "web": "https://stream.kf7k.com/public/scifi",
-          "descripcion": "Radioteatro antiguo de ciencia ficción"
+          "descripcion": "Radioteatro antiguo de ciencia ficción",
+          "categoria": "scifi"
         },
         {
           "nombre": "Nightride FM Horrorsynth",
@@ -1099,7 +1238,8 @@
           "bitrate": 320,
           "stream": "https://stream.nightride.fm/horrorsynth.mp3",
           "web": "https://nightride.fm/",
-          "descripcion": "Sintetizadores de terror"
+          "descripcion": "Sintetizadores de terror",
+          "categoria": "buggy"
         },
         {
           "nombre": "Radio M00 Dark Ambient",
@@ -1108,7 +1248,8 @@
           "bitrate": 128,
           "stream": "https://radio.m00.su:8000/darkambient.mp3",
           "web": "https://radio.m00.su/",
-          "descripcion": "Dark ambient"
+          "descripcion": "Dark ambient",
+          "categoria": "buggy"
         },
         {
           "nombre": "Kobold.FM",
@@ -1117,7 +1258,8 @@
           "bitrate": 192,
           "stream": "https://kobold.messy.quest/listen/kobold.fm/radio.mp3",
           "web": "https://kobold.messy.quest/",
-          "descripcion": "Dungeon synth, música de mazmorras"
+          "descripcion": "Dungeon synth, música de mazmorras",
+          "categoria": "buggy"
         },
         {
           "nombre": "1940s Radio HS",
@@ -1126,7 +1268,8 @@
           "bitrate": 128,
           "stream": "https://cast2.asurahosting.com/proxy/1940sradio/stream",
           "web": "https://pumpkinfm.com/",
-          "descripcion": "Música y emisiones de los años 40, ambiente BioShock"
+          "descripcion": "Música y emisiones de los años 40, ambiente BioShock",
+          "categoria": "oldies"
         },
         {
           "nombre": "1940s Light Programme",
@@ -1135,21 +1278,24 @@
           "bitrate": 128,
           "stream": "https://cast2.asurahosting.com/proxy/malvernradiojrs/stream",
           "web": "https://pumpkinfm.com/",
-          "descripcion": "Música de los años 40, ambiente BioShock"
+          "descripcion": "Música de los años 40, ambiente BioShock",
+          "categoria": "oldies"
         },
         {
           "nombre": "Fallout 4 Diamond City Radio",
           "codec": "OGG",
           "stream": "https://fallout.fm:8444/falloutfm6.ogg",
           "web": "https://fallout.fm/",
-          "descripcion": "Radio del videojuego Fallout 4"
+          "descripcion": "Radio del videojuego Fallout 4",
+          "categoria": "games"
         },
         {
           "nombre": "Fallout 3 Galaxy News Radio",
           "codec": "OGG",
           "stream": "https://fallout.fm:8444/falloutfm2.ogg",
           "web": "https://fallout.fm/",
-          "descripcion": "Radio del videojuego Fallout 3"
+          "descripcion": "Radio del videojuego Fallout 3",
+          "categoria": "games"
         },
         {
           "nombre": "Flash FM (Vice City)",
@@ -1158,7 +1304,224 @@
           "bitrate": 128,
           "stream": "https://audio.gtaradio.net/vc/flash",
           "web": "https://www.grandtheftwiki.com/Flash_FM",
-          "descripcion": "Radio del videojuego GTA Vice City"
+          "descripcion": "Radio del videojuego GTA Vice City",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Radio Aurora",
+          "pais": "IT",
+          "codec": "MP3",
+          "bitrate": 96,
+          "stream": "https://sr2.inmystream.it/proxy/aurora1?mp=/stream",
+          "web": "https://www.radioaurora.it/",
+          "descripcion": "Oldies italianos de los 60 a los 90 desde Apulia",
+          "categoria": "oldies"
+        },
+        {
+          "nombre": "Rainwave Game",
+          "pais": "US",
+          "codec": "MP3",
+          "stream": "https://relay.rainwave.cc/game.mp3",
+          "web": "https://rainwave.cc/game/",
+          "descripcion": "Bandas sonoras originales de videojuegos",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Rainwave Covers",
+          "pais": "US",
+          "codec": "MP3",
+          "stream": "https://relay.rainwave.cc/covers.mp3",
+          "web": "https://rainwave.cc/covers/",
+          "descripcion": "Versiones de temas de videojuegos",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Rainwave Chill",
+          "pais": "US",
+          "codec": "MP3",
+          "stream": "https://relay.rainwave.cc/chill.mp3",
+          "web": "https://rainwave.cc/chill/",
+          "descripcion": "Música de videojuegos tranquila",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Pixel & Plot (YourClassical)",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://pixelplot.stream.publicradio.org/pixelplot.mp3",
+          "web": "https://www.yourclassical.org/playlist/pixelplot",
+          "descripcion": "Música orquestal de videojuegos, cine y series",
+          "categoria": "games"
+        },
+        {
+          "nombre": "SpriteLayer Video Game Radio",
+          "pais": "US",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://www.spritelayerradio.com:8010/all",
+          "web": "http://www.spritelayerradio.com/",
+          "descripcion": "Música de videojuegos de todas las épocas",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Gametation",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://game-tation.stream.laut.fm/game-tation",
+          "web": "https://laut.fm/game-tation",
+          "descripcion": "Bandas sonoras instrumentales de videojuegos",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fluffylandrpg",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://fluffylandrpg.stream.laut.fm/fluffylandrpg",
+          "web": "https://laut.fm/fluffylandrpg",
+          "descripcion": "Bandas sonoras de JRPG",
+          "categoria": "games"
+        },
+        {
+          "nombre": "80s80s Games",
+          "pais": "DE",
+          "codec": "MP3",
+          "bitrate": 192,
+          "stream": "https://streams.80s80s.de/games/mp3-192/",
+          "web": "https://www.80s80s.de/radios/games",
+          "descripcion": "Pop de los 80 y música de videojuegos",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Shoot'em Up Radio",
+          "pais": "RU",
+          "codec": "MP3",
+          "bitrate": 320,
+          "stream": "https://stream.shmupradio.com/320",
+          "web": "https://shmupradio.com/",
+          "descripcion": "Música de matamarcianos",
+          "categoria": "games"
+        },
+        {
+          "nombre": "NTS The Sound of GTA",
+          "pais": "GB",
+          "codec": "MP3",
+          "stream": "https://stream-mixtape-geo.ntslive.net/mixtape33",
+          "web": "https://www.nts.live/infinite-mixtapes/the-sound-of-gta",
+          "descripcion": "Mezcla continua de las radios de la saga GTA",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Liberty Rock Radio 97.8 (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/liberty_rock",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: rock clásico y alternativo",
+          "categoria": "games"
+        },
+        {
+          "nombre": "The Vibe 98.8 (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/the_vibe",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: R&B y soul",
+          "categoria": "games"
+        },
+        {
+          "nombre": "K109 The Studio (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/k109_the_studio",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: disco",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fusion FM (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/fusion_fm",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: jazz fusión y funk",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Massive B Soundsystem 96.9 (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/bobby_konders",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: dancehall",
+          "categoria": "games"
+        },
+        {
+          "nombre": "International Funk 99 (GTA IV)",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://audio.gtaradio.net/4/afro_beat",
+          "web": "https://gtaradio.net/en/4",
+          "descripcion": "Radio del videojuego GTA IV: funk y afrobeat",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout.fm (principal)",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm1.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Mezcla de las radios de toda la saga Fallout",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout 1 OST",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm5.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Banda sonora de Fallout",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout 2 OST",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm4.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Banda sonora de Fallout 2",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout New Vegas Radio",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm3.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio del videojuego Fallout: New Vegas",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout 4 Classical Radio",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm7.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio clásica del videojuego Fallout 4",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout 76 General",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm10.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio del videojuego Fallout 76",
+          "categoria": "games"
+        },
+        {
+          "nombre": "Fallout 76 Classical",
+          "codec": "OGG",
+          "stream": "https://fallout.fm:8444/falloutfm9.ogg",
+          "web": "https://fallout.fm/",
+          "descripcion": "Radio clásica del videojuego Fallout 76",
+          "categoria": "games"
         }
       ]
     }

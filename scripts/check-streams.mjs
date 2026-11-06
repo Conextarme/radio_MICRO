@@ -186,7 +186,7 @@ function printFailureRanking(health) {
   if (!ranking.length) return;
   console.log('\nEmisoras con más fallos acumulados (historial en stream-health.json):');
   ranking.slice(0, 10).forEach((e) => {
-    const chronic = e.consecutiveFailures >= CHRONIC_CONSECUTIVE_FAILURES ? '  ← CRÓNICA: plantéate quitarla o marcarla reliable:false' : '';
+    const chronic = e.consecutiveFailures >= CHRONIC_CONSECUTIVE_FAILURES ? '  ← CRÓNICA: la app la oculta a partir de 3 seguidos; plantéate quitarla' : '';
     console.log(`  - ${e.name} (${e.file}): ${e.failures}/${e.checks} fallos, ${e.consecutiveFailures} seguidos${chronic}`);
   });
 }

@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v17';
+var CACHE_VERSION = 'v21';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -74,9 +74,9 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
-  // Listas de emisoras: red primero (para tener la lista más reciente), con
+  // Listas de emisoras e historial de fallos: red primero (para tener la lista más reciente), con
   // la copia en caché como respaldo si no hay conexión.
-  if (url.pathname.endsWith('/stations.json') || url.pathname.endsWith('/emisoras-relax.json') || url.pathname.endsWith('/emisoras-modos.json')) {
+  if (url.pathname.endsWith('/stations.json') || url.pathname.endsWith('/emisoras-relax.json') || url.pathname.endsWith('/emisoras-modos.json') || url.pathname.endsWith('/stream-health.json')) {
     event.respondWith(
       fetch(request).then(function (response) {
         var copy = response.clone();

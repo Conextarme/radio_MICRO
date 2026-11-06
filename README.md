@@ -41,6 +41,7 @@ No hace falta tocar `index.html`, `styles.css` ni `app.js` para añadir o quitar
 
 Sus emisoras están en [`emisoras-modos.json`](emisoras-modos.json), en `modos.calm.emisoras`, `modos.music.emisoras` y `modos.buggy.emisoras`. Usan los mismos campos que `emisoras-relax.json` (`nombre`, `codec`, `bitrate`, `stream`, `web`, `descripcion`).
 
+- `categoria`: en Music Time y Buggy Time decide en qué filtro aparece la emisora. Tiene que ser uno de los definidos en `MUSIC_CATEGORY_META` o `BUGGY_CATEGORY_META` de `app.js` (Buggy Time: `scifi`, `oldies`, `games` y `buggy`); si no, la emisora no se ve en ningún filtro.
 - `afinacion` (opcional) muestra una etiqueta en la tarjeta y en el reproductor, por ejemplo `"432 Hz"`. En Big Calm solo debe ponerse si la afinación se ha medido: un nombre con "432" no garantiza que suene así.
 - `afinacionNota` (opcional) es el texto que aparece al pasar el ratón por la etiqueta.
 - `categoria` (obligatoria en Music Time, porque no hay filtro "Todas" y sin ella la emisora no se vería) coloca la emisora en una temática: `blues`, `crooners`, `rock70`, `rocknroll`, `ochentas`, `rockespanol`, `soundtracks`, `metal`, `melodico`, `folkmetal` o `newage`. Las temáticas se definen en `MUSIC_CATEGORY_ORDER` y `MUSIC_CATEGORY_META`, en `app.js`.
@@ -65,6 +66,8 @@ node scripts/check-streams.mjs
 Requiere Node 18 o superior (usa el `fetch` incluido en Node, sin instalar nada). Muestra qué emisoras responden y cuáles no, y termina con error si alguna emisora marcada como fiable ha dejado de funcionar.
 
 También se ejecuta solo, automáticamente, cada lunes mediante GitHub Actions (`.github/workflows/check-streams.yml`). Si detecta alguna caída, la ejecución en GitHub queda marcada en rojo y GitHub avisa por email a quien tenga acceso de escritura al repositorio — así no hace falta comprobarlo a mano. También se puede lanzar manualmente desde la pestaña "Actions" del repositorio en GitHub ("Run workflow").
+
+Cada ejecución guarda el historial de fallos en `stream-health.json`. La app lo lee al cargar y oculta las emisoras que llevan 3 o más comprobaciones seguidas fallando; reaparecen solas en cuanto un lunes vuelven a responder. Las marcadas con `"geoRestricted": true` no se ocultan nunca, porque fallan desde los servidores de GitHub pero funcionan en España. Si el historial no se puede leer, se muestran todas.
 
 ## PWA (instalable en el móvil)
 

@@ -35,7 +35,7 @@
     lofi: { icon: '🎧', label: 'Lo-fi' }
   };
 
-  var MUSIC_CATEGORY_ORDER = ['blues', 'crooners', 'rock70', 'rocknroll', 'ochentas', 'rockespanol', 'soundtracks', 'metal', 'melodico', 'folkmetal', 'newage'];
+  var MUSIC_CATEGORY_ORDER = ['blues', 'crooners', 'rock70', 'rocknroll', 'ochentas', 'rockespanol', 'soundtracks', 'metal', 'melodico', 'folkmetal', 'newage', 'indie', 'cielos', 'clasica'];
   var MUSIC_CATEGORY_META = {
     blues: { icon: '🎷', label: 'Blues' },
     crooners: { icon: '🎩', label: 'Crooners' },
@@ -47,13 +47,25 @@
     metal: { icon: '🤘', label: 'Metal' },
     melodico: { icon: '⚔️', label: 'Metal melódico' },
     folkmetal: { icon: '🍺', label: 'Folk metal' },
-    newage: { icon: '🌿', label: 'New age' }
+    newage: { icon: '🌿', label: 'New age' },
+    indie: { icon: '🌌', label: 'Indie y alternativo' },
+    cielos: { icon: '🌠', label: 'Sky y The Expanse' },
+    clasica: { icon: '🎻', label: 'Clásica' }
+  };
+
+  var BUGGY_CATEGORY_ORDER = ['scifi', 'oldies', 'games', 'buggy'];
+  var BUGGY_CATEGORY_META = {
+    scifi: { icon: '🛸', label: 'Sci-fi' },
+    oldies: { icon: '📻', label: 'Oldies' },
+    games: { icon: '🎮', label: 'Games' },
+    buggy: { icon: '🐞', label: 'Buggy' }
   };
 
   /* Modos con filtro por temática */
   var MODE_CATEGORIES = {
     sleep: { order: SLEEP_CATEGORY_ORDER, meta: SLEEP_CATEGORY_META },
-    music: { order: MUSIC_CATEGORY_ORDER, meta: MUSIC_CATEGORY_META }
+    music: { order: MUSIC_CATEGORY_ORDER, meta: MUSIC_CATEGORY_META },
+    buggy: { order: BUGGY_CATEGORY_ORDER, meta: BUGGY_CATEGORY_META }
   };
 
   /* --- Modos de escucha --- */
@@ -1819,12 +1831,56 @@
     });
   }
 
+  /* --- Emisoras ocultas por fallos ---
+     La comprobación de los lunes (scripts/check-streams.mjs) guarda en
+     stream-health.json los fallos seguidos de cada emisora. Las que llevan
+     HIDE_AFTER_CONSECUTIVE_FAILURES o más no se muestran; vuelven solas en
+     cuanto una comprobación sale bien. Las marcadas geoRestricted no se
+     ocultan: fallan desde los servidores de GitHub pero funcionan en España.
+     Si el historial no se puede leer, no se oculta nada. */
+
+  var HIDE_AFTER_CONSECUTIVE_FAILURES = 3;
+  var hiddenStationsPromise = null;
+
+  function loadHiddenStations() {
+    if (!hiddenStationsPromise) {
+      hiddenStationsPromise = fetch('stream-health.json').then(function (res) {
+        if (!res.ok) {
+          throw new Error('Sin historial de fallos');
+        }
+        return res.json();
+      }).then(function (health) {
+        var hidden = {};
+        var entries = (health && health.stations) || {};
+        Object.keys(entries).forEach(function (key) {
+          if ((entries[key].consecutiveFailures || 0) >= HIDE_AFTER_CONSECUTIVE_FAILURES) {
+            hidden[key] = true;
+          }
+        });
+        return hidden;
+      }).catch(function () {
+        return {};
+      });
+    }
+    return hiddenStationsPromise;
+  }
+
+  function withoutFailingStations(list, file) {
+    return loadHiddenStations().then(function (hidden) {
+      return list.filter(function (s) {
+        return s.geoRestricted || !hidden[file + '|' + s.name];
+      });
+    });
+  }
+
   /* --- Carga de datos por modo --- */
 
   function initNormalMode() {
     var fetchPromise = normalStationsCache
       ? Promise.resolve(normalStationsCache)
-      : fetch('stations.json').then(function (res) { return res.json(); });
+      : fetch('stations.json').then(function (res) { return res.json(); }).then(function (data) {
+        return withoutFailingStations(data, 'stations.json');
+      });
 
     return fetchPromise.then(function (data) {
       normalStationsCache = data;
@@ -1852,7 +1908,9 @@
           throw new Error('No se pudo cargar emisoras-relax.json');
         }
         return res.json();
-      }).then(flattenSleepData);
+      }).then(flattenSleepData).then(function (flat) {
+        return withoutFailingStations(flat, 'emisoras-relax.json');
+      });
 
     return fetchPromise.then(function (flat) {
       sleepStationsCache = flat;
@@ -1910,12 +1968,14 @@
 
     return fetchPromise.then(function (data) {
       extraModesCache = data;
+      return withoutFailingStations(flattenExtraMode(data, mode), EXTRA_MODES_FILE);
+    }).then(function (modeStations) {
       if (appMode !== mode) {
         return;
       }
       rankByName = null;
       var savedState = loadState();
-      stations = applySavedOrder(flattenExtraMode(data, mode), savedState.order);
+      stations = applySavedOrder(modeStations, savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
       updateGridToggleVisibility();

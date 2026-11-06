@@ -4,6 +4,167 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-06 11:46 — Categoría Clásica y musicales en Soundtracks (Music Time)
+
+### Objetivo
+El usuario pidió buscar emisoras dedicadas a Wagner, música medieval, música sacra, Berlioz y Mozart, y meterlas en una categoría nueva "Clásica" de Music Time. También pidió emisoras de musicales de Broadway y de Andrew Lloyd Webber para la categoría Soundtracks (no en Clásica).
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time pasa de 103 a 111 emisoras.
+- Filtro nuevo 🎻 "Clásica" con 5 emisoras: Classical Radio - Wagner (solo Wagner), Klassik Radio Pure Mozart (solo Mozart), Ancient FM (medieval y renacentista), Radio Art - Gregorian Chants (canto gregoriano) y Classical Catholic Radio (música sacra coral y litúrgica).
+- Soundtracks pasa de 8 a 11 emisoras con 3 de musicales: Sounds of Broadway, Heart Musicals y Box Office Radio (West End y Broadway).
+- `sw.js`: la versión de caché sube de v20 a v21.
+
+### Motivo
+- No se encontró ninguna emisora dedicada a Berlioz ni a Andrew Lloyd Webber. La única con "Lloyd Webber" en el nombre es de Julian Lloyd Webber, violonchelista clásico, así que no encaja con musicales. Las emisoras de musicales del West End (Heart Musicals, Box Office Radio) ponen mucho a Andrew Lloyd Webber.
+- Solo se añadieron emisoras que funcionan con HTTPS. Se descartaron CEU Medieval Radio y Concertzender Oude Muziek porque solo funcionan sin cifrar, y el navegador las bloquearía.
+
+### Validaciones
+- `node --check app.js`: sin errores. `emisoras-modos.json` se lee como JSON válido.
+- Las 8 direcciones de audio respondieron con audio por HTTPS desde la línea de comandos.
+- App real servida en local, en Chrome sin ventana y con el audio silenciado: el filtro "Clásica" muestra 5 emisoras y Soundtracks 11. Se pulsaron las 8 tarjetas nuevas y las 8 llegaron a "EN DIRECTO" en menos de 10 segundos. Sin errores de JavaScript.
+- La web de Sounds of Broadway devolvió error 511 a la comprobación automática (probablemente un bloqueo a programas, no una caída). No se ha comprobado desde un navegador normal.
+- No probado: escucha humana, un móvil físico ni la app instalada.
+
+### Riesgos o pendientes
+- Classical Catholic Radio puede incluir alguna locución además de música; las descripciones salen de las fichas de cada emisora, no de haberlas escuchado.
+- Heart Musicals es de una cadena británica: hoy funciona desde España, pero podría tener restricción geográfica en algún momento.
+
+### Cómo revertir
+En `emisoras-modos.json`, borrar de `modos.music.emisoras` las 8 emisoras indicadas. En `app.js`, quitar `'clasica'` de `MUSIC_CATEGORY_ORDER` y su línea de `MUSIC_CATEGORY_META`. Subir de nuevo la versión de caché en `sw.js`.
+
+---
+
+## 2026-11-06 11:40 — Categorías en Buggy Time, emisoras de videojuegos y categoría Sky y The Expanse
+
+### Objetivo
+El usuario pidió crear categorías en Buggy Time (Sci-fi, Oldies, Games y Buggy para las que no encajan), repartir allí las emisoras que ya había, añadir a Games las emisoras de videojuegos que eligió de la lista propuesta y crear en Music Time una categoría propia para las emisoras con ambiente de Sky: Children of the Light y The Expanse.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Buggy Time tiene ahora cuatro filtros, como Music Time y el modo dormir: 🛸 Sci-fi, 📻 Oldies, 🎮 Games y 🐞 Buggy. Pasa de 19 a 42 emisoras.
+  - Sci-fi (3): SomaFM Mission Control, Strange Radio (Pumpkin FM) y 50's Science Fiction KOTR.
+  - Oldies (4): 1940s Radio HS, 1940s Light Programme, Fogpoint Radio (años 30 a 50) y Radio Aurora (oldies italianos).
+  - Games (26): las dos de Fallout y Flash FM que ya estaban, más 23 nuevas: Rainwave Game, Rainwave Covers, Rainwave Chill, Pixel & Plot (YourClassical), SpriteLayer Video Game Radio, Gametation, Fluffylandrpg, 80s80s Games, Shoot'em Up Radio, NTS The Sound of GTA, seis radios de GTA IV (Liberty Rock, The Vibe, K109, Fusion FM, Massive B e International Funk) y siete canales de Fallout.fm (principal, Fallout 1 OST, Fallout 2 OST, New Vegas, Fallout 4 Classical, Fallout 76 General y Fallout 76 Classical).
+  - Buggy (9): Shirley & Spinoza, Radio Aporee, Datafruits, Substrate Radio, Nightwave Plaza, Birdsong Radio, Nightride FM Horrorsynth, Radio M00 Dark Ambient y Kobold.FM.
+- Music Time pasa de 100 a 103 emisoras, con el filtro nuevo 🌠 "Sky y The Expanse": Rainwave Chill, Klassik Radio Games y Thermocline Radio.
+- `sw.js`: la versión de caché sube de v19 a v20.
+- `README.md`: se explica el campo `categoria` y las categorías de Buggy Time.
+
+### Motivo
+- No existe ninguna emisora dedicada a Sky: Children of the Light ni a The Expanse; se eligieron tres con un ambiente parecido (música de videojuegos tranquila, orquestal y cinematográfica).
+- Las emisoras de Fallout.fm usan el puerto 8444, que funciona con HTTPS, igual que las dos que ya estaban; el que figura en el directorio público solo funciona sin cifrar y el navegador lo bloquearía.
+- Rainwave se añade en su versión MP3 en lugar de OGG, que no todos los navegadores reproducen. Fallout.fm solo emite en OGG.
+- Rainwave Chill está en los dos modos porque el usuario la eligió para ambos.
+
+### Validaciones
+- `node --check app.js`: sin errores. `emisoras-modos.json` se lee como JSON válido y no tiene nombres repetidos dentro de un mismo modo.
+- Todas las direcciones nuevas respondieron con audio por HTTPS desde la línea de comandos.
+- App real servida en local, en Chrome sin ventana y con el audio silenciado: Buggy Time muestra 42 emisoras y los filtros Sci-fi 3, Oldies 4, Games 26 y Buggy 9. Music Time muestra 103 emisoras, y el filtro "Sky y The Expanse" tiene 3.
+- Se pulsaron las 26 tarjetas nuevas (23 de Buggy Time y 3 de Music Time) y las 26 llegaron a "EN DIRECTO" en menos de 10 segundos. Sin errores de JavaScript.
+- No probado: escucha humana, un móvil físico ni la app instalada. Las emisoras OGG de Fallout.fm pueden no sonar en Safari de iPhone antiguos (ya pasaba con las dos que había). Tampoco se ejecutó `scripts/check-streams.mjs`.
+
+### Riesgos o pendientes
+- Buggy Time abre por defecto en el primer filtro (Sci-fi), igual que los otros modos con filtros.
+- El reparto entre Sci-fi y Buggy es una propuesta: Nightride FM Horrorsynth y Radio M00 Dark Ambient podrían ir en Sci-fi si el usuario lo prefiere.
+
+### Cómo revertir
+En `app.js`, borrar `BUGGY_CATEGORY_ORDER`, `BUGGY_CATEGORY_META` y la línea `buggy` de `MODE_CATEGORIES`, y quitar `'cielos'` de `MUSIC_CATEGORY_ORDER` y su línea de `MUSIC_CATEGORY_META`. En `emisoras-modos.json`, borrar las 23 emisoras nuevas de `modos.buggy.emisoras`, las 3 últimas de `modos.music.emisoras` y el campo `categoria` de las emisoras de Buggy Time. Subir de nuevo la versión de caché en `sw.js` y quitar la línea de `categoria` de `README.md`.
+
+---
+
+## 2026-11-06 11:20 — Ocultar emisoras que fallan mucho y quitar Europa FM
+
+### Objetivo
+El usuario pidió que las emisoras que acumulan fallos en la comprobación automática de los lunes se oculten solas en la app, y quitar Europa FM.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `stations.json`: modificado.
+- `scripts/check-streams.mjs`: modificado.
+- `README.md`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- La app lee ahora `stream-health.json`, el historial que guarda cada lunes la comprobación automática, y no muestra las emisoras que llevan 3 o más comprobaciones seguidas fallando. No se borran de las listas: en cuanto una comprobación sale bien, el contador vuelve a cero y la emisora reaparece sola. Funciona en todos los modos (normal, dormir, Big Calm, Music Time y Buggy Time).
+- Las emisoras marcadas con `"geoRestricted": true` no se ocultan nunca. Si el historial no se puede leer, se muestran todas.
+- `sw.js`: el historial se pide siempre primero a internet (como las listas de emisoras), para no usar una copia antigua. La versión de caché sube de v18 a v19.
+- `stations.json`: se quita Europa FM (la lista normal pasa de 45 a 44 emisoras).
+- `scripts/check-streams.mjs`: el aviso de "CRÓNICA" ahora indica que la app oculta la emisora a partir de 3 fallos seguidos.
+- `README.md`: se explica el ocultado automático.
+
+### Motivo
+- Ocultar en vez de borrar evita perder emisoras por caídas temporales del servidor.
+- El umbral de 3 fallos seguidos equivale a tres lunes sin responder; un fallo suelto no oculta nada.
+- La excepción de `geoRestricted` existe porque la comprobación se hace desde servidores de GitHub fuera de España, y una emisora con restricción geográfica falla allí aunque en España funcione. Era el caso de Europa FM, que fallaba con error 403 desde hacía 5 lunes seguidos y el usuario pidió quitarla.
+
+### Validaciones
+- `node --check` de `app.js`, `sw.js` y `scripts/check-streams.mjs`: sin errores. `stations.json` se lee como JSON válido, con 44 emisoras y sin Europa FM.
+- App real servida en local desde una copia, en Chrome sin ventana, con un historial simulado: Cadena 100 (3 fallos seguidos) y KEXP 90.3 Seattle (3) quedaron ocultas, y Radio Aurora (2) siguió visible. Modo normal: 43 de 44; Music Time: 99 de 100; Buggy Time: 19 de 19. Sin errores de JavaScript.
+- Misma prueba sin `stream-health.json`: se muestran todas (44, 100 y 19). Sin errores de JavaScript.
+- No probado: la app instalada en un móvil ni el paso del service worker de la versión v18 a la v19.
+
+### Riesgos o pendientes
+- Con el historial actual (actualizado por GitHub el lunes) ninguna emisora llega a 3 fallos seguidos, así que hoy no se oculta ninguna.
+- `stream-health.json` lo actualiza el bot de GitHub cada lunes: conviene hacer `git pull` antes de subir cambios para no pisarlo.
+- Una emisora con restricción geográfica sin la marca `geoRestricted` podría ocultarse aunque funcione en España.
+
+### Cómo revertir
+En `app.js`, borrar el bloque "Emisoras ocultas por fallos" (`HIDE_AFTER_CONSECUTIVE_FAILURES`, `loadHiddenStations` y `withoutFailingStations`) y sus tres llamadas en `initNormalMode`, `initSleepMode` e `initExtraMode`. En `sw.js`, quitar `stream-health.json` de la condición de red primero y subir la versión de caché. Para recuperar Europa FM, restaurar su línea en `stations.json` con `git checkout 3d85320 -- stations.json` (eso deshace solo los cambios de ese archivo). Revertir también los textos de `scripts/check-streams.mjs` y `README.md`.
+
+---
+
+## 2026-11-06 11:05 — Emisoras con música de AURORA y Radio Aurora en Buggy Time
+
+### Objetivo
+El usuario pidió buscar emisoras que pongan música de la artista AURORA para añadirlas a Music Time, y poner en Buggy Time (la sección de rarezas) una emisora italiana de oldies llamada Radio Aurora que salió en la búsqueda.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Music Time pasa de 98 a 100 emisoras. Se añaden KEXP 90.3 Seattle y NRK P1 (Noruega), las dos en una categoría nueva, "Indie y alternativo" (🌌), que aparece como un filtro más al final de la lista.
+- Buggy Time pasa de 18 a 19 emisoras: se añade Radio Aurora (Italia, oldies de los 60 a los 90).
+- `sw.js`: la versión de caché sube de v17 a v18 para que quien tenga la app instalada reciba el `app.js` nuevo.
+
+### Motivo
+- No existe ninguna emisora dedicada a AURORA, y en el directorio radio-browser nadie la tiene como etiqueta. Por eso se buscaron emisoras que la pongan de verdad, mirando sus listas de canciones emitidas: KEXP la puso varias veces entre septiembre y octubre de 2026 ("The Blade" y su colaboración con TOMORA), y NRK P1 puso "Morning Shall Come" el 6 de noviembre de 2026.
+- Se miraron también NRK P3, NRK mP3 y SomaFM Indie Pop Rocks, pero en sus listas recientes no aparecía AURORA y no se añadieron.
+- Ninguna categoría existente (blues, rock, metal...) encajaba con este estilo, de ahí la categoría nueva.
+- Radio Aurora solo figuraba en el directorio con una dirección sin cifrar (HTTP), que el navegador bloquea en una web segura. Se usa la dirección HTTPS que aparece en el reproductor de su propia web.
+
+### Validaciones
+- `node --check` de `app.js` y `sw.js`: sin errores. `emisoras-modos.json` se lee como JSON válido.
+- Las tres direcciones de audio respondieron con audio (audio/mpeg) desde la línea de comandos, y sus webs oficiales respondieron con código 200.
+- App real servida en local, en Chrome sin ventana y con el audio silenciado: Music Time muestra 100 emisoras y el filtro "Indie y alternativo"; Buggy Time muestra 19. Se pulsaron las tres tarjetas nuevas y las tres quedaron en "EN DIRECTO" con el tiempo avanzando. Sin errores de JavaScript.
+- No probado: escucha humana, un móvil físico ni la app instalada. Tampoco se ejecutó `scripts/check-streams.mjs`, para no alterar `stream-health.json`.
+
+### Riesgos o pendientes
+- NRK P1 es una radio generalista: tiene mucha charla en noruego, no solo música. AURORA está en su rotación, pero no suena a todas horas.
+- KEXP mezcla muchos estilos y pone a AURORA de vez en cuando, no de forma continua.
+- El subtítulo de Music Time sigue diciendo "BLUES, ROCK Y METAL"; no se ha cambiado.
+
+### Cómo revertir
+En `emisoras-modos.json`, borrar "KEXP 90.3 Seattle" y "NRK P1" de `modos.music.emisoras` y "Radio Aurora" de `modos.buggy.emisoras`. En `app.js`, quitar `'indie'` de `MUSIC_CATEGORY_ORDER` y la línea `indie` de `MUSIC_CATEGORY_META`. En `sw.js`, volver a subir la versión de caché (por ejemplo, a v19) para que los usuarios reciban el cambio.
+
+---
+
 ## 2026-10-30 11:04 — Seis emisoras más para Buggy Time
 
 ### Objetivo
