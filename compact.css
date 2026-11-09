@@ -1,0 +1,472 @@
+/* =========================================================================
+   Modo compacto: casete de los años 70 sobre madera.
+   Todas las reglas empiezan por .compact para no afectar al resto de la web.
+   ========================================================================= */
+
+.compact {
+  --amber: #ffb000;
+  --silver-1: #d9d4cb;
+  --silver-2: #f3f0ea;
+  --silver-3: #a8a296;
+  --ink: #2a2520;
+  --red: #c0392b;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: #120b07;
+  color: #f4e9d6;
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+}
+
+.compact[hidden] { display: none; }
+
+/* Ocupa toda la pantalla; en el móvil con el teléfono en vertical se gira
+   para que siempre se vea en horizontal. */
+.compact .compact-stage {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.compact.rotated .compact-stage {
+  inset: auto;
+  width: 100vh;
+  height: 100vw;
+  left: 100vw;
+  top: 0;
+  padding: 10px;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+}
+
+/* --- Madera del reproductor --- */
+.compact .deck {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(88deg, rgba(0,0,0,.16) 0 2px, transparent 2px 11px),
+    repeating-linear-gradient(92deg, #6b3b22 0%, #5a2e1a 14%, #7a4426 30%, #4d2513 52%, #6b3b22 70%, #56301b 100%);
+  box-shadow: inset 0 0 40px rgba(0,0,0,.45), 0 12px 30px rgba(0,0,0,.6);
+}
+
+/* --- Panel plateado --- */
+.compact .chassis {
+  border-radius: 10px;
+  padding: 14px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, var(--silver-3), var(--silver-2) 30%, var(--silver-3) 60%, var(--silver-1));
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(0,0,0,.25), 0 4px 10px rgba(0,0,0,.4);
+}
+
+.compact .plate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.compact .plate-right { display: flex; align-items: center; gap: 10px; }
+
+.compact .cp-exit {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--ink);
+  background: rgba(255,255,255,.35);
+  border: 1px solid rgba(42,37,32,.4);
+  border-radius: 999px;
+  padding: 4px 10px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.compact .grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 1.25fr) 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.compact .side { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+/* --- Lámparas y barras de potencia --- */
+.compact .lamp {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #4a3a2a;
+  box-shadow: inset 0 0 3px #000;
+  display: inline-block;
+  transition: background .15s, box-shadow .15s;
+}
+.compact .lamp.green.on { background: radial-gradient(circle at 40% 35%, #d9ffd0, #3fe06a 60%); box-shadow: 0 0 12px #3fe06a; }
+
+.compact .bars { display: flex; gap: 4px; align-items: flex-end; height: 70px; }
+.compact .bar {
+  width: 8px; height: 20%;
+  background: #3a2d20;
+  border-radius: 2px;
+  transition: height .14s, background .14s;
+}
+.compact .bar.on { background: linear-gradient(#ff4a3a, #ffb000 45%, #3fe06a); box-shadow: 0 0 6px rgba(255,176,0,.6); }
+
+/* --- Rejilla de altavoz (finales) --- */
+.compact .vents {
+  width: 100%;
+  height: 56px;
+  border-radius: 6px;
+  background: repeating-linear-gradient(0deg, #2b2119 0 3px, #5a4a3a 3px 5px);
+  box-shadow: inset 0 0 8px #000;
+}
+
+/* --- Vúmetro --- */
+.compact .vu {
+  position: relative;
+  width: 150px; height: 84px;
+  border-radius: 6px;
+  background: radial-gradient(ellipse at 50% 100%, #fbf7ea, #e8e0c8 70%);
+  border: 6px solid #2a2622;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0,0,0,.4);
+}
+.compact .needle {
+  position: absolute;
+  left: 50%; bottom: 4px;
+  width: 2px; height: 70px;
+  margin-left: -1px;
+  background: var(--red);
+  transform-origin: 50% 100%;
+  transform: rotate(-42deg);
+  transition: transform .14s ease-out;
+}
+.compact .tag {
+  position: absolute; bottom: 2px; left: 0; right: 0;
+  text-align: center; font-size: 10px; letter-spacing: .3em; color: #6d675d;
+}
+
+/* --- Diales --- */
+.compact .knob-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.compact .dial {
+  position: relative;
+  width: 104px; height: 104px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbfaf6, #b8b3aa 45%, #4b4740 100%);
+  box-shadow: 0 6px 12px rgba(0,0,0,.45), inset 0 0 0 6px rgba(0,0,0,.08);
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+  transition: transform .18s ease-out;
+}
+.compact .dial.grab { cursor: grabbing; }
+.compact .dial:focus-visible { box-shadow: 0 0 0 3px var(--amber), 0 6px 12px rgba(0,0,0,.45); }
+.compact .dial .ptr {
+  position: absolute;
+  left: 50%; top: 8px;
+  width: 6px; height: 30px;
+  margin-left: -3px;
+  border-radius: 3px;
+  background: #ffb000;
+  box-shadow: 0 0 6px rgba(255,176,0,.7);
+}
+.compact .dial-label { font-size: 12px; font-weight: 700; letter-spacing: .2em; color: var(--ink); }
+.compact .dial-value {
+  font-family: 'VT323', monospace; font-size: 20px; color: #3a2d1a;
+  min-height: 20px; text-align: center; max-width: 150px;
+}
+
+/* --- Centro: casete --- */
+.compact .center { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
+
+.compact .window {
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  background: #15100b;
+  box-shadow: inset 0 0 20px #000, 0 0 0 4px #a8a296, 0 0 0 6px #444;
+  overflow: hidden;
+}
+
+/* Interferencia al cambiar de emisora */
+.compact .window.static::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, rgba(0,0,0,.2) 2px 4px);
+  animation: cp-noise .18s steps(2) infinite;
+  pointer-events: none;
+}
+@keyframes cp-noise {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-3%,2%); }
+  100% { transform: translate(2%,-2%); }
+}
+
+.compact .cassette {
+  position: relative;
+  aspect-ratio: 1.6 / 1;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ecd39b, #c9a062);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.25), 0 6px 14px rgba(0,0,0,.55);
+  overflow: hidden;
+}
+.compact .cassette::before {
+  content: '';
+  position: absolute; left: 6%; right: 6%; bottom: 26%; height: 16%;
+  background: repeating-linear-gradient(180deg, #c8102e 0 7px, transparent 7px 12px);
+  opacity: .85;
+}
+.compact .cassette::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+  background: linear-gradient(#4a3822, #2a1f14);
+}
+
+/* Etiqueta con el nombre de la emisora */
+.compact .label {
+  position: absolute;
+  top: 9%; left: 12%; right: 12%;
+  height: 36%;
+  border-radius: 4px;
+  background: linear-gradient(#fdf6e3, #f1e4c2);
+  border: 1px solid #b98f4c;
+  box-shadow: 0 2px 4px rgba(0,0,0,.25);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 4px 10px;
+  text-align: center;
+  overflow: hidden;
+}
+.compact .label-name {
+  font-family: 'Segoe Script', 'Comic Sans MS', 'Bradley Hand', cursive;
+  font-size: clamp(15px, 3.4vw, 24px);
+  color: #1d1a14;
+  line-height: 1.1;
+  word-break: break-word;
+  max-height: 2.4em;
+  overflow: hidden;
+}
+.compact .label-sub {
+  margin-top: 4px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #7a1f16;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Latido: "lub-dub" mientras suena */
+.compact .label.beat { animation: cp-lub 1.1s ease-in-out infinite; }
+.compact .label.beat-slow { animation: cp-lub-slow 2.4s ease-in-out infinite; }
+@keyframes cp-lub {
+  0%, 100% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  12% { transform: scale(1.035); box-shadow: 0 0 14px rgba(255,176,0,.55); }
+  24% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  36% { transform: scale(1.02); box-shadow: 0 0 10px rgba(255,176,0,.4); }
+  50% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+}
+/* Microcorte: latido lento y desigual, en ámbar */
+@keyframes cp-lub-slow {
+  0%, 100% { transform: scale(1); filter: none; }
+  20% { transform: scale(.985); filter: hue-rotate(-12deg) brightness(1.1); }
+  35% { transform: scale(1.01); filter: hue-rotate(-12deg) brightness(1.2); }
+  55% { transform: scale(1); filter: none; }
+}
+
+/* Bobinas */
+.compact .reels {
+  position: absolute;
+  left: 0; right: 0; bottom: 24%;
+  display: flex; justify-content: space-around;
+  padding: 0 18%;
+}
+.compact .reel {
+  position: relative;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1d1a16 0 30%, #e9e3d4 31% 38%, #5a5349 40% 100%);
+  box-shadow: inset 0 0 0 3px #2a2622;
+}
+.compact .reel::before,
+.compact .reel::after {
+  content: '';
+  position: absolute; left: 50%; top: 50%;
+  width: 52px; height: 6px;
+  margin: -3px 0 0 -26px;
+  background: #d8d0bd;
+  border-radius: 3px;
+}
+.compact .reel::after { transform: rotate(60deg); }
+.compact .reel.spin { animation: cp-spin 1.6s linear infinite; }
+.compact .reel.spin-recon { animation: cp-spin 1.6s steps(6) infinite; }
+.compact .reel.still { animation: none; }
+@keyframes cp-spin { to { transform: rotate(360deg); } }
+
+/* Botonera */
+.compact .transport { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.compact .btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .08em;
+  color: var(--ink);
+  padding: 10px 14px;
+  min-width: 44px; min-height: 44px;
+  border-radius: 6px;
+  border: 1px solid #6d675d;
+  background: linear-gradient(#f3efe6, #aaa396);
+  box-shadow: 0 3px 0 #5b564d, 0 4px 8px rgba(0,0,0,.35);
+  cursor: pointer;
+  transition: transform .06s, box-shadow .06s, background .2s;
+}
+.compact .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #5b564d; }
+.compact .btn.lit {
+  background: linear-gradient(#ffe39a, #e0a526);
+  box-shadow: 0 0 10px rgba(255,176,0,.6), 0 3px 0 #8a6414;
+}
+.compact .btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.compact .btn:disabled { opacity: .5; cursor: default; }
+
+/* --- Pie discreto y pantalla de listas --- */
+.compact .drawer { margin-top: 12px; text-align: center; }
+.compact .toggle {
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: #e9dcc7;
+  background: transparent;
+  border: 1px dashed rgba(233,220,199,.45);
+  border-radius: 999px;
+  padding: 6px 14px;
+  min-height: 36px;
+  cursor: pointer;
+  opacity: .85;
+}
+.compact .toggle:hover { opacity: 1; }
+
+.compact .screen {
+  position: relative;
+  max-width: 560px;
+  margin: 12px auto 0;
+  background: radial-gradient(ellipse at 50% 30%, #1c1407, #0b0a05 80%);
+  color: var(--amber);
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size: 22px;
+  border: 10px solid #2b2418;
+  border-radius: 14px;
+  box-shadow: inset 0 0 40px rgba(255,176,0,.12), 0 0 18px rgba(255,176,0,.12);
+  text-shadow: 0 0 6px rgba(255,176,0,.55);
+  overflow: hidden;
+  text-align: left;
+}
+.compact .screen::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+.compact .screen[hidden] { display: none; }
+.compact .screen-head {
+  display: flex; gap: 6px; padding: 6px 8px;
+  border-bottom: 1px solid rgba(255,176,0,.35);
+}
+.compact .screen-tab {
+  font-family: inherit; font-size: 20px;
+  color: var(--amber);
+  background: transparent;
+  border: 1px solid rgba(255,176,0,.5);
+  padding: 0 8px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.compact .screen-tab.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+.compact .screen-body { max-height: 240px; overflow-y: auto; padding: 6px 8px 10px; -webkit-overflow-scrolling: touch; }
+
+/* Letras para saltar en la lista */
+.compact .letters { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+.compact .letter {
+  font: inherit; font-size: 18px; color: var(--amber);
+  background: transparent; border: 1px solid rgba(255,176,0,.45);
+  min-width: 30px; min-height: 30px; padding: 0 4px; cursor: pointer;
+}
+.compact .letter:hover, .compact .letter:focus-visible { background: rgba(255,176,0,.18); }
+
+.compact .row {
+  display: flex; gap: 10px; align-items: baseline; width: 100%;
+  font: inherit; color: inherit; background: none; border: 0;
+  padding: 2px 6px; min-height: 32px; text-align: left; cursor: pointer;
+}
+.compact .row:hover { background: rgba(255,176,0,.12); }
+.compact .row.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+.compact .row .idx { width: 2.2em; text-align: right; opacity: .75; flex: 0 0 auto; }
+.compact .row .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.compact .row .cat { margin-left: auto; opacity: .7; font-size: 18px; flex: 0 0 auto; }
+.compact .screen-line { margin-bottom: 6px; }
+.compact .style-btns { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 2px; }
+.compact .style-btn {
+  font: inherit; font-size: 20px; color: var(--amber);
+  background: transparent; border: 1px solid rgba(255,176,0,.6);
+  padding: 2px 10px; min-height: 36px; cursor: pointer;
+}
+.compact .style-btn.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+
+/* Apagado */
+.compact .deck.off .label { filter: grayscale(.7) brightness(.55); }
+
+/* Pantallas bajas (horizontal en el móvil): todo un poco más compacto */
+/* Pantallas bajas o vista girada (horizontal): todo un poco más compacto.
+   La clase .small la pone compact.js según el tamaño real de la vista. */
+.compact.small .deck { padding: 10px; }
+.compact.small .chassis { padding: 10px; }
+.compact.small .plate { margin-bottom: 6px; }
+.compact.small .dial { width: 76px; height: 76px; }
+.compact.small .dial .ptr { height: 22px; }
+.compact.small .vu { width: 112px; height: 64px; }
+.compact.small .needle { height: 50px; }
+.compact.small .compact-stage { padding: 6px; }
+.compact.small .deck { margin-top: 0; }
+.compact.small .drawer { margin-top: 4px; }
+.compact.small .toggle { min-height: 28px; padding: 2px 10px; }
+.compact.small .cp-exit { min-height: 26px; padding: 2px 8px; }
+.compact.small .label-sub { font-size: 14px; }
+.compact.small .reel { width: 46px; height: 46px; }
+.compact.small .reel::before,
+.compact.small .reel::after { width: 38px; margin: -3px 0 0 -19px; }
+.compact.small .label { height: 42%; top: 7%; }
+.compact.small .reels { bottom: 14%; }
+.compact.small .vents { height: 40px; }
+.compact.small .side { gap: 6px; }
+.compact.small .center { gap: 8px; }
+.compact.small .transport .btn { min-height: 36px; padding: 6px 10px; }
+.compact.small .bars { height: 52px; }
+
+/* Dos columnas solo en pantallas estrechas y sin girar (vertical en escritorio pequeño) */
+@media (max-width: 720px) {
+  .compact:not(.rotated) .grid { grid-template-columns: 1fr 1fr; }
+  .compact:not(.rotated) .center { grid-column: 1 / -1; order: -1; }
+}
+
+/* Pausa cuando la pestaña no se ve: no gastar batería en animaciones */
+body.tab-hidden .compact *,
+body.tab-hidden .compact { animation-play-state: paused !important; }
+
+/* Reducir movimiento: sin giros, latidos ni interferencias */
+@media (prefers-reduced-motion: reduce) {
+  .compact .reel.spin,
+  .compact .reel.spin-recon,
+  .compact .label.beat,
+  .compact .label.beat-slow,
+  .compact .window.static::after { animation: none; }
+}

@@ -254,10 +254,18 @@
     }
   }
 
+  // Avisa a la vista compacta (compact.js) de que algo ha cambiado.
+  function notifyRadioChange() {
+    try {
+      window.dispatchEvent(new CustomEvent('radio:change'));
+    } catch (e) { /* navegadores antiguos: la vista compacta simplemente no se actualiza sola */ }
+  }
+
   function setStatus(status) {
     currentStatus = status;
     renderStatuses();
     updateMiniPlayer();
+    notifyRadioChange();
   }
 
   function updateMiniPlayer() {
@@ -1106,6 +1114,7 @@
       grid.appendChild(empty);
     }
     updateGridToggleVisibility();
+    notifyRadioChange();
   }
 
   /* --- "Ver más": la cuadrícula se colapsa a una altura fija si hay muchas
@@ -1998,6 +2007,7 @@
           np.misses++;
         }
         updateMiniPlayer();
+        notifyRadioChange();
         renderTracksButton();
         updateMediaSessionTrack();
         if (!tracksPanel.hidden) {
@@ -2405,6 +2415,7 @@
     updateModeUI();
 
     initCurrentMode();
+    notifyRadioChange();
   }
 
   if (modeSelect) {
@@ -2574,6 +2585,55 @@
   document.addEventListener('visibilitychange', function () {
     document.body.classList.toggle('tab-hidden', document.hidden);
   });
+
+  /* --- Puente para la vista compacta (compact.js) ---
+     Expone solo lo que necesita: leer el estado y pedir acciones. La vista
+     compacta no toca el audio directamente; usa las mismas funciones que la
+     lista normal, así que la reproducción, la reconexión y las canciones son
+     las de siempre. */
+
+  window.radioMicro = {
+    getMode: function () { return appMode; },
+    getModes: function () { return ['normal', 'sleep', 'calm', 'music', 'buggy']; },
+    setMode: function (mode) { setMode(mode); },
+    getStations: function () { return stations; },
+    getCurrentIndex: function () { return currentIndex; },
+    getStatus: function () { return currentStatus; },
+    isUserPaused: function () { return userPaused; },
+    getTrack: function () { return getCurrentTrack(); },
+    getCategories: function () {
+      var cfg = MODE_CATEGORIES[appMode];
+      var present = {};
+      stations.forEach(function (s) { if (s.category) { present[s.category] = true; } });
+      var ids = [];
+      if (cfg) {
+        cfg.order.forEach(function (id) { if (present[id]) { ids.push(id); } });
+      }
+      Object.keys(present).forEach(function (id) { if (ids.indexOf(id) === -1) { ids.push(id); } });
+      return ids.map(function (id) {
+        var meta = cfg && cfg.meta[id];
+        return { id: id, label: meta ? meta.icon + ' ' + meta.label : id };
+      });
+    },
+    play: function (index) { playStation(index); },
+    toggle: function () { miniPlayerToggle.click(); },
+    stop: function () {
+      stopPlayback();
+      clearMediaSession();
+      userPaused = false;
+      currentIndex = -1;
+      currentStatus = STATUS.IDLE;
+      updateMiniPlayer();
+      renderStatuses();
+      notifyRadioChange();
+    },
+    glitch: function () {
+      // Simula un microcorte: la misma reconexión que si la red fallara de verdad.
+      if (currentIndex !== -1 && !userPaused) {
+        scheduleReconnect();
+      }
+    }
+  };
 
   /* --- Arranque: la web entra siempre en el modo normal --- */
 

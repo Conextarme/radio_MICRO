@@ -4,6 +4,106 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 12:00 — Modo compacto integrado en la web (casete con emisoras reales)
+
+### Objetivo
+Pasar el prototipo del casete a la web real: un interruptor "Modo compacto" junto al selector de modos. En el móvil la vista va siempre en horizontal. El selector de emisoras debe poder saltar por letras o con giro rápido. Incluir optimizaciones.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (versión de caché `v34` y nuevos archivos en el "app shell").
+- `compact.css`: creado.
+- `compact.js`: creado.
+- `CAMBIOS_IA.md`: modificado.
+- `prototipos/modo-compacto.html`: sin cambios en esta entrada (sigue como maqueta independiente).
+
+### Cambios realizados
+- **Interruptor** "📼 Modo compacto" en la cabecera, junto al selector de modos. En escritorio quedan en la esquina superior derecha; en el móvil, uno debajo del otro.
+- **Vista compacta** con el casete, los diales de modo y de emisora, la botonera (encender/apagar, play/pausa, parar, estilo, microcorte) y la pantalla de listas. Usa las emisoras reales del modo activo.
+- **Reproducción real:** la vista no reproduce audio. Llama a las mismas funciones que el mini reproductor (reproducir, pausar, parar, reconectar). El microcorte es el de verdad: reintenta la conexión.
+- **Cambio de modo** con el dial, igual que el selector de la cabecera. Cada modo muestra sus estilos reales.
+- **Estilo:** el botón ESTILO abre la pestaña de estilos. Si el modo no tiene estilos, el botón aparece desactivado.
+- **Selector de emisoras rápido:** saltos por letras en la pantalla de listas; al girar el dial deprisa, avanza de cuatro en cuatro. Mientras se gira solo se previsualiza; la emisora cambia al soltar, para no parar y arrancar la radio en cada paso.
+- **Horizontal en el móvil:** con el teléfono en vertical, la vista se gira para verse en horizontal.
+- **Optimizaciones:** se recuerda si la vista compacta estaba abierta y la última emisora escuchada; las animaciones se paran con la pestaña oculta; se respeta "reducir movimiento" del sistema.
+- **Cambios en `app.js`:** se añade un puente pequeño (`window.radioMicro`) con lectura de estado y acciones, y un aviso `radio:change` cuando cambia algo. No cambia la lista normal ni el mini reproductor.
+
+### Motivo
+- Un solo juego de funciones de reproducción evita que la vista compacta y la web se desincronicen.
+- La vista compacta va en su propio archivo (`compact.js` y `compact.css`) para no mezclarla con el resto.
+- Los cambios de `sw.js` hacen que los móviles carguen los archivos nuevos juntos.
+
+### Validaciones
+- Navegador en escritorio (ancho de móvil emulado; la vista de escritorio no se ha podido comprobar del todo): la web carga las 44 emisoras de Normal; la vista compacta se abre y el botón cambia de texto.
+- Encender: suena una emisora real (estado "EN DIRECTO"), las bobinas giran y el latido se activa.
+- Teclado en el dial de emisoras: cambia de emisora y reproduce la nueva.
+- Microcorte: pasa a "RECONECTANDO…" y vuelve a "EN DIRECTO".
+- Letras en la lista: el salto lleva a la primera emisora de esa letra.
+- Cambio de modo a Dormir con el teclado: carga 62 emisoras y los estilos reales (Lluvia, Mar, Bosque…).
+- Estilo "Lluvia": filtra a 5 emisoras y el dial marca "1 / 5".
+- Móvil en vertical (375×812 emulado, puntero táctil): la vista se gira a horizontal y el reproductor cabe en 792 px de ancho.
+- Consola: sin errores de JavaScript. Aparecen errores 404 de recursos que no he identificado; no impiden el uso.
+- No probado: arrastre con el dedo en un móvil real; audio en un dispositivo real; layout de escritorio con ventana ancha; la lista de emisoras normal después de volver de la vista compacta.
+
+### Riesgos o pendientes
+- Los vúmetros y las barras de potencia son simulados; no leen el audio real.
+- Las emisoras de "modo compacto" se guardan en el navegador, no en la cuenta de nadie.
+- Pendiente de decidir: borrar `prototipos/modo-compacto.html` ahora que la versión real existe.
+- Los 404 de la consola: habría que identificar qué recursos faltan (posiblemente logos o el endpoint de títulos en un servidor local).
+- Al cambiar de modo con la vista compacta abierta, la radio se detiene (igual que en la lista normal).
+
+### Cómo revertir
+1. En `index.html`: quitar el bloque `<div class="header-tools">` (dejar solo el `<select>`), la sección `<section id="compact">` completa y las líneas que cargan `compact.css` y `compact.js`.
+2. En `styles.css`: quitar las reglas `.header-tools`, `.compact-toggle` y volver a las de `.mode-select` originales.
+3. En `app.js`: quitar las llamadas a `notifyRadioChange()`, la función `notifyRadioChange` y el bloque `window.radioMicro = {...}` antes del arranque.
+4. Borrar `compact.css` y `compact.js`.
+5. En `sw.js`: quitar `./compact.css` y `./compact.js` de `APP_SHELL` y volver a `var CACHE_VERSION = 'v33';`.
+6. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
+## 2026-11-09 11:15 — Prototipo del modo compacto con casete y diales
+
+### Objetivo
+Montar una maqueta HTML autocontenida para ver cómo quedaría un modo compacto con aspecto de reproductor de casete de los años 70: madera alrededor, casete central con la emisora en la etiqueta, dos diales (modo y emisora), botones de encendido, play, parar, estilo y microcorte, pantalla de listas tipo años 70, y un efecto de latido mientras gira la cinta.
+
+### Archivos afectados
+- `prototipos/modo-compacto.html`: creado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Maqueta independiente en `prototipos/modo-compacto.html`. No está conectada a la web real: usa emisoras de ejemplo y no toca `app.js`, `styles.css` ni `sw.js`.
+- Diseño: madera de fondo, panel plateado, casete con la emisora en la etiqueta y bobinas que giran al reproducir.
+- Diales de modo y de emisora: se pueden arrastrar con el ratón o el dedo, usar la rueda y las flechas del teclado.
+- Botones: encender/apagar, play/pausa, parar, estilo (abre la pantalla en la pestaña de estilos) y microcorte (simula reconexión).
+- Pantalla de listas plegable, con pestañas EMISORAS y ESTILOS, en estilo de pantalla ámbar.
+- Vúmetros y barras de potencia que se mueven solo al reproducir. Son simulados, no leen el audio.
+- Latido de la etiqueta mientras suena; durante un microcorte cambia a un latido lento en ámbar.
+- No se han copiado las imágenes de referencia. El diseño está hecho desde cero.
+
+### Motivo
+Antes de tocar la web real, se quiere ver el aspecto y el manejo del modo compacto para decidir si merece la pena.
+
+### Validaciones
+- Vista local en el navegador: la página carga sin errores de consola.
+- Encender: la etiqueta muestra "Los 40 Classic", el estado "EN DIRECTO" y las bobinas giran.
+- Lista de emisoras y estilos: se abre y el botón ESTILO lleva a la pestaña de estilos.
+- Microcorte: durante 3,2 s muestra "RECONECTANDO…" con las bobinas a tirones; después vuelve a "EN DIRECTO".
+- No se han probado diales con el dedo en un móvil real ni con emisoras reales.
+
+### Riesgos o pendientes
+- Los vúmetros son decorativos. Si se quieren reales, hay que analizar el audio, lo que solo funciona si el stream permite acceso desde otra web (CORS).
+- Las fuentes VT323 y Rajdhani se cargan de Google Fonts; sin conexión se ve una fuente de reserva.
+- Pendiente decidir si el modo compacto sustituye a la vista actual o es un interruptor.
+
+### Cómo revertir
+1. Borrar la carpeta `prototipos/` (contiene solo `modo-compacto.html`).
+2. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 10:30 — Mini reproductor en móvil: canción en dos líneas a todo el ancho
 
 ### Objetivo

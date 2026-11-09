@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="compact.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a0b2e" id="theme-color-meta">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
@@ -30,6 +31,7 @@
   </div>
 
   <header class="site-header">
+    <div class="header-tools">
     <select id="mode-select" class="mode-select" aria-label="Modo de escucha" autocomplete="off">
       <option value="normal">☀️ Modo normal</option>
       <option value="sleep">🌙 Modo dormir</option>
@@ -37,6 +39,8 @@
       <option value="music">🎸 Music Time</option>
       <option value="buggy">🐞 Buggy Time</option>
     </select>
+    <button type="button" id="compact-toggle" class="compact-toggle" aria-pressed="false">📼 Modo compacto</button>
+    </div>
     <h1 class="title">
       <span class="title-main">RADIOS DE ESPAÑA</span>
       <span class="title-sub">SIN MICROCORTES</span>
@@ -139,7 +143,80 @@
     <div class="sleep-dim-name" id="sleep-dim-name"></div>
   </div>
 
+  <!-- Modo compacto: casete de los años 70 con las emisoras del modo activo -->
+  <section id="compact" class="compact" hidden aria-label="Modo compacto">
+    <div class="compact-stage" id="compactStage">
+      <div class="deck">
+        <div class="chassis">
+          <div class="plate">
+            <span>RADIO · SIN MICROCORTES</span>
+            <span class="plate-right">
+              <span class="lamp green" id="cpLed" aria-hidden="true"></span>
+              <button type="button" class="cp-exit" id="cpExit">✕ SALIR</button>
+            </span>
+          </div>
+
+          <div class="grid">
+            <div class="side left">
+              <div class="vu" aria-hidden="true"><div class="needle" id="cpNeedleL"></div><span class="tag">L</span></div>
+              <div class="vents" aria-hidden="true"></div>
+              <div class="knob-wrap">
+                <div class="dial" id="cpModeDial" role="slider" tabindex="0" aria-label="Modo de escucha"><div class="ptr"></div></div>
+                <div class="dial-label">MODO</div>
+                <div class="dial-value" id="cpModeVal"></div>
+              </div>
+            </div>
+
+            <div class="center">
+              <div class="window" id="cpWindow">
+                <div class="cassette">
+                  <div class="label beat" id="cpLabel">
+                    <div class="label-name" id="cpName">—</div>
+                    <div class="label-sub" id="cpSub"></div>
+                  </div>
+                  <div class="reels">
+                    <div class="reel" id="cpReelL"></div>
+                    <div class="reel" id="cpReelR"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="transport">
+                <button class="btn" id="cpPower" type="button">ENCENDER</button>
+                <button class="btn" id="cpPlay" type="button">▶ PLAY</button>
+                <button class="btn" id="cpStop" type="button">■ PARAR</button>
+                <button class="btn" id="cpStyle" type="button">ESTILO</button>
+                <button class="btn" id="cpGlitch" type="button">⚡ MICROCORTE</button>
+              </div>
+            </div>
+
+            <div class="side right">
+              <div class="vu" aria-hidden="true"><div class="needle" id="cpNeedleR"></div><span class="tag">R</span></div>
+              <div class="bars" id="cpBars" aria-hidden="true"></div>
+              <div class="knob-wrap">
+                <div class="dial" id="cpStDial" role="slider" tabindex="0" aria-label="Emisora del grupo activo"><div class="ptr"></div></div>
+                <div class="dial-label">EMISORA</div>
+                <div class="dial-value" id="cpStVal"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer">
+          <button class="toggle" id="cpList" type="button" aria-expanded="false" aria-controls="cpScreen">▲ LISTA</button>
+          <div class="screen" id="cpScreen" hidden>
+            <div class="screen-head">
+              <button class="screen-tab active" data-tab="emisoras" type="button">EMISORAS</button>
+              <button class="screen-tab" data-tab="estilos" type="button">ESTILOS</button>
+            </div>
+            <div class="screen-body" id="cpScreenBody"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script src="app.js" defer></script>
+  <script src="compact.js" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {

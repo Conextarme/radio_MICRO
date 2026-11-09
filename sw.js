@@ -14,14 +14,16 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v33';
+var CACHE_VERSION = 'v34';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
   './',
   './index.html',
   './styles.css',
+  './compact.css',
   './app.js',
+  './compact.js',
   './manifest.json',
   './stations.json',
   './emisoras-relax.json',

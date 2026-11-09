@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipo · Modo compacto (casete)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #ffb000;
+    --silver-1: #d9d4cb;
+    --silver-2: #f3f0ea;
+    --silver-3: #a8a296;
+    --ink: #2a2520;
+    --red: #c0392b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; min-height: 100%; }
+
+  body {
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+    color: #f4e9d6;
+    background: #120b07;
+    min-height: 100vh;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* --- Madera del reproductor --- */
+  .deck {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 18px;
+    border-radius: 18px;
+    background:
+      repeating-linear-gradient(88deg, rgba(0,0,0,.16) 0 2px, transparent 2px 11px),
+      repeating-linear-gradient(92deg, #6b3b22 0%, #5a2e1a 14%, #7a4426 30%, #4d2513 52%, #6b3b22 70%, #56301b 100%);
+    box-shadow: inset 0 0 40px rgba(0,0,0,.45), 0 12px 30px rgba(0,0,0,.6);
+  }
+
+  /* --- Panel plateado (chasis) --- */
+  .chassis {
+    border-radius: 10px;
+    padding: 14px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
+      linear-gradient(90deg, var(--silver-3), var(--silver-2) 30%, var(--silver-3) 60%, var(--silver-1));
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(0,0,0,.25), 0 4px 10px rgba(0,0,0,.4);
+  }
+
+  .plate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    letter-spacing: .18em;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 1.25fr) 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .side { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  /* --- Lámparas de potencia --- */
+  .lamp {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #4a3a2a;
+    box-shadow: inset 0 0 3px #000;
+    display: inline-block;
+    transition: background .15s, box-shadow .15s;
+  }
+  .lamp.on { background: radial-gradient(circle at 40% 35%, #fff6c8, #ffb000 60%); box-shadow: 0 0 12px #ffb000, 0 0 24px rgba(255,176,0,.5); }
+  .lamp.green.on { background: radial-gradient(circle at 40% 35%, #d9ffd0, #3fe06a 60%); box-shadow: 0 0 12px #3fe06a; }
+  .lamp.red.on { background: radial-gradient(circle at 40% 35%, #ffd0c8, #ff4a3a 60%); box-shadow: 0 0 12px #ff4a3a; }
+
+  /* Barras de potencia (VU de LEDs) */
+  .bars { display: flex; gap: 4px; align-items: flex-end; height: 70px; }
+  .bar {
+    width: 8px; height: 20%;
+    background: #3a2d20;
+    border-radius: 2px;
+    transition: height .14s, background .14s;
+  }
+  .bar.on { background: linear-gradient(#ff4a3a, #ffb000 45%, #3fe06a); box-shadow: 0 0 6px rgba(255,176,0,.6); }
+
+  /* --- Rejillas de altavoz (finales) --- */
+  .vents {
+    width: 100%;
+    height: 56px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(0deg, #2b2119 0 3px, #5a4a3a 3px 5px);
+    box-shadow: inset 0 0 8px #000;
+  }
+
+  /* --- Vúmetro analógico --- */
+  .vu {
+    position: relative;
+    width: 150px; height: 84px;
+    border-radius: 6px;
+    background: radial-gradient(ellipse at 50% 100%, #fbf7ea, #e8e0c8 70%);
+    border: 6px solid #2a2622;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0,0,0,.4);
+  }
+  .vu .needle {
+    position: absolute;
+    left: 50%; bottom: 4px;
+    width: 2px; height: 70px;
+    margin-left: -1px;
+    background: var(--red);
+    transform-origin: 50% 100%;
+    transform: rotate(-42deg);
+    transition: transform .14s ease-out;
+  }
+  .vu .tag {
+    position: absolute; bottom: 2px; left: 0; right: 0;
+    text-align: center; font-size: 10px; letter-spacing: .3em; color: #6d675d;
+  }
+
+  /* --- Diales (knobs) --- */
+  .knob-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .dial {
+    position: relative;
+    width: 104px; height: 104px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #fbfaf6, #b8b3aa 45%, #4b4740 100%);
+    box-shadow: 0 6px 12px rgba(0,0,0,.45), inset 0 0 0 6px rgba(0,0,0,.08);
+    cursor: grab;
+    touch-action: none;
+    outline: none;
+    transition: transform .18s ease-out;
+  }
+  .dial.grab { cursor: grabbing; }
+  .dial:focus-visible { box-shadow: 0 0 0 3px var(--amber), 0 6px 12px rgba(0,0,0,.45); }
+  .dial .ptr {
+    position: absolute;
+    left: 50%; top: 8px;
+    width: 6px; height: 30px;
+    margin-left: -3px;
+    border-radius: 3px;
+    background: #ffb000;
+    box-shadow: 0 0 6px rgba(255,176,0,.7);
+  }
+  .dial-label {
+    font-size: 12px; font-weight: 700; letter-spacing: .2em; color: var(--ink);
+  }
+  .dial-value {
+    font-family: 'VT323', monospace; font-size: 20px; color: #3a2d1a;
+    min-height: 20px; text-align: center; max-width: 150px;
+  }
+
+  /* --- Centro: ventana del casete --- */
+  .center { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+  .window {
+    position: relative;
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    background: #15100b;
+    box-shadow: inset 0 0 20px #000, 0 0 0 4px #a8a296, 0 0 0 6px #444;
+    overflow: hidden;
+  }
+
+  /* Interferencia al sintonizar */
+  .window.static::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, rgba(0,0,0,.2) 2px 4px);
+    animation: noise .18s steps(2) infinite;
+    pointer-events: none;
+  }
+  @keyframes noise { 0% { transform: translate(0,0); } 50% { transform: translate(-3%,2%); } 100% { transform: translate(2%,-2%); } }
+
+  /* Cuerpo del casete: estilo "Awesome Mix" */
+  .cassette {
+    position: relative;
+    aspect-ratio: 1.6 / 1;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ecd39b, #c9a062);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.25), 0 6px 14px rgba(0,0,0,.55);
+    overflow: hidden;
+  }
+  .cassette::before {
+    /* Bandas rojas inferiores */
+    content: '';
+    position: absolute; left: 6%; right: 6%; bottom: 26%; height: 16%;
+    background: repeating-linear-gradient(180deg, #c8102e 0 7px, transparent 7px 12px);
+    opacity: .85;
+  }
+  .cassette::after {
+    /* Carcasa inferior oscura */
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+    background: linear-gradient(#4a3822, #2a1f14);
+  }
+
+  /* Etiqueta de la emisora */
+  .label {
+    position: absolute;
+    top: 9%; left: 12%; right: 12%;
+    height: 36%;
+    border-radius: 4px;
+    background: linear-gradient(#fdf6e3, #f1e4c2);
+    border: 1px solid #b98f4c;
+    box-shadow: 0 2px 4px rgba(0,0,0,.25);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 4px 10px;
+    text-align: center;
+    transform-origin: 50% 50%;
+  }
+  .label-name {
+    font-family: 'Segoe Script', 'Comic Sans MS', 'Bradley Hand', cursive;
+    font-size: clamp(16px, 3.6vw, 24px);
+    color: #1d1a14;
+    line-height: 1.1;
+    word-break: break-word;
+  }
+  .label-sub {
+    margin-top: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: #7a1f16;
+    letter-spacing: .08em;
+  }
+
+  /* Latido: "lub-dub" al ritmo de la emisión */
+  .label.beat { animation: lub 1.1s ease-in-out infinite; }
+  .label.beat-slow { animation: lub-slow 2.4s ease-in-out infinite; }
+  @keyframes lub {
+    0%, 100% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+    12% { transform: scale(1.035); box-shadow: 0 0 14px rgba(255,176,0,.55); }
+    24% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+    36% { transform: scale(1.02); box-shadow: 0 0 10px rgba(255,176,0,.4); }
+    50% { transform: scale(1); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  }
+  /* En microcorte: latido lento y desigual, en ámbar */
+  @keyframes lub-slow {
+    0%, 100% { transform: scale(1); filter: none; }
+    20% { transform: scale(.985); filter: hue-rotate(-12deg) brightness(1.1); }
+    35% { transform: scale(1.01); filter: hue-rotate(-12deg) brightness(1.2); }
+    55% { transform: scale(1); filter: none; }
+  }
+
+  /* Ventanas de las bobinas */
+  .reels {
+    position: absolute;
+    left: 0; right: 0; bottom: 24%;
+    display: flex; justify-content: space-around;
+    padding: 0 18%;
+  }
+  .reel {
+    position: relative;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1d1a16 0 30%, #e9e3d4 31% 38%, #5a5349 40% 100%);
+    box-shadow: inset 0 0 0 3px #2a2622;
+  }
+  .reel::before, .reel::after {
+    content: '';
+    position: absolute; left: 50%; top: 50%;
+    width: 52px; height: 6px;
+    margin: -3px 0 0 -26px;
+    background: #d8d0bd;
+    border-radius: 3px;
+  }
+  .reel::after { transform: rotate(60deg); }
+  .reel.spin { animation: spin 1.6s linear infinite; }
+  .reel.spin-recon { animation: spin 1.6s steps(6) infinite; }
+  .reel.still { animation: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Botonera */
+  .transport {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  }
+  .btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .08em;
+    color: var(--ink);
+    padding: 10px 14px;
+    min-width: 44px; min-height: 44px;
+    border-radius: 6px;
+    border: 1px solid #6d675d;
+    background: linear-gradient(#f3efe6, #aaa396);
+    box-shadow: 0 3px 0 #5b564d, 0 4px 8px rgba(0,0,0,.35);
+    cursor: pointer;
+    transition: transform .06s, box-shadow .06s, background .2s;
+  }
+  .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #5b564d; }
+  .btn.lit {
+    background: linear-gradient(#ffe39a, #e0a526);
+    box-shadow: 0 0 10px rgba(255,176,0,.6), 0 3px 0 #8a6414;
+  }
+  .btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+  /* --- Pie discreto + lista --- */
+  .drawer { margin-top: 14px; text-align: center; }
+  .toggle {
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: #e9dcc7;
+    background: transparent;
+    border: 1px dashed rgba(233,220,199,.45);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+    opacity: .85;
+  }
+  .toggle:hover { opacity: 1; }
+
+  .screen {
+    position: relative;
+    max-width: 560px;
+    margin: 12px auto 0;
+    background: radial-gradient(ellipse at 50% 30%, #1c1407, #0b0a05 80%);
+    color: var(--amber);
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: 22px;
+    border: 10px solid #2b2418;
+    border-radius: 14px;
+    box-shadow: inset 0 0 40px rgba(255,176,0,.12), 0 0 18px rgba(255,176,0,.12);
+    text-shadow: 0 0 6px rgba(255,176,0,.55);
+    overflow: hidden;
+    text-align: left;
+  }
+  .screen::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  .screen[hidden] { display: none; }
+  .screen-head {
+    display: flex; gap: 6px; padding: 6px 8px;
+    border-bottom: 1px solid rgba(255,176,0,.35);
+  }
+  .screen-tab {
+    font-family: inherit; font-size: 20px;
+    color: var(--amber);
+    background: transparent;
+    border: 1px solid rgba(255,176,0,.5);
+    padding: 0 8px;
+    cursor: pointer;
+  }
+  .screen-tab.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+  .screen-body { max-height: 280px; overflow-y: auto; padding: 6px 8px 10px; }
+  .row {
+    display: flex; gap: 10px; align-items: baseline; width: 100%;
+    font: inherit; color: inherit; background: none; border: 0;
+    padding: 2px 6px; text-align: left; cursor: pointer;
+  }
+  .row:hover { background: rgba(255,176,0,.12); }
+  .row.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+  .row .idx { width: 2.2em; text-align: right; opacity: .75; }
+  .row .cat { margin-left: auto; opacity: .7; font-size: 18px; }
+  .style-btns { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 2px; }
+  .style-btn {
+    font: inherit; font-size: 20px; color: var(--amber);
+    background: transparent; border: 1px solid rgba(255,176,0,.6);
+    padding: 2px 10px; cursor: pointer;
+  }
+  .style-btn.active { background: var(--amber); color: #0b0a05; text-shadow: none; }
+
+  /* Apagado */
+  .deck.off .label { filter: grayscale(.7) brightness(.55); }
+  .deck.off .cassette { filter: brightness(.8); }
+
+  /* Móvil: los diales y el casete bajan a una columna */
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .center { grid-column: 1 / -1; order: -1; }
+    .side.left, .side.right { flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel.spin, .reel.spin-recon, .label.beat, .label.beat-slow, .window.static::after { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+  <div class="chassis">
+    <div class="plate">
+      <span>RADIO · SIN MICROCORTES</span>
+      <span class="lamp green" id="powerLed" aria-hidden="true"></span>
+    </div>
+
+    <div class="grid">
+      <!-- Izquierda: vúmetro, rejilla y dial de modo -->
+      <div class="side left">
+        <div class="vu" aria-hidden="true">
+          <div class="needle" id="needleL"></div>
+          <span class="tag">L</span>
+        </div>
+        <div class="vents" aria-hidden="true"></div>
+        <div class="knob-wrap">
+          <div class="dial" id="modeDial" role="slider" tabindex="0" aria-label="Modo de escucha" aria-valuemin="1" aria-valuemax="5">
+            <div class="ptr"></div>
+          </div>
+          <div class="dial-label">MODO</div>
+          <div class="dial-value" id="modeVal"></div>
+        </div>
+      </div>
+
+      <!-- Centro: casete y botonera -->
+      <div class="center">
+        <div class="window" id="window">
+          <div class="cassette" id="cassette">
+            <div class="label beat" id="label">
+              <div class="label-name" id="labelName">—</div>
+              <div class="label-sub" id="labelSub"></div>
+            </div>
+            <div class="reels">
+              <div class="reel" id="reelL"></div>
+              <div class="reel" id="reelR"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="transport">
+          <button class="btn" id="btnPower" type="button">⏻ ENCENDER</button>
+          <button class="btn" id="btnPlay" type="button">▶ PLAY</button>
+          <button class="btn" id="btnStop" type="button">■ PARAR</button>
+          <button class="btn" id="btnStyle" type="button">ESTILO</button>
+          <button class="btn" id="btnGlitch" type="button">⚡ MICROCORTE</button>
+        </div>
+      </div>
+
+      <!-- Derecha: indicadores de potencia y dial de emisora -->
+      <div class="side right">
+        <div class="vu" aria-hidden="true">
+          <div class="needle" id="needleR"></div>
+          <span class="tag">R</span>
+        </div>
+        <div class="bars" id="bars" aria-hidden="true"></div>
+        <div class="knob-wrap">
+          <div class="dial" id="stDial" role="slider" tabindex="0" aria-label="Emisora del grupo activo" aria-valuemin="1">
+            <div class="ptr"></div>
+          </div>
+          <div class="dial-label">EMISORA</div>
+          <div class="dial-value" id="stVal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer">
+    <button class="toggle" id="btnList" type="button" aria-expanded="false" aria-controls="screen">▲ LISTA</button>
+    <div class="screen" id="screen" hidden>
+      <div class="screen-head">
+        <button class="screen-tab active" data-tab="emisoras" type="button">EMISORAS</button>
+        <button class="screen-tab" data-tab="estilos" type="button">ESTILOS</button>
+      </div>
+      <div class="screen-body" id="screenBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // Datos de ejemplo (solo para la maqueta; no son las emisoras reales).
+  var MODES = [
+    { id: 'normal', label: 'NORMAL', cats: [['todos', 'Todos'], ['pop', 'Pop'], ['clasica', 'Clásica'], ['noticias', 'Noticias'], ['rock', 'Rock']],
+      stations: [
+        { n: 'Los 40 Classic', c: 'pop', f: '98.2' },
+        { n: 'Cadena 100', c: 'pop', f: '100.0' },
+        { n: 'Radio Clásica', c: 'clasica', f: '89.5' },
+        { n: 'Onda Cero', c: 'noticias', f: '107.0' },
+        { n: 'Rock FM', c: 'rock', f: '103.9' }
+      ] },
+    { id: 'sleep', label: 'DORMIR', cats: [['todos', 'Todos'], ['lluvia', 'Lluvia'], ['mar', 'Mar'], ['bosque', 'Bosque']],
+      stations: [
+        { n: 'Lluvia suave', c: 'lluvia' },
+        { n: 'Olas del mar', c: 'mar' },
+        { n: 'Bosque de noche', c: 'bosque' },
+        { n: 'Lluvia en tejado', c: 'lluvia' }
+      ] },
+    { id: 'calm', label: 'BIG CALM', cats: [['todos', 'Todos'], ['ambient', 'Ambient'], ['piano', 'Piano']],
+      stations: [
+        { n: 'Ambient 432 Hz', c: 'ambient' },
+        { n: 'Piano relax', c: 'piano' }
+      ] },
+    { id: 'music', label: 'MUSIC TIME', cats: [['todos', 'Todos'], ['blues', 'Blues'], ['metal', 'Metal'], ['rock70', 'Rock 70']],
+      stations: [
+        { n: 'Blues Radio', c: 'blues' },
+        { n: 'Metal Hits', c: 'metal' },
+        { n: 'Rock 70 Live', c: 'rock70' }
+      ] },
+    { id: 'buggy', label: 'BUGGY TIME', cats: [['todos', 'Todos'], ['scifi', 'Sci-fi'], ['oldies', 'Oldies']],
+      stations: [
+        { n: 'Sci-fi Radio', c: 'scifi' },
+        { n: 'Oldies Live', c: 'oldies' }
+      ] }
+  ];
+
+  var st = { on: false, playing: false, recon: false, mode: 0, style: 'todos', idx: 0, tab: 'emisoras' };
+  var staticTimer = null;
+  var reconTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var deck = $('deck'), windowEl = $('window'), label = $('label'), labelName = $('labelName'), labelSub = $('labelSub');
+  var reelL = $('reelL'), reelR = $('reelR'), powerLed = $('powerLed');
+  var btnPower = $('btnPower'), btnPlay = $('btnPlay'), btnStop = $('btnStop'), btnStyle = $('btnStyle'), btnGlitch = $('btnGlitch');
+  var btnList = $('btnList'), screen = $('screen'), screenBody = $('screenBody');
+  var modeVal = $('modeVal'), stVal = $('stVal');
+  var needleL = $('needleL'), needleR = $('needleR'), bars = $('bars');
+
+  function filtered() {
+    var m = MODES[st.mode];
+    return st.style === 'todos' ? m.stations : m.stations.filter(function (s) { return s.c === st.style; });
+  }
+  function current() { return filtered()[st.idx]; }
+  function catLabel(id) {
+    var c = MODES[st.mode].cats.filter(function (x) { return x[0] === id; })[0];
+    return c ? c[1] : id;
+  }
+
+  /* --- Diales: arrastrar, rueda del ratón o flechas --- */
+  function attachDial(el, getCount, getIndex, setIndex) {
+    var drag = null;
+    function move(step) {
+      var n = getCount();
+      if (n < 2) { return; }
+      setIndex((getIndex() + step + n) % n);
+    }
+    el.addEventListener('pointerdown', function (e) {
+      drag = { y: e.clientY, acc: 0 };
+      el.setPointerCapture(e.pointerId);
+      el.classList.add('grab');
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!drag) { return; }
+      var dy = drag.y - e.clientY;
+      drag.y = e.clientY;
+      drag.acc += dy;
+      while (Math.abs(drag.acc) >= 14) {
+        var s = drag.acc > 0 ? 1 : -1;
+        drag.acc -= 14 * s;
+        move(s);
+      }
+    });
+    function end() { drag = null; el.classList.remove('grab'); }
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    el.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      move(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowRight') { e.preventDefault(); move(1); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { e.preventDefault(); move(-1); }
+    });
+  }
+
+  function paintDial(el, n, i) {
+    var angle = n <= 1 ? 0 : -135 + 270 * i / (n - 1);
+    el.style.transform = 'rotate(' + angle + 'deg)';
+    el.setAttribute('aria-valuenow', String(i + 1));
+    el.setAttribute('aria-valuemax', String(n));
+  }
+
+  attachDial($('modeDial'),
+    function () { return MODES.length; },
+    function () { return st.mode; },
+    function (i) {
+      st.mode = i;
+      st.idx = 0;
+      st.style = 'todos';
+      if (st.on && st.playing) { tune(); } else { render(); }
+    });
+
+  attachDial($('stDial'),
+    function () { return filtered().length; },
+    function () { return st.idx; },
+    function (i) { st.idx = i; tune(); });
+
+  /* --- Sintonizar: efecto de interferencia y arranque --- */
+  function tune() {
+    if (!st.on) { render(); return; }
+    windowEl.classList.add('static');
+    clearTimeout(staticTimer);
+    staticTimer = setTimeout(function () { windowEl.classList.remove('static'); }, 500);
+    st.playing = true;
+    st.recon = false;
+    render();
+  }
+
+  /* --- Botones --- */
+  btnPower.addEventListener('click', function () {
+    st.on = !st.on;
+    st.playing = st.on;
+    st.recon = false;
+    if (st.on) {
+      windowEl.classList.add('static');
+      clearTimeout(staticTimer);
+      staticTimer = setTimeout(function () { windowEl.classList.remove('static'); }, 500);
+    }
+    render();
+  });
+
+  btnPlay.addEventListener('click', function () {
+    if (!st.on) { st.on = true; st.playing = true; tune(); return; }
+    st.playing = !st.playing;
+    st.recon = false;
+    render();
+  });
+
+  btnStop.addEventListener('click', function () {
+    st.playing = false;
+    st.recon = false;
+    render();
+  });
+
+  btnStyle.addEventListener('click', function () {
+    openScreen(true);
+    setTab('estilos');
+  });
+
+  btnGlitch.addEventListener('click', function () {
+    if (!st.playing) { return; }
+    st.recon = true;
+    render();
+    clearTimeout(reconTimer);
+    reconTimer = setTimeout(function () { st.recon = false; render(); }, 3200);
+  });
+
+  btnList.addEventListener('click', function () {
+    openScreen(screen.hidden);
+  });
+
+  /* --- Pantalla de listas --- */
+  function openScreen(open) {
+    screen.hidden = !open;
+    btnList.setAttribute('aria-expanded', String(open));
+    btnList.textContent = open ? '▼ CERRAR LISTA' : '▲ LISTA';
+    if (open) { renderScreen(); }
+  }
+
+  function setTab(tab) {
+    st.tab = tab;
+    document.querySelectorAll('.screen-tab').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-tab') === tab);
+    });
+    renderScreen();
+  }
+
+  document.querySelectorAll('.screen-tab').forEach(function (b) {
+    b.addEventListener('click', function () { setTab(b.getAttribute('data-tab')); });
+  });
+
+  function renderScreen() {
+    screenBody.innerHTML = '';
+    if (st.tab === 'emisoras') {
+      var head = document.createElement('div');
+      head.textContent = 'GRUPO ' + MODES[st.mode].label + ' · ESTILO ' + catLabel(st.style).toUpperCase();
+      head.style.marginBottom = '6px';
+      screenBody.appendChild(head);
+      filtered().forEach(function (s, i) {
+        var row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'row' + (st.on && i === st.idx ? ' active' : '');
+        var idx = document.createElement('span'); idx.className = 'idx'; idx.textContent = (i + 1) + '.';
+        var name = document.createElement('span'); name.textContent = s.n;
+        var cat = document.createElement('span'); cat.className = 'cat'; cat.textContent = catLabel(s.c);
+        row.appendChild(idx); row.appendChild(name); row.appendChild(cat);
+        row.addEventListener('click', function () { st.idx = i; tune(); });
+        screenBody.appendChild(row);
+      });
+    } else {
+      var wrap = document.createElement('div');
+      wrap.className = 'style-btns';
+      MODES[st.mode].cats.forEach(function (c) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'style-btn' + (c[0] === st.style ? ' active' : '');
+        b.textContent = c[1];
+        b.addEventListener('click', function () {
+          st.style = c[0];
+          st.idx = 0;
+          setTab('emisoras');
+          if (st.on && st.playing) { tune(); } else { render(); }
+        });
+        wrap.appendChild(b);
+      });
+      screenBody.appendChild(wrap);
+    }
+  }
+
+  /* --- Pintado general --- */
+  function render() {
+    deck.classList.toggle('off', !st.on);
+    powerLed.classList.toggle('on', st.on);
+    btnPower.classList.toggle('lit', st.on);
+    btnPower.textContent = st.on ? '⏻ APAGAR' : '⏻ ENCENDER';
+    btnPlay.classList.toggle('lit', st.on && st.playing);
+    btnPlay.textContent = st.on && st.playing ? '❚❚ PAUSA' : '▶ PLAY';
+
+    var s = st.on ? current() : null;
+    labelName.textContent = !st.on ? 'APAGADO' : (s ? s.n : 'SIN EMISORAS');
+    labelSub.textContent = !st.on ? '' :
+      st.recon ? 'RECONECTANDO…' :
+      st.playing ? '♪ EN DIRECTO' : 'EN PAUSA';
+    labelName.style.fontSize = '';
+    label.classList.toggle('beat', st.on && st.playing && !st.recon);
+    label.classList.toggle('beat-slow', st.on && st.recon);
+
+    var spinning = st.on && st.playing;
+    reelL.className = 'reel ' + (st.recon ? 'spin-recon' : spinning ? 'spin' : 'still');
+    reelR.className = reelL.className;
+
+    modeVal.textContent = MODES[st.mode].label;
+    stVal.textContent = st.on && filtered().length ? (st.idx + 1) + ' / ' + filtered().length : '—';
+    paintDial($('modeDial'), MODES.length, st.mode);
+    paintDial($('stDial'), filtered().length, st.idx);
+
+    if (!screen.hidden) { renderScreen(); }
+  }
+
+  /* --- Vúmetros e indicadores de potencia: simulados --- */
+  function buildBars() {
+    for (var i = 0; i < 8; i++) {
+      var b = document.createElement('div');
+      b.className = 'bar';
+      bars.appendChild(b);
+    }
+  }
+  buildBars();
+
+  setInterval(function () {
+    var active = st.on && st.playing && !st.recon;
+    var lv = function () { return active ? -30 + Math.random() * 60 : -42; };
+    needleL.style.transform = 'rotate(' + lv() + 'deg)';
+    needleR.style.transform = 'rotate(' + lv() + 'deg)';
+    var lit = active ? Math.round(3 + Math.random() * 5) : 0;
+    Array.prototype.forEach.call(bars.children, function (b, i) {
+      var on = i < lit;
+      b.classList.toggle('on', on);
+      b.style.height = on ? (40 + Math.random() * 60) + '%' : '20%';
+    });
+  }, 150);
+
+  render();
+})();
+</script>
+</body>
+</html>
