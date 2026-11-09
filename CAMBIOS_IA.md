@@ -4,6 +4,76 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 11:32 — Emisora "Exclusively Queen" en Rock años 70
+
+### Objetivo
+El usuario pidió añadir una emisora de Queen en la categoría de rock.
+
+### Archivos afectados
+- `emisoras-modos.json`: modificado.
+- `sw.js`: modificado (versión de caché v40 → v41).
+
+### Cambios realizados
+Se ha añadido "Exclusively Queen" (Exclusive Radio, solo canciones de Queen) en Music Time, categoría "Rock años 70", justo detrás de las otras emisoras de la misma cadena (Pink Floyd, Deep Purple y Led Zeppelin). Ahora la categoría tiene 9 emisoras.
+
+### Motivo
+Es la misma cadena que ya se usa para Pink Floyd, Deep Purple y Led Zeppelin, que funciona en la web, y su emisora de Queen emite en el mismo formato (MP3 a 128 kbps).
+
+### Validaciones
+- Petición al stream con `curl`: respuesta 200, tipo `audio/mpeg`, nombre de emisora "er/queen", 128 kbps, y se recibió audio.
+- `emisoras-modos.json` se lee sin errores y la emisora aparece en el modo `music` con la categoría `rock70`.
+- No probado: escucharla en la web (para no poner sonido durante las pruebas).
+
+### Riesgos o pendientes
+- No tiene logo propio, igual que Deep Purple y Led Zeppelin; se ve el que la web pone por defecto.
+
+### Cómo revertir
+Quitar el bloque "Exclusively Queen" de `emisoras-modos.json` y dejar `CACHE_VERSION` en `'v40'`.
+
+---
+
+## 2026-11-09 11:31 — Carga más rápida: fuentes sin bloqueo y lista corta de emisoras ocultas
+
+### Objetivo
+El usuario pidió aplicar dos mejoras de rendimiento: que las fuentes no retrasen la primera vista y que la lista de emisoras no espere a descargar el historial completo de fallos.
+
+### Archivos afectados
+- `index.html`: modificado.
+- `app.js`: modificado.
+- `scripts/check-streams.mjs`: modificado.
+- `.github/workflows/check-streams.yml`: modificado.
+- `emisoras-ocultas.json`: creado.
+- `sw.js`: modificado (versión de caché v39 → v40 y nuevo archivo en la lista de la caché).
+
+### Cambios realizados
+1. **Fuentes.** Antes, el navegador no mostraba nada hasta descargar las fuentes de Google. Ahora la web aparece enseguida con la letra del sistema y cambia a Audiowide y Rajdhani cuando llegan, un instante después. Además, ya no se descarga el grosor 500 de Rajdhani, que no se usaba. Si el JavaScript está desactivado, las fuentes se cargan como antes.
+2. **Emisoras ocultas.** Antes, para saber qué emisoras ocultar (las que fallan 3 semanas seguidas), la web descargaba `stream-health.json` entero (unos 74 KB) antes de pintar las tarjetas. Ahora la comprobación semanal también genera `emisoras-ocultas.json`, de menos de 1 KB, con solo esa lista, y la web lee este archivo. Si falta o está dañado, la web usa el historial completo como antes, y si tampoco puede leerlo, no oculta nada.
+   - El robot semanal de GitHub guarda ahora los dos archivos.
+   - Con `node scripts/check-streams.mjs --solo-ocultas` se rehace la lista corta a partir del historial, sin comprobar emisoras. Así se ha creado la lista inicial.
+
+### Motivo
+Las dos cosas retrasaban la primera vista en el móvil: el CSS de las fuentes bloqueaba el pintado y el historial era una descarga que había que esperar antes de mostrar la lista.
+
+### Validaciones
+- `node --check app.js`: sin errores.
+- `node scripts/check-streams.mjs --solo-ocultas`: generó `emisoras-ocultas.json` con 1 emisora oculta ("Europa FM"), la misma que sale al calcularlo a mano desde `stream-health.json`.
+- Navegador local, sin service worker ni caché:
+  - Se descarga `emisoras-ocultas.json` y no `stream-health.json`.
+  - Se pintan 44 tarjetas.
+  - El enlace de las fuentes acaba como `media="all"` y Audiowide y Rajdhani quedan cargadas.
+- Prueba del respaldo, quitando `emisoras-ocultas.json` temporalmente: la web pasó a leer `stream-health.json` y pintó las 44 tarjetas. El archivo se restauró después.
+- No probado: la ejecución real del workflow de GitHub (se hará el próximo lunes o al lanzarlo a mano).
+
+### Riesgos o pendientes
+- Al abrir la web puede verse un instante la letra del sistema antes de la definitiva (el cambio de fuente es visible).
+- El umbral de 3 fallos seguidos está ahora en dos sitios: `HIDE_AFTER_CONSECUTIVE_FAILURES` en `app.js` (para el respaldo) y en `scripts/check-streams.mjs`. Si se cambia, hay que cambiarlo en los dos.
+- Comprobar tras el próximo lunes que el robot sube también `emisoras-ocultas.json`.
+
+### Cómo revertir
+Deshacer los cambios de este commit en `index.html`, `app.js`, `scripts/check-streams.mjs`, `.github/workflows/check-streams.yml` y `sw.js`, y borrar `emisoras-ocultas.json`. Dejar `CACHE_VERSION` en `'v39'`.
+
+---
+
 ## 2026-11-09 11:24 — Modo compacto: correcciones tras la revisión del código
 
 ### Objetivo

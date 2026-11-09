@@ -29,10 +29,10 @@ jobs:
       - name: Guardar historial de fallos
         if: always()
         run: |
-          if [ -n "$(git status --porcelain stream-health.json)" ]; then
+          if [ -n "$(git status --porcelain stream-health.json emisoras-ocultas.json)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add stream-health.json
+            git add stream-health.json emisoras-ocultas.json
             git commit -m "actualizar historial de fallos de streams"
             git push
           fi

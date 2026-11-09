@@ -6,7 +6,11 @@
   <title>Radios de España Sin Microcortes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Las fuentes se cargan sin bloquear el primer pintado: la web aparece al
+       momento con la letra del sistema y cambia a la definitiva cuando llega.
+       (media="print" no bloquea; al cargar se pasa a "all".) -->
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a0b2e" id="theme-color-meta">

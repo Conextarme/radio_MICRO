@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v39';
+var CACHE_VERSION = 'v41';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -28,6 +28,7 @@ var APP_SHELL = [
   './stations.json',
   './emisoras-relax.json',
   './emisoras-modos.json',
+  './emisoras-ocultas.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'

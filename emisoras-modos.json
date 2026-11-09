@@ -232,6 +232,16 @@
           "categoria": "rock70"
         },
         {
+          "nombre": "Exclusively Queen",
+          "pais": "AE",
+          "codec": "MP3",
+          "bitrate": 128,
+          "stream": "https://streaming.exclusive.radio/er/queen/icecast.audio",
+          "web": "https://exclusive.radio/",
+          "descripcion": "Solo Queen",
+          "categoria": "rock70"
+        },
+        {
           "nombre": "Radio Bob Rockabilly",
           "pais": "DE",
           "codec": "MP3",

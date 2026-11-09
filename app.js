@@ -2435,22 +2435,42 @@
   var HIDE_AFTER_CONSECUTIVE_FAILURES = 3;
   var hiddenStationsPromise = null;
 
+  function fetchJson(url) {
+    return fetch(url).then(function (res) {
+      if (!res.ok) {
+        throw new Error('No se pudo leer ' + url);
+      }
+      return res.json();
+    });
+  }
+
+  // Respaldo: calcula las ocultas a partir del historial completo (más pesado)
+  function hiddenFromHealth() {
+    return fetchJson('stream-health.json').then(function (health) {
+      var hidden = {};
+      var entries = (health && health.stations) || {};
+      Object.keys(entries).forEach(function (key) {
+        if ((entries[key].consecutiveFailures || 0) >= HIDE_AFTER_CONSECUTIVE_FAILURES) {
+          hidden[key] = true;
+        }
+      });
+      return hidden;
+    });
+  }
+
   function loadHiddenStations() {
     if (!hiddenStationsPromise) {
-      hiddenStationsPromise = fetch('stream-health.json').then(function (res) {
-        if (!res.ok) {
-          throw new Error('Sin historial de fallos');
+      // emisoras-ocultas.json es la lista corta que genera la misma comprobación
+      // semanal (menos de 1 KB frente a los ~74 KB del historial completo).
+      hiddenStationsPromise = fetchJson('emisoras-ocultas.json').then(function (data) {
+        if (!data || !Array.isArray(data.ocultas)) {
+          throw new Error('Lista de ocultas no válida');
         }
-        return res.json();
-      }).then(function (health) {
         var hidden = {};
-        var entries = (health && health.stations) || {};
-        Object.keys(entries).forEach(function (key) {
-          if ((entries[key].consecutiveFailures || 0) >= HIDE_AFTER_CONSECUTIVE_FAILURES) {
-            hidden[key] = true;
-          }
-        });
+        data.ocultas.forEach(function (key) { hidden[key] = true; });
         return hidden;
+      }).catch(function () {
+        return hiddenFromHealth();
       }).catch(function () {
         return {};
       });

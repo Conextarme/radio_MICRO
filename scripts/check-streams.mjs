@@ -22,7 +22,10 @@ const STATIONS_PATH = path.join(__dirname, '..', 'stations.json');
 const SLEEP_STATIONS_PATH = path.join(__dirname, '..', 'emisoras-relax.json');
 const EXTRA_MODES_PATH = path.join(__dirname, '..', 'emisoras-modos.json');
 const HEALTH_PATH = path.join(__dirname, '..', 'stream-health.json');
+const HIDDEN_PATH = path.join(__dirname, '..', 'emisoras-ocultas.json');
 const CHRONIC_CONSECUTIVE_FAILURES = 2;
+// Igual que HIDE_AFTER_CONSECUTIVE_FAILURES en app.js: a partir de aquí la web la oculta
+const HIDE_AFTER_CONSECUTIVE_FAILURES = 3;
 const TIMEOUT_MS = 10000;
 
 const RETRIES = 3;
@@ -179,6 +182,20 @@ function updateHealth(health, results) {
   return health;
 }
 
+/* Lista corta para la web (emisoras-ocultas.json): solo las claves
+   "archivo|nombre" de las emisoras que hay que ocultar. Así la web no tiene que
+   descargar el historial completo (stream-health.json) antes de pintar la lista. */
+function hiddenList(health) {
+  const ocultas = Object.keys(health.stations || {})
+    .filter((key) => (health.stations[key].consecutiveFailures || 0) >= HIDE_AFTER_CONSECUTIVE_FAILURES)
+    .sort();
+  return { updated: health.updated || null, ocultas };
+}
+
+async function writeHiddenList(health) {
+  await writeFile(HIDDEN_PATH, JSON.stringify(hiddenList(health), null, 2) + '\n', 'utf8');
+}
+
 function printFailureRanking(health) {
   const ranking = Object.values(health.stations)
     .filter((e) => e.failures > 0)
@@ -210,6 +227,14 @@ async function writeFailureReport(reportPath, failed, health) {
 }
 
 async function main() {
+  // node scripts/check-streams.mjs --solo-ocultas
+  // Rehace emisoras-ocultas.json a partir del historial, sin comprobar nada.
+  if (process.argv.includes('--solo-ocultas')) {
+    await writeHiddenList(await loadHealth());
+    console.log('emisoras-ocultas.json actualizado a partir de stream-health.json.');
+    return;
+  }
+
   const withStream = await loadStations();
 
   console.log(`Comprobando ${withStream.length} emisoras con stream configurado (lotes de ${CONCURRENCY})...\n`);
@@ -221,6 +246,7 @@ async function main() {
 
   const health = updateHealth(await loadHealth(), results);
   await writeFile(HEALTH_PATH, JSON.stringify(health, null, 2) + '\n', 'utf8');
+  await writeHiddenList(health);
 
   const failed = [];
   for (const r of results) {
