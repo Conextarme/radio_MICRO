@@ -4,6 +4,53 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 11:24 — Modo compacto: correcciones tras la revisión del código
+
+### Objetivo
+El usuario pidió revisar todo lo hecho en la sesión y corregir los cinco puntos encontrados en el modo compacto.
+
+### Archivos afectados
+- `compact.js`: modificado.
+- `compact.css`: modificado.
+- `index.html`: modificado.
+- `app.js`: modificado.
+- `sw.js`: modificado (versión de caché v38 → v39).
+
+### Cambios realizados
+1. **Arrastrar el dial con el móvil en vertical.** El casete se ve girado y, al arrastrar el dial "hacia arriba", no respondía porque se medía el movimiento vertical de la pantalla real. Ahora, con la vista girada, se mide el movimiento horizontal, que es el que el usuario ve como "arriba".
+2. **Casete cortado en el móvil.** La vista girada usaba la altura total de la pantalla, incluida la barra del navegador, y el casete se salía por un lado. Ahora usa la altura visible real (`100dvh`) y mantiene la anterior como respaldo para navegadores antiguos.
+3. **Girar varios pasos seguidos.** Antes, cada toque, cada paso de la rueda del ratón y cada pulsación de flecha cambiaba de emisora (o cargaba un modo) al instante, y se encadenaban conexiones. Ahora el dial se mueve al momento, pero la emisora o el modo solo se aplican cuando se deja de girar durante 0,4 segundos. Mientras se gira el dial de modo, el rótulo de debajo muestra el modo al que apunta.
+4. **La lista inferior ya no salta.** Antes se rehacía con cada canción nueva y volvía sola a la emisora activa. Ahora solo se rehace si cambia algo que aparece en ella, y solo vuelve a la emisora activa al abrirla, al cambiar de pestaña o al cambiar de emisora.
+5. **Detalles:**
+   - Si el compacto no se puede descargar (sin conexión), el icono vuelve a intentarlo al pulsarlo otra vez; antes se quedaba sin responder hasta recargar.
+   - Se ha quitado de `app.js` la función `glitch`, que usaba el antiguo botón de microcortes y ya no se usaba en ningún sitio.
+   - Los diales informan al lector de pantalla del nombre del modo o de la emisora, en lugar de solo un número.
+
+### Motivo
+Son los fallos y mejoras que salieron en la revisión del código de esta sesión: uso en el móvil girado, conexiones innecesarias al girar rápido, lista incómoda de leer, recuperación sin conexión y accesibilidad.
+
+### Validaciones
+- `node --check` de `compact.js` y `app.js`: sin errores de sintaxis.
+- Navegador local (servidor `python -m http.server`) con la reproducción simulada, sin sonido real:
+  - Tres pasos seguidos de rueda en el dial de modo → un solo cambio de modo al final, y el rótulo mostraba el modo de destino mientras tanto. Correcto.
+  - Tres toques seguidos en el dial de emisora con la radio "encendida" (simulado) → una sola orden de reproducir, la de la emisora final. Correcto.
+  - Vista girada: arrastrar 30 px hacia la derecha de la pantalla avanzó dos modos; arrastrar en vertical no hizo nada. Correcto.
+  - Panel de emisoras abierto y desplazado; al llegar una canción nueva, la lista no se rehízo ni se movió. Correcto.
+  - La regla con `100dvh` está cargada y el navegador la admite.
+  - `window.radioMicro.glitch` ya no existe.
+- No probado: el aspecto real de la vista girada en un móvil (en la prueba la ventana no tenía alto visible), la vibración (el navegador la bloquea con toques simulados) y la recarga del icono sin conexión.
+
+### Riesgos o pendientes
+- Hay que comprobar en un móvil real la vista girada y el arrastre.
+- La espera de 0,4 s hace que la emisora empiece a sonar un poco después de tocar el dial; se puede ajustar en `SETTLE_MS`, en `compact.js`.
+- El commit anterior (v38) no llegó a publicarse en Vercel; este cambio necesitará también un despliegue manual si Vercel no lo recoge.
+- Las horas de las entradas anteriores de hoy (09:35–16:00) no coinciden con el reloj del equipo (11:24 en el momento de esta entrada).
+
+### Cómo revertir
+Deshacer los cambios de este commit en `compact.js`, `compact.css`, `index.html`, `app.js` y `sw.js` (por ejemplo, con `git revert` del commit) y volver a dejar `CACHE_VERSION` en `'v38'`.
+
+---
+
 ## 2026-11-09 16:00 — Optimización de rendimiento: desenfoque, sol/luna y tarjetas fuera de pantalla
 
 ### Objetivo

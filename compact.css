@@ -32,7 +32,10 @@
 
 .compact.rotated .compact-stage {
   inset: auto;
+  /* dvh = alto visible real: en el móvil 100vh incluye la barra del navegador
+     y el casete quedaba cortado por un lado. vh queda como respaldo. */
   width: 100vh;
+  width: 100dvh;
   height: 100vw;
   left: 100vw;
   top: 0;

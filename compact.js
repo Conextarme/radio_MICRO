@@ -179,8 +179,12 @@
     } catch (e) { /* navegador sin vibración */ }
   }
 
+  var SETTLE_MS = 400;       // espera tras el último paso antes de sintonizar
+
   function attachDial(el, opts) {
     var drag = null;
+    var settleTimer = null;
+    var settling = false;
 
     function step(delta) {
       var n = opts.count();
@@ -190,15 +194,36 @@
       if (next !== cur) { opts.set(next); buzz(); }
     }
 
-    // Un paso completo: empezar, mover y aplicar
+    function finishSettle() {
+      clearTimeout(settleTimer);
+      settleTimer = null;
+      if (settling) {
+        settling = false;
+        if (opts.end) { opts.end(); }
+      }
+    }
+
+    // Un paso (toque, rueda o tecla): el dial se mueve al instante, pero la
+    // emisora o el modo solo se aplican cuando se deja de girar un momento.
+    // Así, varios pasos seguidos no arrancan una conexión por cada uno.
     function turn(delta) {
-      if (opts.start) { opts.start(); }
+      if (!settling) {
+        settling = true;
+        if (opts.start) { opts.start(); }
+      }
       step(delta);
-      if (opts.end) { opts.end(); }
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(finishSettle, SETTLE_MS);
+    }
+
+    // Con la vista girada 90° (móvil en vertical), "arriba" en el casete es
+    // "hacia la derecha" en la pantalla: se mide el eje horizontal.
+    function axis(e) {
+      return root.classList.contains('rotated') ? -e.clientX : e.clientY;
     }
 
     el.addEventListener('pointerdown', function (e) {
-      drag = { x: e.clientX, y: e.clientY, last: e.clientY, acc: 0, moved: false };
+      drag = { x: e.clientX, y: e.clientY, last: axis(e), acc: 0, moved: false };
       try { el.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
       el.classList.add('grab');
     });
@@ -208,10 +233,15 @@
       if (!drag.moved) {
         if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < TAP_MOVE_PX) { return; }
         drag.moved = true;
+        // Si quedaba un toque pendiente de aplicar, el arrastre lo continúa
+        clearTimeout(settleTimer);
+        settleTimer = null;
+        settling = false;
         if (opts.start) { opts.start(); }
       }
-      var dy = drag.last - e.clientY;
-      drag.last = e.clientY;
+      var pos = axis(e);
+      var dy = drag.last - pos;
+      drag.last = pos;
       drag.acc += dy;
       var mul = opts.fast && Math.abs(dy) >= FAST_DRAG_PX ? FAST_MULTIPLIER : 1;
       while (Math.abs(drag.acc) >= DRAG_STEP_PX) {
@@ -253,11 +283,14 @@
     });
   }
 
-  function paintDial(el, n, i) {
+  // text: lo que lee el lector de pantalla (nombre del modo o de la emisora)
+  function paintDial(el, n, i, text) {
     var angle = n <= 1 ? 0 : -135 + 270 * i / (n - 1);
     el.style.transform = 'rotate(' + angle + 'deg)';
+    el.setAttribute('aria-valuemin', '1');
     el.setAttribute('aria-valuenow', String(i + 1));
-    el.setAttribute('aria-valuemax', String(n));
+    el.setAttribute('aria-valuemax', String(Math.max(n, 1)));
+    el.setAttribute('aria-valuetext', text || '');
   }
 
   // Letras alrededor del dial de modo, cada una en su posición, para saber dónde girar
@@ -369,11 +402,12 @@
     screen.hidden = !show;
     listBtn.setAttribute('aria-expanded', String(show));
     listBtn.textContent = show ? '▼ CERRAR' : '▲ LISTA';
-    if (show) { renderScreen(); }
+    if (show) { lastScrollKey = null; renderScreen(); }
   }
 
   function setTab(tab) {
     st.tab = tab;
+    lastScrollKey = null; // al cambiar de pestaña se vuelve a la emisora activa
     document.querySelectorAll('#compact .screen-tab').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-tab') === tab);
     });
@@ -392,7 +426,17 @@
     return n;
   }
 
+  var lastScrollKey = null;
+  var lastScreenKey = null;
+
+  // Lo que se ve en el panel inferior (la canción no sale en él)
+  function screenKey() {
+    return [st.tab, isOn(), B.getCurrentIndex(), st.pick, B.getMode(), st.style,
+      allStations().length].join('#');
+  }
+
   function renderScreen() {
+    lastScreenKey = screenKey();
     screenBody.textContent = '';
     var all = allStations();
 
@@ -432,7 +476,11 @@
         screenBody.appendChild(row);
         if (i === ai) { activeRow = row; }
       });
-      if (activeRow) { activeRow.scrollIntoView({ block: 'nearest' }); }
+      // Solo se lleva la lista a la emisora activa cuando esta cambia o al abrir
+      // la pestaña; si no, se respeta dónde la ha dejado quien la está mirando.
+      var scrollKey = B.getMode() + '|' + st.style + '|' + ai;
+      if (activeRow && scrollKey !== lastScrollKey) { activeRow.scrollIntoView({ block: 'nearest' }); }
+      lastScrollKey = scrollKey;
 
     } else if (st.tab === 'estilos') {
       var wrap = el('div', 'style-btns');
@@ -525,16 +573,19 @@
     var mode = B.getMode();
     var ms = modeList();
     var modePos = st.modePreview !== null ? st.modePreview : Math.max(0, ms.indexOf(mode));
-    paintDial(modeDial, ms.length, modePos);
+    // Mientras se gira el dial de modo, el rótulo muestra el modo al que apunta
+    var shownMode = ms[modePos] || mode;
+    var modeName = MODE_NAMES[shownMode] || shownMode.toUpperCase();
+    paintDial(modeDial, ms.length, modePos, modeName);
     buildModeRing();
-    modeVal.textContent = MODE_NAMES[mode] || mode.toUpperCase();
+    modeVal.textContent = modeName;
 
     var list = filtered();
     var pos = list.indexOf(st.pick);
-    paintDial(stDial, list.length, pos < 0 ? 0 : pos);
+    var s = st.pick >= 0 ? allStations()[st.pick] : null;
+    paintDial(stDial, list.length, pos < 0 ? 0 : pos, s ? s.name : 'Sin emisoras');
     stVal.textContent = list.length ? ((pos < 0 ? 0 : pos) + 1) + ' / ' + list.length : '—';
 
-    var s = st.pick >= 0 ? allStations()[st.pick] : null;
     nameEl.textContent = s ? s.name : 'SIN EMISORAS';
     subEl.textContent = statusText(on, status, paused);
 
@@ -568,7 +619,8 @@
     }
     st.lastActive = active;
 
-    if (!screen.hidden) { renderScreen(); }
+    // El panel se rehace solo si cambia algo suyo, no con cada canción nueva
+    if (!screen.hidden && screenKey() !== lastScreenKey) { renderScreen(); }
   }
 
   /* --- Vúmetros y barras: simulados, solo se mueven mientras suena --- */

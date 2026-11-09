@@ -2626,12 +2626,6 @@
       updateMiniPlayer();
       renderStatuses();
       notifyRadioChange();
-    },
-    glitch: function () {
-      // Simula un microcorte: la misma reconexión que si la red fallara de verdad.
-      if (currentIndex !== -1 && !userPaused) {
-        scheduleReconnect();
-      }
     }
   };
 
