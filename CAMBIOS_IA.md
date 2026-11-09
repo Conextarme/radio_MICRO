@@ -4,6 +4,48 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 11:38 — Fuentes guardadas en el propio proyecto
+
+### Objetivo
+El usuario pidió dejar de cargar las fuentes desde Google y guardarlas en la web, y borrar `logos/hoja-de-contacto.png`.
+
+### Archivos afectados
+- `fonts/audiowide-latin.woff2`, `fonts/audiowide-latin-ext.woff2`: creados.
+- `fonts/rajdhani-400-latin.woff2`, `fonts/rajdhani-400-latin-ext.woff2`: creados.
+- `fonts/rajdhani-600-latin.woff2`, `fonts/rajdhani-600-latin-ext.woff2`: creados.
+- `fonts/rajdhani-700-latin.woff2`, `fonts/rajdhani-700-latin-ext.woff2`: creados.
+- `styles.css`: modificado (declaración de las fuentes al principio).
+- `index.html`: modificado.
+- `sw.js`: modificado (versión de caché v41 → v42 y fuentes en la lista de la caché).
+
+### Cambios realizados
+- Se han descargado de Google Fonts las fuentes que usa la web, Audiowide y Rajdhani en los grosores 400, 600 y 700, y se han guardado en la carpeta `fonts/`. Para cada una hay dos archivos: el de letras latinas normales y el de letras latinas extendidas (como ł, ő o ş). Este segundo solo se descarga si algún texto las usa. No se han incluido las letras devanagari, que la web no usa.
+- `styles.css` declara esas fuentes al principio, así que ya no se pide nada a fonts.googleapis.com ni a fonts.gstatic.com.
+- `index.html` ya no enlaza con Google. Adelanta la descarga de las cuatro fuentes que se usan nada más abrir (unos 60 KB).
+- El service worker guarda esas cuatro fuentes para que la web se vea con su letra también sin conexión.
+- **No se ha borrado `logos/hoja-de-contacto.png`.** Al ir a borrarlo se vio que está en `.gitignore`: nunca se ha subido a GitHub ni a Vercel. Es una imagen local que genera `scripts/fetch-logos.py` para revisar los logos, como explica `README.md`. La revisión anterior se equivocó al decir que ocupaba espacio en el repositorio.
+
+### Motivo
+Quitar las conexiones a los servidores de Google al abrir la web. Así la letra definitiva llega antes, casi sin el cambio visible desde la letra del sistema, y funciona sin conexión.
+
+### Validaciones
+- Los 8 archivos descargados empiezan por la firma `wOF2` (woff2 válido) y ocupan entre 7 y 16 KB cada uno.
+- Navegador local, sin service worker ni caché:
+  - Se descargan `audiowide-latin`, `rajdhani-400-latin`, `rajdhani-600-latin` y `rajdhani-700-latin` desde `fonts/`, por precarga.
+  - Las cuatro quedan cargadas y hay 0 peticiones a Google.
+  - Se pintan 44 tarjetas y el título se ve en Audiowide (captura revisada).
+  - No hay avisos de precarga sin usar en la consola.
+- No probado: la carga sin conexión con el service worker instalado.
+
+### Riesgos o pendientes
+- Si en el futuro se usa otro grosor (por ejemplo 500 u 800), habrá que añadir su archivo; si no, el navegador lo imitará con uno de los que hay.
+- `prototipos/modo-compacto.html` sigue pidiendo sus fuentes a Google. Es la maqueta y la web no lo usa.
+
+### Cómo revertir
+Borrar la carpeta `fonts/` y el bloque de `@font-face` del principio de `styles.css`. En `index.html`, volver a poner el enlace a Google Fonts en lugar de las líneas `preload`. En `sw.js`, quitar las fuentes de `APP_SHELL` y dejar `CACHE_VERSION` en `'v41'`.
+
+---
+
 ## 2026-11-09 11:32 — Emisora "Exclusively Queen" en Rock años 70
 
 ### Objetivo

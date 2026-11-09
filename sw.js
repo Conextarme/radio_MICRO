@@ -14,7 +14,7 @@
  * instalada seguirán viendo la versión antigua cacheada.
  */
 
-var CACHE_VERSION = 'v41';
+var CACHE_VERSION = 'v42';
 var CACHE_NAME = 'radio-micro-' + CACHE_VERSION;
 
 var APP_SHELL = [
@@ -29,6 +29,11 @@ var APP_SHELL = [
   './emisoras-relax.json',
   './emisoras-modos.json',
   './emisoras-ocultas.json',
+  // Fuentes (solo las "latin"; las "latin-ext" se guardan si alguna vez se usan)
+  './fonts/audiowide-latin.woff2',
+  './fonts/rajdhani-400-latin.woff2',
+  './fonts/rajdhani-600-latin.woff2',
+  './fonts/rajdhani-700-latin.woff2',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'
