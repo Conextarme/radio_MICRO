@@ -148,10 +148,10 @@
   };
 
   var STATUS_LABEL = {
-    tuning: '▶︎ SINTONIZANDO…',
+    tuning: 'SINTONIZANDO…',
     live: '🔴 EN DIRECTO',
     reconnecting: '🔁 RECONECTANDO…',
-    paused: '⏸︎ EN PAUSA',
+    paused: 'EN PAUSA',
     unavailable: '⚠ NO DISPONIBLE AQUÍ',
     blocked: '👆 TOCA PARA REANUDAR'
   };

@@ -1765,3 +1765,33 @@ body.sleep-mode .sleep-timer-btn {
     align-items: center;
   }
 }
+
+/* --- Mini reproductor en móvil: canción arriba, en una sola línea y más grande;
+   nombre de la emisora y afinación debajo, en dos líneas como máximo. --- */
+@media (max-width: 480px) {
+  .mini-player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .mini-player-status {
+    order: -1;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .mini-player-name {
+    order: 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.25;
+  }
+}

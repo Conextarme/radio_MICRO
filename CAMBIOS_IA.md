@@ -4,6 +4,44 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 09:35 — Mini reproductor en móvil: canción arriba y pausa sin icono naranja
+
+### Objetivo
+En el móvil, los títulos de las canciones se leían pequeños y cortados; los nombres de emisora y afinación se veían mal al estar en una sola línea; y al pasar de "en directo" a "pausa" aparecía un icono naranja de pausa que desentonaba.
+
+### Archivos afectados
+- `app.js`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- En móvil (pantallas de 480 px o menos), el mini reproductor de abajo muestra arriba la canción en una sola línea, más grande y en negrita, y debajo el nombre de la emisora con su afinación en hasta dos líneas.
+- Los textos de estado "SINTONIZANDO…" y "EN PAUSA" ya no llevan el símbolo ▶︎ / ⏸︎. En muchos móviles ese símbolo se dibuja como un emoji de color naranja; ahora el estado se muestra solo como texto.
+- Se sube la versión de caché del servicio de la web a `v31` para que los móviles carguen el cambio.
+
+### Motivo
+- Los textos del mini reproductor en móvil eran pequeños y se cortaban con puntos suspensivos. Se amplía la canción y se coloca arriba, donde se lee primero.
+- El símbolo ⏸︎ era un carácter de texto que el sistema operativo sustituía por un emoji naranja. Quitarlo evita ese icono.
+- La versión de caché cambia para que la PWA instalada no siga usando los archivos antiguos.
+
+### Validaciones
+- Revisión del código de `app.js`, `styles.css` y `sw.js` y de las diferencias con `git diff`.
+- Pendiente: no se ha probado en un móvil real ni en el navegador de móvil. No se ha ejecutado la web.
+
+### Riesgos o pendientes
+- Hay que comprobar en un móvil real que el título de la canción cabe en una línea con nombres largos (se recorta con puntos suspensivos si no cabe).
+- El "🔴 EN DIRECTO" de la tarjeta sigue usando un emoji; no era el icono que molestaba, pero conviene revisarlo.
+- Interpretación: se entendió "estilos" como el nombre de la emisora con su afinación. Si se refería a otro texto, indicarlo.
+
+### Cómo revertir
+1. En `app.js`, en el objeto `STATUS_LABEL`, volver a poner `tuning: '▶︎ SINTONIZANDO…'` y `paused: '⏸︎ EN PAUSA'`.
+2. En `styles.css`, borrar el bloque que empieza por el comentario "Mini reproductor en móvil: canción arriba" (al final del archivo).
+3. En `sw.js`, volver a poner `var CACHE_VERSION = 'v30';`.
+4. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-06 17:43 — Nueva temática "Electrónica" con Daft Punk y similares
 
 ### Objetivo
