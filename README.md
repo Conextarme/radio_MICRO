@@ -47,6 +47,20 @@ Sus emisoras están en [`emisoras-modos.json`](emisoras-modos.json), en `modos.c
 - `categoria` (obligatoria en Music Time, porque no hay filtro "Todas" y sin ella la emisora no se vería) coloca la emisora en una temática: `blues`, `crooners`, `rock70`, `rocknroll`, `ochentas`, `rockespanol`, `soundtracks`, `fantasia`, `metal`, `melodico`, `folkmetal`, `newage`, `indie`, `electronica`, `cielos` o `clasica`. Las temáticas se definen en `MUSIC_CATEGORY_ORDER` y `MUSIC_CATEGORY_META`, en `app.js`.
 - Si un modo no tiene emisoras, muestra un aviso y oculta el podio.
 
+## Buscador: añadir emisoras desde el navegador
+
+La lupa de la cabecera (junto al casete) abre un buscador de emisoras. Busca por nombre o estilo en [radio-browser.info](https://www.radio-browser.info/), el mismo catálogo del que salen muchas emisoras de la web, y solo enseña las que emiten por HTTPS y funcionaban en su última comprobación.
+
+- Cada resultado se puede escuchar antes (▶) y añadir eligiendo el **modo**: normal, dormir, Music Time o Buggy Time. **Big Calm no admite añadidas**, porque solo lleva emisoras con la afinación medida.
+- El estilo no se elige: en los modos con temáticas, las añadidas van siempre a **★ Para ti**, un filtro que solo aparece si el modo tiene alguna. En el modo normal van al final de la lista.
+- Se guardan **solo en ese navegador** (`localStorage`, clave `radioMicroAddedStations`). En "Mis añadidas" se pueden quitar, exportar a un archivo `.json` e importar en otro dispositivo (se suman, no se borra ninguna).
+- Se distinguen de las de la web: sin logo, con las iniciales en amarillo neón y la etiqueta "★ Añadida por ti".
+- **No muestran la canción que suena.** `api/now-playing.js` solo acepta las emisoras de los JSON, así que la web ni lo intenta y lo dice en el reproductor ("añadida: sin título de canción").
+- La revisión semanal no las comprueba: si una deja de funcionar no se oculta sola, hay que quitarla a mano.
+- Para que una añadida pase a ser una emisora de la web para todos, hay que copiarla al JSON del modo como cualquier otra.
+
+El código está en `buscador.js` y `buscador.css`, que solo se descargan al pulsar la lupa. La mezcla con las emisoras de cada modo está en `app.js` ("Emisoras añadidas desde el buscador").
+
 ## Notas técnicas
 
 - HTML + CSS + JavaScript vanilla, sin build step.

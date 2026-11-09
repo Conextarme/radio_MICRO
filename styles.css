@@ -370,6 +370,13 @@ body.tab-hidden .moon {
   margin: 0 auto 1.1rem;
 }
 
+/* Iconos del casete y de la lupa, uno al lado del otro */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .compact-toggle {
   width: 44px;
   min-height: 44px;
@@ -682,6 +689,19 @@ body.tab-hidden .moon {
   background: rgba(111, 127, 214, 0.18);
 }
 
+/* "Para ti": la temática de las emisoras añadidas desde el buscador */
+.sleep-chip--added {
+  color: var(--neon-yellow);
+  border-color: rgba(249, 227, 71, 0.45);
+}
+
+.sleep-chip--added.is-active {
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  background: rgba(249, 227, 71, 0.14);
+  box-shadow: 0 0 10px rgba(249, 227, 71, 0.3);
+}
+
 /* --- Grid de emisoras --- */
 
 main {
@@ -943,6 +963,47 @@ body.is-dragging .podium-drop {
 
 .station-logo[hidden] {
   display: none;
+}
+
+/* Emisoras añadidas desde el buscador: iniciales en amarillo neón con borde
+   continuo, para que no se confundan con las de la web. */
+.station-logo.is-initials.is-added {
+  background: rgba(249, 227, 71, 0.12);
+  border: 1px solid var(--neon-yellow);
+  box-shadow: 0 0 10px rgba(249, 227, 71, 0.35), inset 0 0 8px rgba(249, 227, 71, 0.15);
+  color: var(--neon-yellow);
+  text-shadow: 0 0 6px rgba(249, 227, 71, 0.6);
+}
+
+.station-added-tag {
+  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--neon-yellow);
+  cursor: help;
+}
+
+.mini-player.is-added .mini-player-status {
+  color: var(--neon-yellow);
+}
+
+/* Destello al llevar la vista a una emisora recién añadida */
+.station-card.is-flash {
+  animation: added-flash 0.8s ease-in-out 3;
+}
+
+@keyframes added-flash {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 0 2px var(--neon-yellow), 0 0 22px rgba(249, 227, 71, 0.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .station-card.is-flash {
+    animation: none;
+    outline: 2px solid var(--neon-yellow);
+  }
 }
 
 .card-content {

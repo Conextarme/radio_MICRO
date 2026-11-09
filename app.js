@@ -65,6 +65,13 @@
     buggy: { icon: '🐞', label: 'Buggy' }
   };
 
+  /* Temática fija de las emisoras añadidas desde el buscador. No está en los
+     *_ORDER: su chip solo aparece, al final, si el modo tiene alguna añadida. */
+  var ADDED_CATEGORY = 'parati';
+  [SLEEP_CATEGORY_META, MUSIC_CATEGORY_META, BUGGY_CATEGORY_META].forEach(function (meta) {
+    meta[ADDED_CATEGORY] = { icon: '★', label: 'Para ti' };
+  });
+
   /* Modos con filtro por temática */
   var MODE_CATEGORIES = {
     sleep: { order: SLEEP_CATEGORY_ORDER, meta: SLEEP_CATEGORY_META },
@@ -155,6 +162,8 @@
     unavailable: '⚠ NO DISPONIBLE AQUÍ',
     blocked: '👆 TOCA PARA REANUDAR'
   };
+
+  var ADDED_NO_TRACK_NOTE = 'Emisora añadida por ti desde el buscador. Suena y se reconecta igual que las demás, pero la web no consulta qué canción está sonando en las emisoras añadidas.';
 
   var audio = document.getElementById('audio-player');
   var grid = document.getElementById('stations-grid');
@@ -307,9 +316,14 @@
     updateMediaSessionState();
 
     var nowTrack = currentStatus === STATUS.LIVE ? getCurrentTrack() : null;
+    miniPlayer.classList.toggle('is-added', !!station.added);
     if (nowTrack) {
       miniPlayerStatus.textContent = '♪︎ ' + formatTrack(nowTrack);
       miniPlayerStatus.title = formatTrack(nowTrack);
+    } else if (station.added && currentStatus === STATUS.LIVE) {
+      // Las añadidas no consultan la canción: se dice para que no parezca un fallo.
+      miniPlayerStatus.textContent = STATUS_LABEL.live + ' · añadida: sin título de canción';
+      miniPlayerStatus.title = ADDED_NO_TRACK_NOTE;
     } else {
       miniPlayerStatus.removeAttribute('title');
     }
@@ -903,8 +917,14 @@
 
   function fillStationLogo(el, station) {
     el.textContent = '';
+    // Las emisoras añadidas desde el buscador van siempre con iniciales y con
+    // su propio color, para distinguirlas de las de la web.
+    el.classList.toggle('is-added', !!station.added);
     var slug = logoSlug(station.name);
-    if (logoSet && logoSet[slug]) {
+    if (station.added) {
+      el.classList.add('is-initials');
+      el.textContent = stationInitials(station.name);
+    } else if (logoSet && logoSet[slug]) {
       el.classList.remove('is-initials');
       var img = document.createElement('img');
       img.src = 'logos/' + slug + '.webp';
@@ -965,7 +985,8 @@
     var card = document.createElement('div');
     card.className = 'station-card' + (unavailable ? ' is-unavailable' : '') +
       (station.category ? ' category-' + station.category : '') +
-      (station.afinacion ? ' has-tuning' : '');
+      (station.afinacion ? ' has-tuning' : '') +
+      (station.added ? ' is-added' : '');
     card.dataset.name = station.name;
     if (station.category) {
       card.dataset.category = station.category;
@@ -1027,7 +1048,8 @@
     content = textBox;
 
     var modeCategories = MODE_CATEGORIES[appMode];
-    var categoryMeta = modeCategories && station.category ? modeCategories.meta[station.category] : null;
+    // Las añadidas ya llevan su etiqueta propia ("Añadida por ti").
+    var categoryMeta = modeCategories && station.category && !station.added ? modeCategories.meta[station.category] : null;
     if (categoryMeta) {
       var catTag = document.createElement('div');
       catTag.className = 'station-category-tag';
@@ -1042,6 +1064,14 @@
       name.lang = station.lang;
     }
     content.appendChild(name);
+
+    if (station.added) {
+      var addedTag = document.createElement('div');
+      addedTag.className = 'station-added-tag';
+      addedTag.textContent = '★ Añadida por ti';
+      addedTag.title = ADDED_NO_TRACK_NOTE;
+      content.appendChild(addedTag);
+    }
 
     if (station.afinacion) {
       var tuning = document.createElement('div');
@@ -1609,9 +1639,17 @@
       return;
     }
     activeCategoryFilter = modeCategories.order[0];
-    modeCategories.order.forEach(function (id) {
+    var ids = modeCategories.order.slice();
+    if (stations.some(function (s) { return s.added; })) {
+      ids.push(ADDED_CATEGORY);
+    }
+    ids.forEach(function (id) {
       var meta = modeCategories.meta[id];
-      sleepChipsWrap.appendChild(makeCategoryChip(id, meta.icon + ' ' + meta.label));
+      var chip = makeCategoryChip(id, meta.icon + ' ' + meta.label);
+      if (id === ADDED_CATEGORY) {
+        chip.classList.add('sleep-chip--added');
+      }
+      sleepChipsWrap.appendChild(chip);
     });
     applyCategoryFilter();
   }
@@ -2024,7 +2062,9 @@
   // Se llama cada vez que cambia el estado del reproductor.
   function syncNowPlaying() {
     var station = stations[currentIndex];
-    if (!station || playerMode !== 'radio') {
+    // Las emisoras añadidas desde el buscador no están en la lista que acepta
+    // api/now-playing, así que ni se pregunta.
+    if (!station || playerMode !== 'radio' || station.added) {
       if (np.url) {
         resetNowPlaying();
       }
@@ -2414,8 +2454,9 @@
     applyModeClasses();
     updateModeUI();
 
-    initCurrentMode();
+    var loading = initCurrentMode();
     notifyRadioChange();
+    return loading;
   }
 
   if (modeSelect) {
@@ -2486,6 +2527,346 @@
     });
   }
 
+  /* --- Emisoras añadidas desde el buscador (buscador.js) ---
+     Se guardan solo en este navegador (localStorage), cada una con su modo y,
+     si el modo tiene temáticas, su estilo. Big Calm no admite añadidas: solo
+     lleva emisoras con la afinación medida. Se pintan con iniciales de otro
+     color y no consultan la canción (api/now-playing solo acepta las emisoras
+     de los JSON de la web). */
+
+  var ADDED_STORAGE_KEY = 'radioMicroAddedStations';
+  var ADDED_MODES = ['normal', 'sleep', 'music', 'buggy'];
+  var ADDED_EXPORT_KIND = 'radio-micro-emisoras-anadidas';
+  var ADDED_NAME_MAX = 60;
+
+  function cleanText(value, max) {
+    return String(value === null || value === undefined ? '' : value).replace(/\s+/g, ' ').trim().slice(0, max);
+  }
+
+  function streamKey(url) {
+    return String(url || '').trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '').toLowerCase();
+  }
+
+  // Valida una emisora añadida (también las que llegan de un archivo importado).
+  function normalizeAddedEntry(e) {
+    if (!e || typeof e !== 'object') {
+      return null;
+    }
+    var stream = cleanText(e.stream, 500);
+    var nombre = cleanText(e.nombre, ADDED_NAME_MAX);
+    if (!/^https:\/\/[^\s]+$/i.test(stream) || !nombre || ADDED_MODES.indexOf(e.modo) === -1) {
+      return null;
+    }
+    // El estilo no se elige: en los modos con temáticas siempre es "Para ti".
+    var cats = MODE_CATEGORIES[e.modo];
+    var web = cleanText(e.web, 300);
+    return {
+      id: cleanText(e.id, 64),
+      nombre: nombre,
+      stream: stream,
+      web: /^https?:\/\//i.test(web) ? web : '',
+      pais: cleanText(e.pais, 2).toUpperCase(),
+      codec: cleanText(e.codec, 12),
+      bitrate: Math.max(0, parseInt(e.bitrate, 10) || 0),
+      hls: !!e.hls,
+      modo: e.modo,
+      categoria: cats ? ADDED_CATEGORY : null,
+      anadida: cleanText(e.anadida, 30)
+    };
+  }
+
+  function readAddedStations() {
+    try {
+      var list = JSON.parse(window.localStorage.getItem(ADDED_STORAGE_KEY) || '[]');
+      return Array.isArray(list) ? list.map(normalizeAddedEntry).filter(Boolean) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Puede lanzar un error si el navegador no deja guardar: lo recoge quien llama.
+  function writeAddedStations(list) {
+    window.localStorage.setItem(ADDED_STORAGE_KEY, JSON.stringify(list));
+  }
+
+  function addedToStation(e) {
+    return {
+      name: e.nombre,
+      freq: 'Stream · sin título de canción',
+      streamUrl: e.stream,
+      streamType: e.hls ? 'hls' : (e.codec || 'mp3').toLowerCase(),
+      officialUrl: e.web || null,
+      bitrate: e.bitrate || undefined,
+      pais: e.pais,
+      category: e.categoria || undefined,
+      votos: 0,
+      added: true
+    };
+  }
+
+  // Añade al final de la lista del modo sus emisoras añadidas. Si alguna
+  // coincide en nombre o stream con una de la web, manda la de la web.
+  function withAddedStations(list, mode) {
+    var names = {};
+    var streams = {};
+    list.forEach(function (s) {
+      names[s.name] = true;
+      streams[streamKey(s.streamUrl)] = true;
+    });
+    var extra = readAddedStations().filter(function (e) {
+      var key = streamKey(e.stream);
+      if (e.modo !== mode || names[e.nombre] || streams[key]) {
+        return false;
+      }
+      names[e.nombre] = true;
+      streams[key] = true;
+      return true;
+    }).map(addedToStation);
+    return list.concat(extra);
+  }
+
+  // Streams y nombres de todas las emisoras de la web, por modo, para que el
+  // buscador marque las que ya están y no se dupliquen nombres.
+  var officialCatalogPromise = null;
+
+  function loadOfficialCatalog() {
+    if (!officialCatalogPromise) {
+      officialCatalogPromise = Promise.all([
+        fetchJson('stations.json').catch(function () { return []; }),
+        fetchJson('emisoras-relax.json').catch(function () { return {}; }),
+        fetchJson(EXTRA_MODES_FILE).catch(function () { return {}; })
+      ]).then(function (r) {
+        var catalog = { streams: {}, names: {} };
+        function put(mode, name, stream) {
+          if (stream) {
+            catalog.streams[streamKey(stream)] = mode;
+          }
+          if (name) {
+            catalog.names[mode] = catalog.names[mode] || {};
+            catalog.names[mode][name.toLowerCase()] = true;
+          }
+        }
+        (Array.isArray(r[0]) ? r[0] : []).forEach(function (s) { put('normal', s.name, s.streamUrl); });
+        ((r[1] && r[1].categorias) || []).forEach(function (c) {
+          (c.emisoras || []).forEach(function (e) { put('sleep', e.nombre, e.stream); });
+        });
+        var modos = (r[2] && r[2].modos) || {};
+        Object.keys(modos).forEach(function (m) {
+          (modos[m].emisoras || []).forEach(function (e) { put(m, e.nombre, e.stream); });
+        });
+        return catalog;
+      });
+    }
+    return officialCatalogPromise;
+  }
+
+  // Motivo por el que no se puede añadir (o null si se puede).
+  function addedConflict(entry, list, catalog) {
+    var key = streamKey(entry.stream);
+    var nameKey = entry.nombre.toLowerCase();
+    if (catalog.streams[key] === entry.modo) {
+      return 'Esa emisora ya está en ese modo de la web.';
+    }
+    var clash = list.filter(function (e) {
+      return e.modo === entry.modo && (streamKey(e.stream) === key || e.nombre.toLowerCase() === nameKey);
+    })[0];
+    if (clash) {
+      return streamKey(clash.stream) === key
+        ? 'Ya la tienes añadida en ese modo.'
+        : 'Ya tienes otra emisora con ese nombre en ese modo: cámbialo.';
+    }
+    if ((catalog.names[entry.modo] || {})[nameKey]) {
+      return 'Ya hay una emisora de la web con ese nombre en ese modo: cámbialo.';
+    }
+    return null;
+  }
+
+  function indexOfStream(url) {
+    for (var i = 0; i < stations.length; i++) {
+      if (stations[i].streamUrl === url) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function stopRadio() {
+    stopPlayback();
+    clearMediaSession();
+    userPaused = false;
+    currentIndex = -1;
+    currentStatus = STATUS.IDLE;
+    updateMiniPlayer();
+    renderStatuses();
+    notifyRadioChange();
+  }
+
+  // Lleva la vista hasta una tarjeta y la hace destellar un momento.
+  function focusStationCard(name) {
+    var index = -1;
+    stations.forEach(function (s, i) { if (s.name === name) { index = i; } });
+    var card = cards[index];
+    if (!card) {
+      return;
+    }
+    var needsExpand = !gridExpanded && toggleGridBtn && !toggleGridBtn.hidden && !isInPodium(card);
+    if (needsExpand) {
+      toggleGridBtn.click();
+    }
+    setTimeout(function () {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('is-flash');
+      void card.offsetWidth;
+      card.classList.add('is-flash');
+      setTimeout(function () { card.classList.remove('is-flash'); }, 2600);
+    }, needsExpand ? 400 : 0);
+  }
+
+  // Vuelve a pintar el modo actual tras añadir o quitar, sin cortar la radio
+  // si la que suena sigue en la lista.
+  function refreshAfterAddedChange(focus) {
+    if (cards.length && renderedMode === appMode) {
+      saveState();
+    }
+    var prevFilter = activeCategoryFilter;
+    var playing = playerMode === 'radio' ? stations[currentIndex] : null;
+    var playingUrl = playing ? playing.streamUrl : null;
+    return Promise.resolve(initCurrentMode()).then(function () {
+      if (playingUrl) {
+        var idx = indexOfStream(playingUrl);
+        if (idx >= 0) {
+          currentIndex = idx;
+          renderStatuses();
+          updateMiniPlayer();
+        } else {
+          stopRadio();
+        }
+      }
+      var cat = (focus && focus.category) || prevFilter;
+      if (hasCategoryChip(cat)) {
+        selectCategory(cat);
+      }
+      if (focus && focus.name) {
+        focusStationCard(focus.name);
+      }
+      notifyRadioChange();
+    });
+  }
+
+  function addStationFromSearch(raw) {
+    var entry = normalizeAddedEntry(raw);
+    if (!entry) {
+      return Promise.resolve({ ok: false, error: 'Faltan datos: revisa el nombre y el modo (Big Calm no admite añadidas).' });
+    }
+    entry.anadida = new Date().toISOString();
+    return loadOfficialCatalog().then(function (catalog) {
+      var list = readAddedStations();
+      var conflict = addedConflict(entry, list, catalog);
+      if (conflict) {
+        return { ok: false, error: conflict };
+      }
+      list.push(entry);
+      try {
+        writeAddedStations(list);
+      } catch (e) {
+        return { ok: false, error: 'El navegador no deja guardar datos (¿modo privado?).' };
+      }
+      if (entry.modo === appMode) {
+        refreshAfterAddedChange({ name: entry.nombre, category: entry.categoria });
+      }
+      return { ok: true, entry: entry };
+    });
+  }
+
+  function removeAddedStation(stream, modo) {
+    var list = readAddedStations();
+    var rest = list.filter(function (e) { return !(e.stream === stream && e.modo === modo); });
+    if (rest.length === list.length) {
+      return false;
+    }
+    try {
+      writeAddedStations(rest);
+    } catch (e) {
+      return false;
+    }
+    if (modo === appMode) {
+      refreshAfterAddedChange(null);
+    }
+    return true;
+  }
+
+  function exportAddedStations() {
+    return JSON.stringify({
+      tipo: ADDED_EXPORT_KIND,
+      version: 1,
+      exportado: new Date().toISOString(),
+      emisoras: readAddedStations()
+    }, null, 2);
+  }
+
+  // Junta las del archivo con las que ya hay; no borra ninguna.
+  function importAddedStations(text) {
+    var data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      return Promise.resolve({ ok: false, error: 'El archivo no es válido.' });
+    }
+    var incoming = Array.isArray(data) ? data : (data && Array.isArray(data.emisoras) ? data.emisoras : null);
+    if (!incoming) {
+      return Promise.resolve({ ok: false, error: 'El archivo no tiene emisoras añadidas.' });
+    }
+    return loadOfficialCatalog().then(function (catalog) {
+      var list = readAddedStations();
+      var result = { ok: true, added: 0, skipped: 0, invalid: 0 };
+      var touched = {};
+      incoming.forEach(function (raw) {
+        var entry = normalizeAddedEntry(raw);
+        if (!entry) {
+          result.invalid++;
+          return;
+        }
+        if (addedConflict(entry, list, catalog)) {
+          result.skipped++;
+          return;
+        }
+        list.push(entry);
+        touched[entry.modo] = true;
+        result.added++;
+      });
+      if (result.added) {
+        try {
+          writeAddedStations(list);
+        } catch (e) {
+          return { ok: false, error: 'El navegador no deja guardar datos (¿modo privado?).' };
+        }
+        if (touched[appMode]) {
+          refreshAfterAddedChange(null);
+        }
+      }
+      return result;
+    });
+  }
+
+  function goToAddedStation(modo, name, category) {
+    var loading = appMode === modo ? null : setMode(modo);
+    return Promise.resolve(loading).then(function () {
+      if (hasCategoryChip(category)) {
+        selectCategory(category);
+      }
+      focusStationCard(name);
+    });
+  }
+
+  function hasCategoryChip(id) {
+    if (!id || !MODE_CATEGORIES[appMode] || !sleepChipsWrap) {
+      return false;
+    }
+    return Array.prototype.some.call(sleepChipsWrap.children, function (c) {
+      return c.dataset.category === id;
+    });
+  }
+
   /* --- Carga de datos por modo --- */
 
   function initNormalMode() {
@@ -2503,7 +2884,7 @@
       }
       rankByName = null;
       var savedState = loadState();
-      var withDefaultOrder = applySavedOrder(data, DEFAULT_ORDER);
+      var withDefaultOrder = applySavedOrder(withAddedStations(data, 'normal'), DEFAULT_ORDER);
       stations = applySavedOrder(withDefaultOrder, savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
@@ -2532,7 +2913,7 @@
       }
       rankByName = computeRankMap(flat);
       var savedState = loadState();
-      var defaultOrder = defaultSleepOrder(flat);
+      var defaultOrder = defaultSleepOrder(withAddedStations(flat, 'sleep'));
       stations = applySavedOrder(defaultOrder, savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
@@ -2588,7 +2969,7 @@
       }
       rankByName = null;
       var savedState = loadState();
-      stations = applySavedOrder(modeStations, savedState.order);
+      stations = applySavedOrder(withAddedStations(modeStations, mode), savedState.order);
       renderGrid();
       applyTop3ToDom(savedState.top3);
       updateGridToggleVisibility();
@@ -2637,15 +3018,21 @@
     },
     play: function (index) { playStation(index); },
     toggle: function () { miniPlayerToggle.click(); },
-    stop: function () {
-      stopPlayback();
-      clearMediaSession();
-      userPaused = false;
-      currentIndex = -1;
-      currentStatus = STATUS.IDLE;
-      updateMiniPlayer();
-      renderStatuses();
-      notifyRadioChange();
+    stop: function () { stopRadio(); },
+    // Para el buscador (buscador.js): emisoras añadidas por el usuario
+    added: {
+      modes: function () { return ADDED_MODES.slice(); },
+      list: function () { return readAddedStations(); },
+      add: addStationFromSearch,
+      remove: removeAddedStation,
+      exportJson: exportAddedStations,
+      importJson: importAddedStations,
+      catalog: loadOfficialCatalog,
+      streamKey: streamKey,
+      initials: stationInitials,
+      goTo: goToAddedStation,
+      nameMax: ADDED_NAME_MAX,
+      noTrackNote: ADDED_NO_TRACK_NOTE
     }
   };
 

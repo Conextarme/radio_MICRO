@@ -41,9 +41,14 @@
       <option value="music">🎸 Music Time</option>
       <option value="buggy">🐞 Buggy Time</option>
     </select>
+    <div class="header-icons">
     <button type="button" id="compact-toggle" class="compact-toggle" aria-pressed="false" aria-label="Modo compacto (casete)" title="Modo compacto">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8.5" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="15.5" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 16.5h12" stroke="currentColor" stroke-width="1.2" opacity=".6"/></svg>
     </button>
+    <button type="button" id="search-toggle" class="compact-toggle search-toggle" aria-haspopup="dialog" aria-label="Buscar emisoras para añadir" title="Buscar emisoras">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15 15l5.5 5.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+    </button>
+    </div>
     </div>
     <h1 class="title">
       <span class="title-main">RADIOS DE ESPAÑA</span>
@@ -232,43 +237,51 @@
 
   <script src="app.js" defer></script>
   <script>
-    // El modo compacto (CSS y JS) se descarga solo cuando hace falta: al pulsar
-    // el icono o si estaba abierto la última vez. Así la carga normal es más ligera.
+    // El modo compacto y el buscador (CSS y JS) se descargan solo cuando hacen
+    // falta: al pulsar su icono (el compacto, también si estaba abierto la
+    // última vez). Así la carga normal es más ligera.
     (function () {
-      var toggle = document.getElementById('compact-toggle');
-      if (!toggle) { return; }
-      var loading = false;
+      function lazyFeature(toggleId, base, readyFlag) {
+        var toggle = document.getElementById(toggleId);
+        if (!toggle) { return null; }
+        var loading = false;
 
-      function load(done) {
-        if (window.__compactReady) { done(); return; }
-        if (loading) { return; }
-        loading = true;
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'compact.css';
-        document.head.appendChild(link);
-        var s = document.createElement('script');
-        s.src = 'compact.js';
-        s.onload = function () { done(); };
-        // Si no se pudo descargar (sin conexión), el icono vuelve a intentarlo al pulsarlo otra vez
-        s.onerror = function () {
-          loading = false;
-          s.remove();
-          link.remove();
-        };
-        document.body.appendChild(s);
+        function load(done) {
+          if (window[readyFlag]) { done(); return; }
+          if (loading) { return; }
+          loading = true;
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = base + '.css';
+          document.head.appendChild(link);
+          var s = document.createElement('script');
+          s.src = base + '.js';
+          s.onload = function () { done(); };
+          // Si no se pudo descargar (sin conexión), el icono vuelve a intentarlo al pulsarlo otra vez
+          s.onerror = function () {
+            loading = false;
+            s.remove();
+            link.remove();
+          };
+          document.body.appendChild(s);
+        }
+
+        toggle.addEventListener('click', function (e) {
+          if (window[readyFlag]) { return; }
+          e.stopImmediatePropagation();
+          load(function () { toggle.click(); });
+        }, true);
+
+        return load;
       }
 
-      toggle.addEventListener('click', function (e) {
-        if (window.__compactReady) { return; }
-        e.stopImmediatePropagation();
-        load(function () { toggle.click(); });
-      }, true);
+      var loadCompact = lazyFeature('compact-toggle', 'compact', '__compactReady');
+      lazyFeature('search-toggle', 'buscador', '__searchReady');
 
       // Tras 'load', app.js ya está ejecutado y compact.js puede usar window.radioMicro
       window.addEventListener('load', function () {
         try {
-          if (window.localStorage.getItem('radioMicroCompact') === '1') { load(function () {}); }
+          if (loadCompact && window.localStorage.getItem('radioMicroCompact') === '1') { loadCompact(function () {}); }
         } catch (err) { /* sin almacenamiento */ }
       });
     })();

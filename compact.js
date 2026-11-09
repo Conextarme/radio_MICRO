@@ -527,6 +527,9 @@
     if (!on || paused || status !== 'live') { return ''; }
     var t = B.getTrack();
     if (t) { return '♪ ' + (t.artist ? t.artist + ' — ' + t.title : t.title); }
+    // Las emisoras añadidas desde el buscador no consultan la canción: se avisa
+    var cur = B.getStations()[B.getCurrentIndex()];
+    if (cur && cur.added) { return '★ AÑADIDA POR TI · SIN TÍTULO DE CANCIÓN'; }
     return '';
   }
 

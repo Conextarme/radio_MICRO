@@ -4,6 +4,112 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 15:26 — Buscador de emisoras para añadirlas desde el navegador
+
+### Objetivo
+El usuario pidió un buscador para localizar emisoras por palabras en el catálogo del que salen las de la web y añadirlas eligiendo el modo. Detalles pedidos:
+- Una lupa discreta junto al icono del casete.
+- Las añadidas, sin logo: solo iniciales, con el cuadrado de otro color para distinguirlas.
+- Exportar e importar.
+- Big Calm excluido.
+- El estilo no se elige: van a un estilo fijo "Para ti" de cada modo.
+- Un menú claro y sencillo con la estética neón de los 80 de la web.
+- Que se sepa por qué no sale la canción. No se amplía `api/now-playing.js`.
+
+### Archivos afectados
+- `buscador.js`: creado.
+- `buscador.css`: creado.
+- `app.js`: modificado.
+- `compact.js`: modificado.
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `sw.js`: modificado (caché v42 → v43 y los dos archivos nuevos en la lista).
+- `README.md`: modificado (sección "Buscador").
+- `.claude/launch.json`: creado (servidor local `python -m http.server 5173`, solo para probar la web en el navegador de Claude; no afecta a la web).
+- `CAMBIOS_IA.md`: modificado (esta entrada).
+
+### Cambios realizados
+- **Lupa en la cabecera**, al lado del casete y con el mismo aspecto. Al pulsarla se descargan `buscador.js` y `buscador.css`, igual que el modo compacto. El cargador de `index.html` se ha convertido en una función común para los dos.
+- **Panel del buscador** (neón magenta y cian, títulos en Audiowide; a pantalla completa en el móvil) con dos pestañas:
+  - **BUSCAR**: se escribe una palabra y se busca a la vez por nombre y por etiqueta de estilo en radio-browser.info (servidores `de1` y `de2`, si uno falla se prueba el otro). Solo salen emisoras HTTPS que funcionaban en su última comprobación y sin error de certificado, sin repetidas, de más a menos votadas (máximo 30). Cada una muestra iniciales, país, formato, calidad, votos y etiquetas. Se avisa si ya está en la web o si ya la has añadido. ▶ la escucha sin añadirla (pausa la radio de la web si sonaba). "＋ AÑADIR" abre un formulario con el nombre (editable) y el modo: Normal, Dormir, Music Time o Buggy Time. Big Calm no aparece y se explica por qué. Tras guardar, "VER EN LA LISTA →" lleva a la emisora en su modo.
+  - **MIS AÑADIDAS**: lista con IR (lleva a la tarjeta) y ✕ QUITAR (pide un segundo toque para confirmar). También EXPORTAR (descarga un `.json`) e IMPORTAR (lee ese archivo y suma las emisoras sin borrar ninguna).
+- **Dónde se guardan**: solo en el navegador (`localStorage`, clave `radioMicroAddedStations`). `app.js` las valida (stream HTTPS, nombre, modo permitido) y las añade al final de la lista de su modo al cargarlo.
+- **Estilo "★ Para ti"**: en Dormir, Music Time y Buggy Time las añadidas van siempre a esta temática nueva. Su chip, en amarillo, solo aparece al final si el modo tiene alguna añadida. En el modo normal, que no tiene temáticas, van al final de la lista.
+- **Cómo se distinguen**: nunca llevan logo, solo iniciales en un cuadrado amarillo neón con borde continuo, en la tarjeta, el podio y el reproductor de abajo. La tarjeta lleva la etiqueta "★ AÑADIDA POR TI" y debajo "Stream · sin título de canción".
+- **Canción**: las añadidas no preguntan a `api/now-playing` (lo rechazaría). Mientras suenan, el reproductor dice "🔴 EN DIRECTO · añadida: sin título de canción" en amarillo, con una explicación al pasar el ratón. El modo casete muestra "★ AÑADIDA POR TI · SIN TÍTULO DE CANCIÓN".
+- Añadir o quitar una emisora del modo que está abierto vuelve a pintar la lista sin cortar la radio que suena. Si se quita justo la que suena, se para.
+- No se puede añadir una emisora que ya está en ese modo de la web, ni repetir una añadida, ni usar un nombre que ya existe en ese modo (se pide cambiarlo).
+
+### Motivo
+- Guardarlas en el navegador evita servidor, cuentas y claves, como pidió el usuario. Exportar/importar cubre el paso a otro dispositivo.
+- Sin logo y con otro color, se ve de un vistazo qué emisoras son "tuyas" y no de la web, y por qué no muestran la canción.
+- Big Calm se excluye porque su regla es "solo afinación comprobada", y una emisora del catálogo no lo garantiza.
+- El estilo fijo "Para ti" mantiene ordenadas las temáticas de la web.
+- Solo HTTPS: el navegador bloquea los streams HTTP en una web HTTPS.
+
+### Validaciones
+- `node --check` de `app.js`, `buscador.js` y `compact.js`: sin errores.
+- Comprobado con `curl` que la API de radio-browser responde y permite llamadas desde otra web (`Access-Control-Allow-Origin: *`). Solo responden `de1` y `de2`. `fi1`, `nl1` y `at1` no responden y no se usan.
+- En el navegador de Claude, con un servidor local:
+  - La lupa aparece junto al casete.
+  - Buscar "celtic" da 14 resultados y marca Celtcast como "Ya está en la web (Music Time)".
+  - Se añadió SomaFM ThistleRadio a Music Time con el formulario. "VER EN LA LISTA" cambia a Music Time, activa "★ Para ti" y enseña la tarjeta con iniciales amarillas y la etiqueta.
+  - Una añadida al modo normal ("Energía Flamenca") suena en directo y el reproductor muestra "EN DIRECTO · añadida: sin título de canción". No se hace ninguna petición a `api/now-playing` y el botón de canciones no aparece.
+  - Rechazos comprobados:
+    - Duplicado: "Ya la tienes añadida en ese modo".
+    - Big Calm y stream HTTP: rechazados.
+    - Nombre "Cadena 100" en el modo normal: "Ya hay una emisora de la web con ese nombre".
+  - Exportar e importar: el archivo lleva las dos emisoras con su modo y "parati". Importarlo da 2 importadas. Repetirlo da 2 que ya estaban y ninguna nueva. Un archivo inválido da error.
+  - Con Cadena 100 sonando, añadir y quitar una emisora del modo normal no corta la radio. Quitar la que suena la para.
+  - En tamaño móvil (375×812) el panel ocupa la pantalla y se ven bien las pestañas, los resultados, el formulario y "Mis añadidas".
+  - El botón IR lleva a Buggy Time con "★ Para ti" activo. En el modo casete la franja dice "★ AÑADIDA POR TI · SIN TÍTULO DE CANCIÓN".
+  - Consola: sin errores de JavaScript. Hay 403 de SomaFM y un 404 de `api/now-playing` porque en local esa función no existe.
+- Las emisoras de SomaFM no suenan en el navegador de Claude, tampoco las que ya estaban en la web (error de formato no compatible). Las de otros proveedores sí. Es una limitación de ese navegador o de su red, no del buscador. No se ha comprobado en un móvil real ni desplegado en Vercel.
+- Al terminar se borraron del navegador de pruebas las emisoras añadidas de prueba.
+
+### Riesgos o pendientes
+- Si radio-browser.info no responde, el buscador avisa de que no puede conectar. Las emisoras ya añadidas siguen funcionando.
+- La revisión semanal no comprueba las añadidas: si una se cae, no se oculta sola.
+- Si se borran los datos del navegador, se pierden las añadidas que no se hayan exportado.
+- En iPhone la vista previa y la descarga del archivo exportado dependen de Safari. No se ha probado en un dispositivo real.
+- El pendiente "Buscador de emisoras que busque en todos los modos" de `PENDIENTES.md` (buscar entre las emisoras de la web) sigue sin hacer. Este buscador es para añadir emisoras nuevas.
+
+### Cómo revertir
+- Borrar `buscador.js`, `buscador.css` y `.claude/launch.json`.
+- Deshacer los cambios de este paso en `app.js`, `compact.js`, `index.html`, `styles.css`, `sw.js` y `README.md`. Mientras no haya commit: `git checkout -- app.js compact.js index.html styles.css sw.js README.md`. Después: `git revert` del commit que los incluya.
+- Si se revierte tras publicar, subir otra vez `CACHE_VERSION` en `sw.js` para que los móviles con la web instalada se actualicen.
+- Las añadidas que ya tenga un navegador se quedan guardadas, pero sin este código no se ven.
+
+---
+
+## 2026-11-09 11:55 — Borrado del prototipo del modo compacto
+
+### Objetivo
+El usuario borró a mano `prototipos/modo-compacto.html`, la maqueta del casete, porque el modo compacto ya está integrado en la web. Se deja constancia en el registro.
+
+### Archivos afectados
+- `prototipos/modo-compacto.html`: eliminado (por el usuario).
+- `CAMBIOS_IA.md`: modificado (esta entrada).
+
+### Cambios realizados
+Se ha quitado la maqueta independiente del modo compacto. La versión real sigue en `compact.js` y `compact.css` y no depende de ella. La IA no ha tocado ningún otro archivo.
+
+### Motivo
+Era un pendiente anotado en las entradas del modo compacto ("Pendiente de decidir: borrar `prototipos/modo-compacto.html`"). Ya no hacía falta.
+
+### Validaciones
+- `git status`: el único cambio es el borrado de `prototipos/modo-compacto.html`.
+- Búsqueda de "prototipos" en los archivos `.js`, `.html`, `.json` y `.md` (sin contar este registro): no hay ninguna referencia, así que la web no lo usaba.
+- No se ha abierto la web en el navegador, porque el archivo no se cargaba en ella.
+
+### Riesgos o pendientes
+- Ninguno detectado. El borrado aún no está en un commit.
+
+### Cómo revertir
+`git checkout -- prototipos/modo-compacto.html` mientras no se haga commit; después, `git revert` del commit que lo borre.
+
+---
+
 ## 2026-11-09 11:38 — Fuentes guardadas en el propio proyecto
 
 ### Objetivo
