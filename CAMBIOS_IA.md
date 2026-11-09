@@ -4,6 +4,52 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 13:00 — Modo compacto: icono, diales por clic, letras y botón MODO
+
+### Objetivo
+Ajustes pedidos sobre el modo compacto: icono discreto de cinta en la cabecera; título de la radio más pequeño; letras en el dial de modo; sustituir el botón MICROCORTE por un botón MODO que abre la selección de modos en el panel inferior; botones más discretos; diales que avancen un paso por clic o toque para que sean fáciles de usar en el móvil.
+
+### Archivos afectados
+- `index.html`: modificado.
+- `styles.css`: modificado.
+- `compact.css`: modificado.
+- `compact.js`: modificado.
+- `sw.js`: modificado (versión de caché `v35`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Cabecera: el botón "📼 Modo compacto" pasa a ser un icono de cinta sin texto (con su nombre accesible y tooltip).
+- Dial de modo: letras alrededor (N, D, C, M, B) con la activa resaltada. Dial de emisoras y dial de modo tienen botones ‹ › a los lados.
+- Diales: un clic o toque avanza una posición; el arrastre sigue funcionando; la rueda y las flechas también.
+- Botón MICROCORTE sustituido por MODO, que abre el panel inferior en la pestaña MODOS (los cinco modos con su letra).
+- Título de la radio dentro de la etiqueta: más pequeño.
+- Línea de la canción: pasa a una franja propia bajo los botones, a todo el ancho; si no cabe, se desplaza despacio.
+- Botones de control: más pequeños y de tono más apagado.
+
+### Motivo
+En el móvil los diales arrastrados eran difíciles de girar; un toque por paso es más fácil. El título de la radio ocupaba demasiado dentro de la etiqueta. El icono y los botones más discretos reducen el ruido visual de la vista compacta.
+
+### Validaciones
+- Navegador (móvil emulado y puntero táctil): un toque en el dial de modo pasa de NORMAL a DORMIR; el anillo marca la D; la pestaña MODOS lista los cinco modos.
+- Botón ›/‹ del dial de emisoras: avanza a la emisora 14 de 44.
+- Consola: sin errores de JavaScript.
+- El usuario confirmó en el móvil que el texto dentro de la cinta se lee bien.
+- No probado: el arrastre con el dedo en un móvil real; el desplazamiento de la línea de canción con una canción larga real; el escritorio con ventana ancha.
+
+### Riesgos o pendientes
+- Con un arrastre, un toque sin movimiento cuenta como un paso: si al tocar el dial se mueve un poco, puede contar como arrastre. El umbral es de 8 píxeles.
+- Las letras del anillo se calculan al pintar; si se cambia el tamaño de la ventana, se recalculan al rotar o redimensionar.
+- Pendiente de decidir: borrar `prototipos/modo-compacto.html`.
+
+### Cómo revertir
+1. En `index.html`: volver al botón de texto `📼 Modo compacto`, quitar los botones ‹ › y el anillo de letras, y restaurar el botón MICROCORTE.
+2. En `compact.js` y `compact.css`: restaurar la versión anterior desde el historial de git.
+3. En `styles.css`: restaurar el bloque `.compact-toggle` original (sin `width: 44px` ni alineación).
+4. En `sw.js`: volver a `var CACHE_VERSION = 'v34';`.
+5. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 12:00 — Modo compacto integrado en la web (casete con emisoras reales)
 
 ### Objetivo

@@ -10,7 +10,8 @@
 
   var STORAGE_OPEN = 'radioMicroCompact';
   var STORAGE_STATION = 'radioMicroCompactStation';
-  var DRAG_STEP_PX = 14;
+  var DRAG_STEP_PX = 14;     // píxeles de arrastre por cada paso
+  var TAP_MOVE_PX = 8;       // movimiento máximo para que un toque cuente como clic
   var FAST_DRAG_PX = 24;
   var FAST_MULTIPLIER = 4;
 
@@ -21,6 +22,8 @@
     music: 'MUSIC TIME',
     buggy: 'BUGGY TIME'
   };
+  // Letra que aparece junto a cada posición del dial de modo
+  var MODE_LETTERS = { normal: 'N', sleep: 'D', calm: 'C', music: 'M', buggy: 'B' };
 
   function $(id) { return document.getElementById(id); }
 
@@ -31,6 +34,8 @@
   var led = $('cpLed');
   var deck = document.querySelector('#compact .deck');
   var modeDial = $('cpModeDial');
+  var modeWrap = $('cpModeWrap');
+  var modeRing = $('cpModeRing');
   var modeVal = $('cpModeVal');
   var stDial = $('cpStDial');
   var stVal = $('cpStVal');
@@ -38,13 +43,15 @@
   var label = $('cpLabel');
   var nameEl = $('cpName');
   var subEl = $('cpSub');
+  var trackBox = $('cpTrack');
+  var trackText = $('cpTrackText');
   var reelL = $('cpReelL');
   var reelR = $('cpReelR');
   var btnPower = $('cpPower');
   var btnPlay = $('cpPlay');
   var btnStop = $('cpStop');
   var btnStyle = $('cpStyle');
-  var btnGlitch = $('cpGlitch');
+  var btnMode = $('cpModeBtn');
   var needleL = $('cpNeedleL');
   var needleR = $('cpNeedleR');
   var bars = $('cpBars');
@@ -154,13 +161,15 @@
     if (isOn() && st.pick >= 0 && list.length) {
       if (st.pick !== B.getCurrentIndex()) { B.play(st.pick); }
     }
-    st.tab = 'emisoras';
     setTab('emisoras');
     render();
   }
 
-  /* --- Diales: arrastrar, rueda o flechas. Mientras se gira solo se previsualiza;
-         al soltar se aplica (así no se para y arranca la radio en cada paso). --- */
+  /* --- Diales ---
+     Un clic (o toque) avanza una posición. Arrastrar también sirve: cada paso
+     de arrastre mueve una posición y, en el de emisoras, un arrastre rápido
+     avanza de cuatro en cuatro. Mientras se arrastra solo se previsualiza; al
+     soltar se aplica, para no parar y arrancar la radio en cada paso. */
 
   function attachDial(el, opts) {
     var drag = null;
@@ -173,16 +182,28 @@
       if (next !== cur) { opts.set(next); }
     }
 
+    // Un paso completo: empezar, mover y aplicar
+    function turn(delta) {
+      if (opts.start) { opts.start(); }
+      step(delta);
+      if (opts.end) { opts.end(); }
+    }
+
     el.addEventListener('pointerdown', function (e) {
-      drag = { y: e.clientY, acc: 0 };
+      drag = { x: e.clientX, y: e.clientY, last: e.clientY, acc: 0, moved: false };
       try { el.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
       el.classList.add('grab');
-      if (opts.start) { opts.start(); }
     });
+
     el.addEventListener('pointermove', function (e) {
       if (!drag) { return; }
-      var dy = drag.y - e.clientY;
-      drag.y = e.clientY;
+      if (!drag.moved) {
+        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < TAP_MOVE_PX) { return; }
+        drag.moved = true;
+        if (opts.start) { opts.start(); }
+      }
+      var dy = drag.last - e.clientY;
+      drag.last = e.clientY;
       drag.acc += dy;
       var mul = opts.fast && Math.abs(dy) >= FAST_DRAG_PX ? FAST_MULTIPLIER : 1;
       while (Math.abs(drag.acc) >= DRAG_STEP_PX) {
@@ -191,20 +212,27 @@
         step(s * mul);
       }
     });
+
     function end() {
       if (!drag) { return; }
+      var wasTap = !drag.moved;
       drag = null;
       el.classList.remove('grab');
-      if (opts.end) { opts.end(); }
+      if (wasTap) {
+        // Clic: un paso adelante
+        turn(1);
+      } else if (opts.end) {
+        opts.end();
+      }
     }
     el.addEventListener('pointerup', end);
-    el.addEventListener('pointercancel', end);
+    el.addEventListener('pointercancel', function () {
+      if (drag) { drag = null; el.classList.remove('grab'); if (opts.end) { opts.end(); } }
+    });
 
     el.addEventListener('wheel', function (e) {
       e.preventDefault();
-      if (opts.start) { opts.start(); }
-      step(e.deltaY > 0 ? 1 : -1);
-      if (opts.end) { opts.end(); }
+      turn(e.deltaY > 0 ? 1 : -1);
     }, { passive: false });
 
     el.addEventListener('keydown', function (e) {
@@ -213,9 +241,7 @@
       if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { d = -1; }
       if (!d) { return; }
       e.preventDefault();
-      if (opts.start) { opts.start(); }
-      step(d);
-      if (opts.end) { opts.end(); }
+      turn(d);
     });
   }
 
@@ -226,23 +252,52 @@
     el.setAttribute('aria-valuemax', String(n));
   }
 
-  attachDial(modeDial, {
+  // Letras alrededor del dial de modo, cada una en su posición, para saber dónde girar
+  function buildModeRing() {
+    var ms = modeList();
+    var wrapSize = modeWrap.clientWidth || 120;
+    var r = wrapSize / 2 - 10;
+    var c = wrapSize / 2;
+    if (modeRing.children.length !== ms.length) {
+      modeRing.textContent = '';
+      ms.forEach(function (m) {
+        var s = document.createElement('span');
+        s.textContent = MODE_LETTERS[m] || m.charAt(0).toUpperCase();
+        s.setAttribute('title', MODE_NAMES[m] || m);
+        modeRing.appendChild(s);
+      });
+    }
+    var current = Math.max(0, ms.indexOf(B.getMode()));
+    if (st.modePreview !== null) { current = st.modePreview; }
+    Array.prototype.forEach.call(modeRing.children, function (s, i) {
+      var a = (-135 + 270 * i / (ms.length - 1)) * Math.PI / 180;
+      s.style.left = (c + r * Math.sin(a)) + 'px';
+      s.style.top = (c - r * Math.cos(a)) + 'px';
+      s.classList.toggle('on', i === current);
+    });
+  }
+
+  var modeOpts = {
     count: function () { return modeList().length; },
     index: function () {
       if (st.modePreview !== null) { return st.modePreview; }
       return Math.max(0, modeList().indexOf(B.getMode()));
     },
     set: function (i) { st.modePreview = i; render(); },
-    start: function () { if (st.modePreview === null) { st.modePreview = Math.max(0, modeList().indexOf(B.getMode())); } },
+    start: function () {
+      if (st.modePreview === null) {
+        st.modePreview = Math.max(0, modeList().indexOf(B.getMode()));
+      }
+    },
     end: function () {
       var i = st.modePreview;
       st.modePreview = null;
       if (i !== null) { setModeByIndex(i); }
       render();
     }
-  });
+  };
 
-  attachDial(stDial, {
+  var stOpts = {
     fast: true,
     count: function () { return filtered().length; },
     index: function () {
@@ -261,7 +316,26 @@
       }
       render();
     }
-  });
+  };
+
+  attachDial(modeDial, modeOpts);
+  attachDial(stDial, stOpts);
+
+  // Botones ‹ › junto a cada dial: mismo paso que un clic
+  function stepBy(opts, delta) {
+    if (opts.start) { opts.start(); }
+    var n = opts.count();
+    if (n >= 2) {
+      var cur = opts.index();
+      var next = ((cur + delta) % n + n) % n;
+      if (next !== cur) { opts.set(next); }
+    }
+    if (opts.end) { opts.end(); }
+  }
+  $('cpModePrev').addEventListener('click', function () { stepBy(modeOpts, -1); });
+  $('cpModeNext').addEventListener('click', function () { stepBy(modeOpts, 1); });
+  $('cpStPrev').addEventListener('click', function () { stepBy(stOpts, -1); });
+  $('cpStNext').addEventListener('click', function () { stepBy(stOpts, 1); });
 
   /* --- Botones --- */
 
@@ -284,18 +358,24 @@
   });
 
   btnStop.addEventListener('click', function () { B.stop(); });
-  btnGlitch.addEventListener('click', function () { B.glitch(); });
+
   btnStyle.addEventListener('click', function () {
     openScreen(true);
     setTab('estilos');
   });
 
-  /* --- Pantalla de listas --- */
+  // El botón MODO abre el panel inferior en la pestaña de modos
+  btnMode.addEventListener('click', function () {
+    openScreen(true);
+    setTab('modos');
+  });
+
+  /* --- Panel inferior (lista, estilos y modos) --- */
 
   function openScreen(show) {
     screen.hidden = !show;
     listBtn.setAttribute('aria-expanded', String(show));
-    listBtn.textContent = show ? '▼ CERRAR LISTA' : '▲ LISTA';
+    listBtn.textContent = show ? '▼ CERRAR' : '▲ LISTA';
     if (show) { renderScreen(); }
   }
 
@@ -322,6 +402,7 @@
   function renderScreen() {
     screenBody.textContent = '';
     var all = allStations();
+
     if (st.tab === 'emisoras') {
       var list = filtered();
       var ai = isOn() ? B.getCurrentIndex() : st.pick;
@@ -359,7 +440,8 @@
         if (i === ai) { activeRow = row; }
       });
       if (activeRow) { activeRow.scrollIntoView({ block: 'nearest' }); }
-    } else {
+
+    } else if (st.tab === 'estilos') {
       var wrap = el('div', 'style-btns');
       var options = [{ id: 'todos', label: 'Todos' }].concat(B.getCategories());
       options.forEach(function (c) {
@@ -369,25 +451,59 @@
         wrap.appendChild(b);
       });
       screenBody.appendChild(wrap);
+
+    } else {
+      // Pestaña MODOS: el mismo cambio que el dial y el selector de la cabecera
+      var mwrap = el('div', 'style-btns');
+      modeList().forEach(function (m) {
+        var b = el('button', 'style-btn' + (m === B.getMode() ? ' active' : ''), (MODE_LETTERS[m] ? MODE_LETTERS[m] + ' · ' : '') + (MODE_NAMES[m] || m));
+        b.type = 'button';
+        b.addEventListener('click', function () {
+          setModeByIndex(modeList().indexOf(m));
+          render();
+        });
+        mwrap.appendChild(b);
+      });
+      screenBody.appendChild(mwrap);
     }
   }
 
   /* --- Pintado --- */
 
-  function subText(on, status, paused) {
+  // Solo el estado de la radio; la canción va en su propia línea
+  function statusText(on, status, paused) {
     if (!on) { return 'PULSA ENCENDER'; }
     if (paused) { return 'EN PAUSA'; }
     if (status === 'reconnecting') { return 'RECONECTANDO…'; }
     if (status === 'tuning') { return 'SINTONIZANDO…'; }
     if (status === 'blocked') { return 'TOCA PARA REANUDAR'; }
     if (status === 'unavailable') { return 'NO DISPONIBLE'; }
-    if (status === 'live') {
-      var t = B.getTrack();
-      if (t) { return '♪ ' + (t.artist ? t.artist + ' — ' + t.title : t.title); }
-      return 'EN DIRECTO';
-    }
+    if (status === 'live') { return 'EN DIRECTO'; }
     return '';
   }
+
+  function trackString(on, status, paused) {
+    if (!on || paused || status !== 'live') { return ''; }
+    var t = B.getTrack();
+    if (t) { return '♪ ' + (t.artist ? t.artist + ' — ' + t.title : t.title); }
+    return '♪ sin datos de canción';
+  }
+
+  // Si el texto no cabe, se desplaza despacio en vez de cortarse
+  function setTrack(text) {
+    trackText.textContent = text;
+    trackBox.classList.remove('scroll');
+    trackText.style.transform = '';
+    if (!text) { return; }
+    var over = trackText.offsetWidth - trackBox.clientWidth + 12;
+    if (over > 0) {
+      trackBox.style.setProperty('--cp-shift', (-over) + 'px');
+      trackBox.style.setProperty('--cp-dur', Math.max(6, Math.round(over / 25)) + 's');
+      trackBox.classList.add('scroll');
+    }
+  }
+
+  var lastTrack = null;
 
   function render() {
     if (!st.open) { return; }
@@ -405,6 +521,7 @@
     var ms = modeList();
     var modePos = st.modePreview !== null ? st.modePreview : Math.max(0, ms.indexOf(mode));
     paintDial(modeDial, ms.length, modePos);
+    buildModeRing();
     modeVal.textContent = MODE_NAMES[mode] || mode.toUpperCase();
 
     var list = filtered();
@@ -414,7 +531,13 @@
 
     var s = st.pick >= 0 ? allStations()[st.pick] : null;
     nameEl.textContent = s ? s.name : 'SIN EMISORAS';
-    subEl.textContent = subText(on, status, paused);
+    subEl.textContent = statusText(on, status, paused);
+
+    var track = trackString(on, status, paused);
+    if (track !== lastTrack) {
+      lastTrack = track;
+      setTrack(track);
+    }
 
     label.classList.toggle('beat', on && status === 'live' && !paused);
     label.classList.toggle('beat-slow', on && status === 'reconnecting' && !paused);
@@ -427,9 +550,9 @@
     deck.classList.toggle('off', !on);
     btnPower.classList.toggle('lit', on);
     btnPower.textContent = on ? 'APAGAR' : 'ENCENDER';
-    btnStyle.disabled = B.getCategories().length === 0;
     btnPlay.classList.toggle('lit', on && !paused);
-    btnPlay.textContent = on && !paused ? '❚❚ PAUSA' : '▶ PLAY';
+    btnPlay.textContent = on && !paused ? 'PAUSA' : 'PLAY';
+    btnStyle.disabled = B.getCategories().length === 0;
 
     // Interferencia breve al cambiar de emisora mientras suena
     var active = on ? B.getCurrentIndex() : -1;
@@ -484,6 +607,7 @@
     // Espacio justo: vista girada o pantalla baja (p. ej. el móvil en horizontal)
     var low = rotated || window.innerHeight <= 520;
     root.classList.toggle('small', st.open && low);
+    if (st.open) { buildModeRing(); }
   }
 
   function setOpen(v) {
@@ -491,7 +615,8 @@
     root.hidden = !v;
     document.body.classList.toggle('compact-open', v);
     openBtn.setAttribute('aria-pressed', String(v));
-    openBtn.textContent = v ? '📼 Salir del modo compacto' : '📼 Modo compacto';
+    openBtn.setAttribute('title', v ? 'Salir del modo compacto' : 'Modo compacto');
+    openBtn.setAttribute('aria-label', v ? 'Salir del modo compacto' : 'Modo compacto (casete)');
     try { window.localStorage.setItem(STORAGE_OPEN, v ? '1' : '0'); } catch (e) { /* sin almacenamiento */ }
     if (v) {
       orient();
