@@ -4,6 +4,38 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 10:05 — Mini reproductor en móvil: título de canción a ancho completo
+
+### Objetivo
+En el móvil, el título de la canción se cortaba: la línea estaba limitada por el espacio que dejaban los iconos de la derecha, en vez de ocupar toda la anchura del mini reproductor.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- En móvil (480 px o menos), el mini reproductor pasa a dos filas: arriba, el título de la canción con el nombre de la emisora, a todo el ancho; abajo, el logo y los iconos (temporizador, canciones, pausa y volumen).
+- Se sube la versión de caché del servicio de la web a `v32` para que los móviles carguen el cambio.
+
+### Motivo
+El bloque de texto compartía fila con los botones y el control de volumen, así que se quedaba con un ancho pequeño. Al ocupar una fila entera, el título tiene todo el ancho disponible.
+
+### Validaciones
+- Revisión del código de `styles.css` y de la versión de caché en `sw.js`.
+- No se ha ejecutado la web ni se ha probado en un navegador de móvil. El usuario confirmó la versión anterior en su móvil; esta nueva disposición aún no está comprobada.
+
+### Riesgos o pendientes
+- Comprobar en el móvil que los iconos de la segunda fila caben bien en pantallas estrechas (360 px).
+- En el modo dormir el logo ya estaba oculto y no cambia.
+
+### Cómo revertir
+1. En `styles.css`, en el bloque final "Mini reproductor en móvil", borrar la regla `.mini-player` con `flex-wrap: wrap` y volver a `.mini-player-info` solo con `display: flex; flex-direction: column; gap: 0.15rem;`.
+2. En `sw.js`, volver a poner `var CACHE_VERSION = 'v31';`.
+3. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 09:35 — Mini reproductor en móvil: canción arriba y pausa sin icono naranja
 
 ### Objetivo

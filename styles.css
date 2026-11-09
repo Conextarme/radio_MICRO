@@ -1769,7 +1769,17 @@ body.sleep-mode .sleep-timer-btn {
 /* --- Mini reproductor en móvil: canción arriba, en una sola línea y más grande;
    nombre de la emisora y afinación debajo, en dos líneas como máximo. --- */
 @media (max-width: 480px) {
+  /* El texto ocupa una fila entera; los iconos y el logo van debajo, en otra fila. */
+  .mini-player {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    justify-content: space-between;
+  }
+
   .mini-player-info {
+    order: -1;
+    flex: 1 0 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
