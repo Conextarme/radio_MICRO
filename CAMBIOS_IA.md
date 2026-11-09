@@ -4,6 +4,54 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 15:00 — Modo compacto: vibración, un solo estado y optimizaciones
+
+### Objetivo
+Confirmar cada paso del dial con una vibración corta; dejar un solo mensaje de estado (en la etiqueta); y aplicar las optimizaciones propuestas: carga bajo demanda, menos repintados, menor frecuencia de los vúmetros y modo ahorro de batería.
+
+### Archivos afectados
+- `index.html`: modificado (el CSS y el JS del compacto ya no se cargan al inicio; se cargan al abrir el modo compacto o si estaba abierto la última vez).
+- `compact.js`: modificado.
+- `compact.css`: modificado.
+- `sw.js`: modificado (versión de caché `v37`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- **Vibración:** cada paso del dial de modo o de emisoras vibra 12 ms, si el móvil lo permite.
+- **Un solo estado:** "RECONECTANDO…", "EN DIRECTO", etc. aparecen solo en la etiqueta. La línea de la canción se oculta cuando no hay título, y ya no muestra un texto de relleno.
+- **Carga bajo demanda:** la vista compacta no se descarga hasta que se abre.
+- **Menos repintados:** la vista solo se actualiza cuando cambia algo visible (estado, emisora, modo, estilo o canción).
+- **Vúmetros:** pasan de 150 ms a 250 ms.
+- **Ahorro de batería:** con menos del 20 % y sin cargador, se paran los giros, los latidos y las interferencias.
+
+### Motivo
+- La vibración permite comprobar el giro sin mirar la pantalla.
+- Un único mensaje evita repetir el estado en dos sitios.
+- Las demás mejoras reducen trabajo del procesador y la descarga inicial, sobre todo en móviles.
+
+### Validaciones
+- Navegador: antes de abrir el compacto no se carga `compact.js` ni `compact.css`; al pulsar el icono se cargan y se abre la vista.
+- Clic en el dial de modo: pasa de NORMAL a DORMIR.
+- Radio sonando: la etiqueta muestra "EN DIRECTO" y la línea de canción aparece con el título.
+- Microcorte: la etiqueta muestra "RECONECTANDO…" y la línea de canción se oculta.
+- Consola: sin errores de JavaScript.
+- No probado: la vibración en un móvil real (el navegador de prueba la acepta pero no vibra); el modo ahorro de batería (requiere batería baja real); la vista con batería baja.
+
+### Riesgos o pendientes
+- El modo ahorro de batería depende de que el navegador dé información de batería. En iPhone y algunos navegadores no está disponible y simplemente no se activa.
+- La carga bajo demanda hace que el primer clic en el icono tarde un poco más, mientras se descarga el compacto.
+- Los cambios están en el disco pero no subidos a GitHub.
+- En el móvil puede hacer falta borrar los datos del sitio para que cargue la caché `v37`.
+
+### Cómo revertir
+1. En `index.html`: volver a poner `<link rel="stylesheet" href="compact.css">` en la cabecera y `<script src="compact.js" defer></script>` después de `app.js`, y quitar el bloque `<script>` de carga.
+2. En `compact.js`: quitar `buzz()`, el ajuste de `setTrack` que oculta la franja, la comprobación de `keyNow`, `applyEco()` y `window.__compactReady`; volver a poner `setInterval(tickVU, 150)` y la línea de `trackString` que devuelve "sin datos de canción".
+3. En `compact.css`: quitar el bloque `.compact.eco`.
+4. En `sw.js`: volver a poner `var CACHE_VERSION = 'v36';`.
+5. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 14:00 — Modo compacto: quitar las flechas de los diales
 
 ### Objetivo

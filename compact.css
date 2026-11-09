@@ -506,6 +506,11 @@
 body.tab-hidden .compact *,
 body.tab-hidden .compact { animation-play-state: paused !important; }
 
+/* Batería baja (ver compact.js): sin giros, latidos ni interferencias */
+.compact.eco .reel,
+.compact.eco .label,
+.compact.eco .window.static::after { animation: none !important; }
+
 /* Reducir movimiento: sin giros, latidos ni interferencias */
 @media (prefers-reduced-motion: reduce) {
   .compact .reel.spin,

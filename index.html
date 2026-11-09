@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="compact.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a0b2e" id="theme-color-meta">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
@@ -229,7 +228,42 @@
   </section>
 
   <script src="app.js" defer></script>
-  <script src="compact.js" defer></script>
+  <script>
+    // El modo compacto (CSS y JS) se descarga solo cuando hace falta: al pulsar
+    // el icono o si estaba abierto la última vez. Así la carga normal es más ligera.
+    (function () {
+      var toggle = document.getElementById('compact-toggle');
+      if (!toggle) { return; }
+      var loading = false;
+
+      function load(done) {
+        if (window.__compactReady) { done(); return; }
+        if (loading) { return; }
+        loading = true;
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'compact.css';
+        document.head.appendChild(link);
+        var s = document.createElement('script');
+        s.src = 'compact.js';
+        s.onload = function () { done(); };
+        document.body.appendChild(s);
+      }
+
+      toggle.addEventListener('click', function (e) {
+        if (window.__compactReady) { return; }
+        e.stopImmediatePropagation();
+        load(function () { toggle.click(); });
+      }, true);
+
+      // Tras 'load', app.js ya está ejecutado y compact.js puede usar window.radioMicro
+      window.addEventListener('load', function () {
+        try {
+          if (window.localStorage.getItem('radioMicroCompact') === '1') { load(function () {}); }
+        } catch (err) { /* sin almacenamiento */ }
+      });
+    })();
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {

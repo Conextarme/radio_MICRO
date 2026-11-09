@@ -3,6 +3,7 @@
 
   // La vista compacta solo habla con la web a través de window.radioMicro
   // (definido al final de app.js). No reproduce audio por su cuenta.
+  window.__compactReady = true;
   var B = window.radioMicro;
   if (!B) {
     return;
@@ -171,6 +172,13 @@
      avanza de cuatro en cuatro. Mientras se arrastra solo se previsualiza; al
      soltar se aplica, para no parar y arrancar la radio en cada paso. */
 
+  // Vibración corta en cada paso, para notar el giro sin mirar la pantalla
+  function buzz() {
+    try {
+      if (navigator.vibrate) { navigator.vibrate(12); }
+    } catch (e) { /* navegador sin vibración */ }
+  }
+
   function attachDial(el, opts) {
     var drag = null;
 
@@ -179,7 +187,7 @@
       if (n < 2) { return; }
       var cur = opts.index();
       var next = ((cur + delta) % n + n) % n;
-      if (next !== cur) { opts.set(next); }
+      if (next !== cur) { opts.set(next); buzz(); }
     }
 
     // Un paso completo: empezar, mover y aplicar
@@ -471,12 +479,14 @@
     if (!on || paused || status !== 'live') { return ''; }
     var t = B.getTrack();
     if (t) { return '♪ ' + (t.artist ? t.artist + ' — ' + t.title : t.title); }
-    return '♪ sin datos de canción';
+    return '';
   }
 
   // Si el texto no cabe, se desplaza despacio en vez de cortarse
   function setTrack(text) {
     trackText.textContent = text;
+    // Sin canción que mostrar, la franja desaparece: el estado va solo en la etiqueta
+    trackBox.style.display = text ? '' : 'none';
     trackBox.classList.remove('scroll');
     trackText.style.transform = '';
     if (!text) { return; }
@@ -489,6 +499,7 @@
   }
 
   var lastTrack = null;
+  var lastKey = null;
 
   function render() {
     if (!st.open) { return; }
@@ -501,6 +512,15 @@
       // Con la radio sonando, el dial sigue a la emisora que suena.
       st.pick = B.getCurrentIndex();
     }
+
+    // Menos repintados: si nada visible ha cambiado, no se toca el DOM
+    var tk = B.getTrack();
+    var keyNow = [on, status, paused, st.pick, B.getMode(), st.style, st.modePreview,
+      filtered().length, tk ? (tk.artist || '') + '|' + tk.title : '', allStations().length].join('#');
+    if (keyNow === lastKey) {
+      return;
+    }
+    lastKey = keyNow;
 
     var mode = B.getMode();
     var ms = modeList();
@@ -573,7 +593,7 @@
 
   function startVU() {
     buildBars();
-    if (!st.vuTimer) { st.vuTimer = setInterval(tickVU, 150); }
+    if (!st.vuTimer) { st.vuTimer = setInterval(tickVU, 250); }
   }
 
   function stopVU() {
@@ -604,6 +624,7 @@
     openBtn.setAttribute('aria-label', v ? 'Salir del modo compacto' : 'Modo compacto (casete)');
     try { window.localStorage.setItem(STORAGE_OPEN, v ? '1' : '0'); } catch (e) { /* sin almacenamiento */ }
     if (v) {
+      lastKey = null; // al reabrir se repinta todo
       orient();
       startVU();
       stage.scrollTop = 0;
@@ -624,6 +645,18 @@
   window.addEventListener('resize', orient);
   window.addEventListener('orientationchange', orient);
   window.addEventListener('radio:change', function () { render(); });
+
+  // Ahorro de batería: con poca batería y sin cargador, se paran giros y latidos
+  function applyEco() {
+    if (!navigator.getBattery) { return; }
+    navigator.getBattery().then(function (b) {
+      function check() { root.classList.toggle('eco', !b.charging && b.level <= 0.2); }
+      check();
+      b.addEventListener('levelchange', check);
+      b.addEventListener('chargingchange', check);
+    }).catch(function () { /* sin información de batería */ });
+  }
+  applyEco();
 
   // Arranque: recuerda si la vista estaba abierta. No arranca la radio sola.
   var saved = null;
