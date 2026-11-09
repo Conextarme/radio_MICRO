@@ -3,2294 +3,2847 @@
     "stations.json|Aragón Radio (Zaragoza)": {
       "name": "Aragón Radio (Zaragoza)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Cadena 100": {
       "name": "Cadena 100",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Cadena Dial": {
       "name": "Cadena Dial",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Cadena SER": {
       "name": "Cadena SER",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Cadena SER (Sevilla)": {
       "name": "Cadena SER (Sevilla)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Canal Fiesta": {
       "name": "Canal Fiesta",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Canal Sur Radio Andalucía": {
       "name": "Canal Sur Radio Andalucía",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Catalunya Informació": {
       "name": "Catalunya Informació",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Catalunya Radio (Barcelona)": {
       "name": "Catalunya Radio (Barcelona)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Cope FM": {
       "name": "Cope FM",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Dance Radio": {
       "name": "Dance Radio",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|esRadio": {
       "name": "esRadio",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
-    },
-    "stations.json|Europa FM": {
-      "name": "Europa FM",
-      "file": "stations.json",
-      "checks": 6,
-      "failures": 5,
-      "consecutiveFailures": 5,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": 403,
-      "lastOk": "2026-09-25T07:21:31.800Z",
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Flaix FM": {
       "name": "Flaix FM",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Flamenco Radio": {
       "name": "Flamenco Radio",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Ibiza Global": {
       "name": "Ibiza Global",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Ibiza Sonica Radio": {
       "name": "Ibiza Sonica Radio",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|IB3 Ràdio (Baleares)": {
       "name": "IB3 Ràdio (Baleares)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Kiss FM": {
       "name": "Kiss FM",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Los 40 Classic": {
       "name": "Los 40 Classic",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Los 40 Dance": {
       "name": "Los 40 Dance",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Los 40 Principales": {
       "name": "Los 40 Principales",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|M80 Radio": {
       "name": "M80 Radio",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|MegaStar FM": {
       "name": "MegaStar FM",
       "file": "stations.json",
-      "checks": 6,
-      "failures": 1,
-      "consecutiveFailures": 1,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "checks": 7,
+      "failures": 2,
+      "consecutiveFailures": 2,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 404,
       "lastOk": "2026-10-26T13:41:58.767Z",
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "lastFailure": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Onda Cero": {
       "name": "Onda Cero",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Q FM": {
       "name": "Q FM",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|RAC 1": {
       "name": "RAC 1",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|RAC 105": {
       "name": "RAC 105",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Clásica": {
       "name": "Radio Clásica",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Euskadi": {
       "name": "Radio Euskadi",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Flaixbac (Barcelona)": {
       "name": "Radio Flaixbac (Barcelona)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Galega": {
       "name": "Radio Galega",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Intereconomía": {
       "name": "Radio Intereconomía",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Marca": {
       "name": "Radio Marca",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio María": {
       "name": "Radio María",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
       "lastFailure": "2026-09-25T07:21:31.800Z",
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio Nervión (Bilbao)": {
       "name": "Radio Nervión (Bilbao)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio RNE 3": {
       "name": "Radio RNE 3",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio RNE 5": {
       "name": "Radio RNE 5",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radio TeleTaxi (Barcelona)": {
       "name": "Radio TeleTaxi (Barcelona)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Radiolé": {
       "name": "Radiolé",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Ràdio 4": {
       "name": "Ràdio 4",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|RNE Radio (Nacional)": {
       "name": "RNE Radio (Nacional)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Rock FM": {
       "name": "Rock FM",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Spektra FM (Valencia)": {
       "name": "Spektra FM (Valencia)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "stations.json|Vaughan Radio (Zaragoza)": {
       "name": "Vaughan Radio (Zaragoza)",
       "file": "stations.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Nature Radio Rain": {
       "name": "Nature Radio Rain",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Rain Songs (雨声轻音乐)": {
       "name": "Rain Songs (雨声轻音乐)",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Rainy Day": {
       "name": "myNoise Rainy Day",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Rain Sounds (雨声)": {
       "name": "Rain Sounds (雨声)",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Sleepscapes Rain": {
       "name": "Sleepscapes Rain",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Ocean Waves": {
       "name": "myNoise Ocean Waves",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Siren Songs": {
       "name": "myNoise Siren Songs",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Otsuchi Coastal Soundscape (costa en directo)": {
       "name": "Otsuchi Coastal Soundscape (costa en directo)",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
       "lastFailure": "2026-09-25T07:21:31.800Z",
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|SeaSalt": {
       "name": "SeaSalt",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Birdsong Radio": {
       "name": "Birdsong Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Phaune Radio": {
       "name": "Phaune Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|CyberForest Fuji (bosque en directo)": {
       "name": "CyberForest Fuji (bosque en directo)",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
       "lastFailure": "2026-09-25T07:21:31.800Z",
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Brazilian Birds Radio": {
       "name": "Brazilian Birds Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radia.cz Birds": {
       "name": "Radia.cz Birds",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Pure Nature": {
       "name": "myNoise Pure Nature",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-19T14:09:22.544Z"
     },
     "emisoras-relax.json|Ambi Nature Radio": {
       "name": "Ambi Nature Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|N07 Nature Meditation": {
       "name": "N07 Nature Meditation",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Relax FM Nature": {
       "name": "Relax FM Nature",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Nature": {
       "name": "Radio Art Nature",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Epic Lounge Nature Sounds": {
       "name": "Epic Lounge Nature Sounds",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Nature Radio Sleep": {
       "name": "Nature Radio Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Zen Garden": {
       "name": "myNoise Zen Garden",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|0R Nature Relax": {
       "name": "0R Nature Relax",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|24/7 Nature Radio": {
       "name": "24/7 Nature Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Relax Nature": {
       "name": "Radio Relax Nature",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Space Odyssey": {
       "name": "myNoise Space Odyssey",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|myNoise Drone Zone": {
       "name": "myNoise Drone Zone",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|NTS Field Recordings": {
       "name": "NTS Field Recordings",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Brown Noise Radio": {
       "name": "Brown Noise Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Ambient Sleeping Pill": {
       "name": "Ambient Sleeping Pill",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|SomaFM Space Station Soma": {
       "name": "SomaFM Space Station Soma",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-26T13:41:58.767Z"
     },
     "emisoras-relax.json|SomaFM Drone Zone": {
       "name": "SomaFM Drone Zone",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-26T13:41:58.767Z"
     },
     "emisoras-relax.json|Ambient Modern": {
       "name": "Ambient Modern",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|SomaFM Deep Space One": {
       "name": "SomaFM Deep Space One",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-26T13:41:58.767Z"
     },
     "emisoras-relax.json|NTS Slow Focus": {
       "name": "NTS Slow Focus",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|ambient.fm": {
       "name": "ambient.fm",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Paradise Serenity": {
       "name": "Radio Paradise Serenity",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 206,
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|dinamo.fm Sleep": {
       "name": "dinamo.fm Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Epic Classical Music for Sleep": {
       "name": "Epic Classical Music for Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Epic Lounge Sleep & Meditation": {
       "name": "Epic Lounge Sleep & Meditation",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Piano for Sleep": {
       "name": "Radio Art Piano for Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Jazz for Sleep": {
       "name": "Radio Art Jazz for Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Positively Sleep Relax": {
       "name": "Positively Sleep Relax",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Calm Radio Sleep Channel": {
       "name": "Calm Radio Sleep Channel",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Yoto Sleep Radio": {
       "name": "Yoto Sleep Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Guitar for Sleep": {
       "name": "Radio Art Guitar for Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Cello for Sleep": {
       "name": "Radio Art Cello for Sleep",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Enigmatic Immersion": {
       "name": "Enigmatic Immersion",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-19T14:09:22.544Z"
     },
     "emisoras-relax.json|YourClassical Peaceful Piano": {
       "name": "YourClassical Peaceful Piano",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Solo Piano": {
       "name": "Radio Art Solo Piano",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Radio Art Relaxing (violín, piano, chelo)": {
       "name": "Radio Art Relaxing (violín, piano, chelo)",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Epic Piano Chillout Piano": {
       "name": "Epic Piano Chillout Piano",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Whisperings Solo Piano Radio": {
       "name": "Whisperings Solo Piano Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|SomaFM Groove Salad": {
       "name": "SomaFM Groove Salad",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 1,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z",
       "lastFailure": "2026-10-26T13:41:58.767Z"
     },
     "emisoras-relax.json|Spokoinoe Radio": {
       "name": "Spokoinoe Radio",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Smooth Chill": {
       "name": "Smooth Chill",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|1.FM Chillout Lounge": {
       "name": "1.FM Chillout Lounge",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Café del Mar": {
       "name": "Café del Mar",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|1.FM Ambient Psychill": {
       "name": "1.FM Ambient Psychill",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|Lofi 24/7": {
       "name": "Lofi 24/7",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|REYFM #lofi": {
       "name": "REYFM #lofi",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-relax.json|I Love Chillhop": {
       "name": "I Love Chillhop",
       "file": "emisoras-relax.json",
-      "checks": 6,
+      "checks": 7,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Positively Peaceful 432Hz": {
       "name": "Positively Peaceful 432Hz",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Positively Rejuvenate 528 Hz": {
       "name": "Positively Rejuvenate 528 Hz",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|432Hz Radio": {
       "name": "432Hz Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio 432": {
       "name": "Radio 432",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Musica a 432 Hz (Musicavera)": {
       "name": "Musica a 432 Hz (Musicavera)",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Blues": {
       "name": "RADIO BOB! Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|JZR Blues": {
       "name": "JZR Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Carbon Radio (Psych Blues)": {
       "name": "Carbon Radio (Psych Blues)",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|181.FM True Blues": {
       "name": "181.FM True Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|OUI FM Blues'n'Rock": {
       "name": "OUI FM Blues'n'Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Art Acoustic Blues": {
       "name": "Radio Art Acoustic Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|A Mississippi Blues": {
       "name": "A Mississippi Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|#joint radio Blues Rock": {
       "name": "#joint radio Blues Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Gritty Rock Radio": {
       "name": "Gritty Rock Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Monte Carlo Wonderful Blues": {
       "name": "Monte Carlo Wonderful Blues",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|SomaFM Left Coast 70s": {
       "name": "SomaFM Left Coast 70s",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|0N 70s": {
       "name": "0N 70s",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|0N Classic Rock": {
       "name": "0N Classic Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|181.FM The Eagle": {
       "name": "181.FM The Eagle",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Megarock Radio": {
       "name": "Megarock Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
-      "failures": 0,
-      "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "checks": 2,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": "timeout",
+      "lastOk": "2026-11-02T16:42:09.547Z",
+      "lastFailure": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Pink Floyd": {
       "name": "Exclusively Pink Floyd",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Deep Purple": {
       "name": "Exclusively Deep Purple",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Led Zeppelin": {
       "name": "Exclusively Led Zeppelin",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Bob Rockabilly": {
       "name": "Radio Bob Rockabilly",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|181.FM Rock 40": {
       "name": "181.FM Rock 40",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|50s 60s Retro Hits": {
       "name": "50s 60s Retro Hits",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|0N 60s": {
       "name": "0N 60s",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Classic Vinyl HD": {
       "name": "Classic Vinyl HD",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Creedence Clearwater Revival": {
       "name": "Exclusively Creedence Clearwater Revival",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|SomaFM Underground 80s": {
       "name": "SomaFM Underground 80s",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! 80er Rock": {
       "name": "RADIO BOB! 80er Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|80's New Wave Radio": {
       "name": "80's New Wave Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 1,
-      "consecutiveFailures": 1,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": "timeout",
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastFailure": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|80s Forever": {
       "name": "80s Forever",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|100 Greatest of the 80's": {
       "name": "100 Greatest of the 80's",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Rock Antenne Hair Metal": {
       "name": "Rock Antenne Hair Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Cinemix": {
       "name": "Cinemix",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|CINEMUSIC Radio": {
       "name": "CINEMUSIC Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Filmradio": {
       "name": "Filmradio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Classic FM Movies": {
       "name": "Classic FM Movies",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|0N Movies": {
       "name": "0N Movies",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Movie Soundtracks Hits 1.fm": {
       "name": "Movie Soundtracks Hits 1.fm",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|United Music Cinema": {
       "name": "United Music Cinema",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|The Base": {
       "name": "The Base",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|SomaFM Metal Detector": {
       "name": "SomaFM Metal Detector",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Metal": {
       "name": "RADIO BOB! Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Rock Antenne Heavy Metal": {
       "name": "Rock Antenne Heavy Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Heavy Metal": {
       "name": "Radio Heavy Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Metal Invasion Radio": {
       "name": "Metal Invasion Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|METAL ZONE": {
       "name": "METAL ZONE",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|100 Greatest Heavy Metal": {
       "name": "100 Greatest Heavy Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Iron Maiden": {
       "name": "Exclusively Iron Maiden",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusive Radio Black Sabbath": {
       "name": "Exclusive Radio Black Sabbath",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Epic Rock Radio": {
       "name": "Epic Rock Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 1,
-      "consecutiveFailures": 1,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": "timeout",
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastFailure": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Power Metal": {
       "name": "RADIO BOB! Power Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Symphonic Metal": {
       "name": "RADIO BOB! Symphonic Metal",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Prog Palace The Armory": {
       "name": "Prog Palace The Armory",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 1,
-      "consecutiveFailures": 1,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
-      "lastStatus": "timeout",
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastFailure": "2026-11-02T16:42:09.547Z",
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Hedgehog Radio": {
       "name": "Hedgehog Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Pinguin Aardschok": {
       "name": "Pinguin Aardschok",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Rock Melodic Radio": {
       "name": "Rock Melodic Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Melodic Radio": {
       "name": "Melodic Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
-      "failures": 1,
-      "consecutiveFailures": 1,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "checks": 2,
+      "failures": 2,
+      "consecutiveFailures": 2,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 401,
-      "lastFailure": "2026-11-02T16:42:09.547Z"
+      "lastFailure": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Elvis Presley": {
       "name": "Exclusively Elvis Presley",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Always ELVIS Radio": {
       "name": "Always ELVIS Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|PCRadio Elvis Presley": {
       "name": "PCRadio Elvis Presley",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Elvis And Company": {
       "name": "Elvis And Company",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Frank Sinatra": {
       "name": "Exclusively Frank Sinatra",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Dean Martin": {
       "name": "Exclusively Dean Martin",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Crooner Radio": {
       "name": "Crooner Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Easy Crooners": {
       "name": "Easy Crooners",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Art Sinatra Style": {
       "name": "Radio Art Sinatra Style",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Ella Radio Sinatra Style": {
       "name": "Ella Radio Sinatra Style",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|The Great American Songbook": {
       "name": "The Great American Songbook",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Celtcast": {
       "name": "Celtcast",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Mittelalter Rock": {
       "name": "RADIO BOB! Mittelalter Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|RADIO BOB! Folk Rock": {
       "name": "RADIO BOB! Folk Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|laut.fm Mittelalter": {
       "name": "laut.fm Mittelalter",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Odins Metal Rock Club": {
       "name": "Odins Metal Rock Club",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Exclusively Mike Oldfield": {
       "name": "Exclusively Mike Oldfield",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|PCRadio Enigma": {
       "name": "PCRadio Enigma",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|PCRadio Era": {
       "name": "PCRadio Era",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|PCRadio New Age": {
       "name": "PCRadio New Age",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|laut.fm New Age": {
       "name": "laut.fm New Age",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Enigmatic Station": {
       "name": "Enigmatic Station",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|KLCBS New Age": {
       "name": "KLCBS New Age",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Gaia FM": {
       "name": "Gaia FM",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|SomaFM ThistleRadio": {
       "name": "SomaFM ThistleRadio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Folk Alley Irish": {
       "name": "Folk Alley Irish",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Siamsa": {
       "name": "Radio Siamsa",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Folk57": {
       "name": "Folk57",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|laut.fm Celtic": {
       "name": "laut.fm Celtic",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|laut.fm Irish Folk": {
       "name": "laut.fm Irish Folk",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Scotlander Radio": {
       "name": "Scotlander Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Celtic Music Radio": {
       "name": "Celtic Music Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Skald": {
       "name": "Radio Skald",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Northern Metal Radio": {
       "name": "Northern Metal Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Bear Metal Radio": {
       "name": "Bear Metal Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Mariskal Rock": {
       "name": "Mariskal Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Rock en Español": {
       "name": "Rock en Español",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Rock En Español Chile": {
       "name": "Rock En Español Chile",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Isla Rock": {
       "name": "Isla Rock",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Pobre Johnny": {
       "name": "Pobre Johnny",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|La Ñ": {
       "name": "La Ñ",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Solo Rock Nacional": {
       "name": "Solo Rock Nacional",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|La 100 Rock Nacional": {
       "name": "La 100 Rock Nacional",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Shirley & Spinoza": {
       "name": "Shirley & Spinoza",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio Aporee": {
       "name": "Radio Aporee",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Datafruits": {
       "name": "Datafruits",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Substrate Radio": {
       "name": "Substrate Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Fogpoint Radio": {
       "name": "Fogpoint Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Nightwave Plaza": {
       "name": "Nightwave Plaza",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Birdsong Radio": {
       "name": "Birdsong Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|SomaFM Mission Control": {
       "name": "SomaFM Mission Control",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Strange Radio (Pumpkin FM)": {
       "name": "Strange Radio (Pumpkin FM)",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|50's Science Fiction KOTR": {
       "name": "50's Science Fiction KOTR",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Nightride FM Horrorsynth": {
       "name": "Nightride FM Horrorsynth",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Radio M00 Dark Ambient": {
       "name": "Radio M00 Dark Ambient",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Kobold.FM": {
       "name": "Kobold.FM",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 206,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|1940s Radio HS": {
       "name": "1940s Radio HS",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|1940s Light Programme": {
       "name": "1940s Light Programme",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Fallout 4 Diamond City Radio": {
       "name": "Fallout 4 Diamond City Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Fallout 3 Galaxy News Radio": {
       "name": "Fallout 3 Galaxy News Radio",
       "file": "emisoras-modos.json",
-      "checks": 1,
+      "checks": 2,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
     },
     "emisoras-modos.json|Flash FM (Vice City)": {
       "name": "Flash FM (Vice City)",
       "file": "emisoras-modos.json",
+      "checks": 2,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Exclusively Queen": {
+      "name": "Exclusively Queen",
+      "file": "emisoras-modos.json",
       "checks": 1,
       "failures": 0,
       "consecutiveFailures": 0,
-      "lastCheck": "2026-11-02T16:42:09.547Z",
+      "lastCheck": "2026-11-09T16:58:39.070Z",
       "lastStatus": 200,
-      "lastOk": "2026-11-02T16:42:09.547Z"
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Rock Antenne Coversongs": {
+      "name": "Rock Antenne Coversongs",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|KEXP 90.3 Seattle": {
+      "name": "KEXP 90.3 Seattle",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|NRK P1": {
+      "name": "NRK P1",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Rainwave Chill": {
+      "name": "Rainwave Chill",
+      "file": "emisoras-modos.json",
+      "checks": 2,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Klassik Radio Games": {
+      "name": "Klassik Radio Games",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Thermocline Radio": {
+      "name": "Thermocline Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Classical Radio - Wagner": {
+      "name": "Classical Radio - Wagner",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Klassik Radio Pure Mozart": {
+      "name": "Klassik Radio Pure Mozart",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Ancient FM": {
+      "name": "Ancient FM",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Radio Art - Gregorian Chants": {
+      "name": "Radio Art - Gregorian Chants",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Classical Catholic Radio": {
+      "name": "Classical Catholic Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Sounds of Broadway": {
+      "name": "Sounds of Broadway",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Heart Musicals": {
+      "name": "Heart Musicals",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Box Office Radio": {
+      "name": "Box Office Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Radio Rivendell": {
+      "name": "Radio Rivendell",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|laut.fm Fantasyradio": {
+      "name": "laut.fm Fantasyradio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Explorers Emporium Radio": {
+      "name": "Explorers Emporium Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Chromatique-Sky": {
+      "name": "Chromatique-Sky",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Nightwish Radio": {
+      "name": "Nightwish Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|PCRadio Nightwish": {
+      "name": "PCRadio Nightwish",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|PCRadio Within Temptation": {
+      "name": "PCRadio Within Temptation",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 1,
+      "consecutiveFailures": 1,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 502,
+      "lastFailure": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Medieval Fantasy": {
+      "name": "Medieval Fantasy",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Arcano Mundo": {
+      "name": "Arcano Mundo",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Score Radio": {
+      "name": "Score Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Epic Sounds FM": {
+      "name": "Epic Sounds FM",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Exclusively Daft Punk": {
+      "name": "Exclusively Daft Punk",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Technolovers Funky House": {
+      "name": "Technolovers Funky House",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Radio Record Disco Funk": {
+      "name": "Radio Record Disco Funk",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Hed Kandi Club": {
+      "name": "Hed Kandi Club",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|M Radio French Touch": {
+      "name": "M Radio French Touch",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Nightride FM": {
+      "name": "Nightride FM",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Nightride Chillsynth": {
+      "name": "Nightride Chillsynth",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Radio Aurora": {
+      "name": "Radio Aurora",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Rainwave Game": {
+      "name": "Rainwave Game",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Rainwave Covers": {
+      "name": "Rainwave Covers",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Pixel & Plot (YourClassical)": {
+      "name": "Pixel & Plot (YourClassical)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|SpriteLayer Video Game Radio": {
+      "name": "SpriteLayer Video Game Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 206,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Gametation": {
+      "name": "Gametation",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fluffylandrpg": {
+      "name": "Fluffylandrpg",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|80s80s Games": {
+      "name": "80s80s Games",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Shoot'em Up Radio": {
+      "name": "Shoot'em Up Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|NTS The Sound of GTA": {
+      "name": "NTS The Sound of GTA",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Liberty Rock Radio 97.8 (GTA IV)": {
+      "name": "Liberty Rock Radio 97.8 (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|The Vibe 98.8 (GTA IV)": {
+      "name": "The Vibe 98.8 (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|K109 The Studio (GTA IV)": {
+      "name": "K109 The Studio (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fusion FM (GTA IV)": {
+      "name": "Fusion FM (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Massive B Soundsystem 96.9 (GTA IV)": {
+      "name": "Massive B Soundsystem 96.9 (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|International Funk 99 (GTA IV)": {
+      "name": "International Funk 99 (GTA IV)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout.fm (principal)": {
+      "name": "Fallout.fm (principal)",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout 1 OST": {
+      "name": "Fallout 1 OST",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout 2 OST": {
+      "name": "Fallout 2 OST",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout New Vegas Radio": {
+      "name": "Fallout New Vegas Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout 4 Classical Radio": {
+      "name": "Fallout 4 Classical Radio",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout 76 General": {
+      "name": "Fallout 76 General",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
+    },
+    "emisoras-modos.json|Fallout 76 Classical": {
+      "name": "Fallout 76 Classical",
+      "file": "emisoras-modos.json",
+      "checks": 1,
+      "failures": 0,
+      "consecutiveFailures": 0,
+      "lastCheck": "2026-11-09T16:58:39.070Z",
+      "lastStatus": 200,
+      "lastOk": "2026-11-09T16:58:39.070Z"
     }
   },
-  "updated": "2026-11-02T16:42:09.547Z"
+  "updated": "2026-11-09T16:58:39.070Z"
 }
