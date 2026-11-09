@@ -1790,6 +1790,13 @@ body.sleep-mode .sleep-timer-btn {
     font-size: 1.02rem;
     font-weight: 700;
     color: var(--text-main);
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: clip;
   }
 
   .mini-player-name {

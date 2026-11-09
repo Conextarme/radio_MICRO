@@ -4,6 +4,40 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 10:30 — Mini reproductor en móvil: canción en dos líneas a todo el ancho
+
+### Objetivo
+El título de la canción seguía cortándose en el móvil con puntos suspensivos. Se pide que vaya en una línea propia, a todo el ancho, encima de los controles.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `sw.js`: modificado.
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- En móvil (480 px o menos), el título de la canción ocupa su propia fila a todo el ancho y puede usar hasta dos líneas, en vez de cortarse con puntos suspensivos en una sola.
+- El nombre de la emisora queda debajo y los controles en la fila inferior, como en la versión anterior.
+- Se sube la versión de caché del servicio de la web a `v33`.
+
+### Motivo
+En la versión anterior el título ya ocupaba todo el ancho en el navegador, pero los títulos largos se cortaban. Permitir dos líneas muestra el texto completo sin quitar la fila de controles.
+
+### Validaciones
+- Vista previa local (`http://localhost:8080/`) con el navegador en tamaño móvil 375×812: el título ocupa 351 px de ancho, en dos líneas, y los controles quedan en su fila debajo.
+- Comprobación de que el estilo se aplica: `-webkit-line-clamp` vale 2 y `white-space` vale `normal` en el título.
+- No se ha probado en un móvil real. Los datos eran de prueba, no de una emisora en directo.
+
+### Riesgos o pendientes
+- Si el móvil sigue mostrando la versión antigua, hay que recargar la web o cerrar y abrir la app instalada para que cargue la caché `v33`.
+- Comprobar en un móvil real con una emisora en directo.
+
+### Cómo revertir
+1. En `styles.css`, en el bloque final "Mini reproductor en móvil", en la regla `.mini-player-status` del móvil, borrar las líneas añadidas: `white-space: normal;`, `display: -webkit-box;`, `-webkit-line-clamp: 2;`, `-webkit-box-orient: vertical;`, `line-height: 1.25;`, `overflow: hidden;` y `text-overflow: clip;`.
+2. En `sw.js`, volver a poner `var CACHE_VERSION = 'v32';`.
+3. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 10:05 — Mini reproductor en móvil: título de canción a ancho completo
 
 ### Objetivo
