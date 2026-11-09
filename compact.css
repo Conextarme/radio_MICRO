@@ -443,17 +443,6 @@
 }
 .compact .ring span.on { background: #ffb000; color: #1d1a14; box-shadow: 0 0 6px rgba(255,176,0,.8); }
 
-.compact .step {
-  width: 28px; height: 28px; min-width: 28px; min-height: 28px;
-  padding: 0; border-radius: 50%;
-  border: 1px solid #8d877b;
-  background: linear-gradient(#e6e2d9, #bdb8ad);
-  color: #3a332a;
-  font-family: inherit; font-size: 16px; line-height: 1;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.compact .step:active { transform: translateY(1px); }
 
 /* Línea de la canción: a todo el ancho; si es larga, se desplaza sola */
 .compact .track-line {
@@ -495,7 +484,6 @@
 .compact.small .dial-wrap { width: 96px; height: 96px; }
 .compact.small .dial-wrap .dial { margin: -38px 0 0 -38px; }
 .compact.small .ring span { width: 17px; height: 17px; margin: -8px 0 0 -8px; font-size: 16px; }
-.compact.small .step { width: 24px; height: 24px; min-width: 24px; min-height: 24px; font-size: 14px; }
 .compact.small .track-line { font-size: 16px; min-height: 22px; }
 .compact.small .reel { width: 46px; height: 46px; }
 .compact.small .reel::before,

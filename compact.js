@@ -321,21 +321,6 @@
   attachDial(modeDial, modeOpts);
   attachDial(stDial, stOpts);
 
-  // Botones ‹ › junto a cada dial: mismo paso que un clic
-  function stepBy(opts, delta) {
-    if (opts.start) { opts.start(); }
-    var n = opts.count();
-    if (n >= 2) {
-      var cur = opts.index();
-      var next = ((cur + delta) % n + n) % n;
-      if (next !== cur) { opts.set(next); }
-    }
-    if (opts.end) { opts.end(); }
-  }
-  $('cpModePrev').addEventListener('click', function () { stepBy(modeOpts, -1); });
-  $('cpModeNext').addEventListener('click', function () { stepBy(modeOpts, 1); });
-  $('cpStPrev').addEventListener('click', function () { stepBy(stOpts, -1); });
-  $('cpStNext').addEventListener('click', function () { stepBy(stOpts, 1); });
 
   /* --- Botones --- */
 

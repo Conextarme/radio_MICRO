@@ -4,6 +4,41 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 14:00 — Modo compacto: quitar las flechas de los diales
+
+### Objetivo
+Quitar los botones laterales ‹ › de los diales de modo y de emisora, porque el clic dentro del propio dial ya avanza una posición.
+
+### Archivos afectados
+- `index.html`: modificado (eliminados los cuatro botones ‹ ›).
+- `compact.js`: modificado (eliminada la función que los manejaba).
+- `compact.css`: modificado (eliminados los estilos de los botones).
+- `sw.js`: modificado (versión de caché `v36`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- Se quitan las flechas ‹ › de los dos diales. El dial de modo y el de emisoras siguen avanzando con un clic sobre el propio dial, con el arrastre, la rueda y las teclas de flechas.
+
+### Motivo
+El clic dentro del dial ya funciona y las flechas sobraban; así la vista es más limpia.
+
+### Validaciones
+- Navegador (vista compacta abierta): hay 0 botones ‹ › en el panel. Un clic en el dial de modo pasa de DORMIR a BIG CALM y el anillo marca la C.
+- Consola: no se revisó en esta prueba.
+
+### Riesgos o pendientes
+- Los cambios están en el disco pero no subidos: falta commit y push para que Vercel los publique.
+- Como en las anteriores, en el móvil puede hacer falta borrar los datos del sitio para que cargue la caché `v36`.
+
+### Cómo revertir
+1. En `index.html`: volver a poner los cuatro botones `cpModePrev`, `cpModeNext`, `cpStPrev` y `cpStNext` dentro de `dial-row`.
+2. En `compact.js`: volver a añadir la función `stepBy` y sus cuatro `addEventListener`.
+3. En `compact.css`: volver a añadir las reglas `.compact .step` y `.compact.small .step`.
+4. En `sw.js`: volver a poner `var CACHE_VERSION = 'v35';`.
+5. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 13:00 — Modo compacto: icono, diales por clic, letras y botón MODO
 
 ### Objetivo
