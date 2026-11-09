@@ -4,6 +4,41 @@ Este archivo recoge, en orden cronológico inverso (lo más reciente arriba), to
 
 ---
 
+## 2026-11-09 16:00 — Optimización de rendimiento: desenfoque, sol/luna y tarjetas fuera de pantalla
+
+### Objetivo
+Hacer la web más fluida en móviles, sobre todo al desplazar la lista de emisoras.
+
+### Archivos afectados
+- `styles.css`: modificado.
+- `sw.js`: modificado (versión de caché `v38`).
+- `CAMBIOS_IA.md`: modificado.
+
+### Cambios realizados
+- **Sin desenfoque en pantallas táctiles:** las tarjetas, el podio, el mini reproductor, el panel de canciones, el menú del temporizador y el botón "Ver más" dejan de usar `backdrop-filter`. Solo se aplica en pantallas con puntero táctil.
+- **Sol y luna:** el resplandor (`box-shadow`) es fijo; la animación solo cambia la opacidad. Antes la sombra cambiaba en cada cuadro.
+- **Tarjetas fuera de pantalla:** `content-visibility: auto` en las tarjetas de emisoras, para que el navegador no pinte las que no se ven.
+
+### Motivo
+El desenfoque y las sombras animadas son lo más caro para la GPU en móviles. Quitarlos o fijarlos reduce el trabajo al desplazar.
+
+### Validaciones
+- Navegador en vista móvil (puntero táctil): las tarjetas tienen `backdrop-filter: none`; `content-visibility` vale `auto`; el sol mantiene su animación.
+- Captura de la página normal: se ve la cabecera, el sol y el podio sin errores visibles.
+- No se ha medido el rendimiento (FPS ni Lighthouse) antes y después.
+
+### Riesgos o pendientes
+- Sin desenfoque, las tarjetas se ven un poco más planas en móviles. Si no gusta, se puede subir la opacidad de `--card-bg` solo en táctil.
+- Los cambios están en el disco pero no subidos a GitHub.
+- En el móvil puede hacer falta borrar los datos del sitio para cargar la caché `v38`.
+
+### Cómo revertir
+1. En `styles.css`: quitar el bloque "Optimización de rendimiento" (al final, antes de "El atributo hidden…"), restaurar el `box-shadow` animado en `@keyframes sun-pulse` y `moon-breathe`, y devolver `animation: moon-breathe` a `.sleep-dim-moon`.
+2. En `sw.js`: volver a poner `var CACHE_VERSION = 'v37';`.
+3. Quitar esta entrada de `CAMBIOS_IA.md`.
+
+---
+
 ## 2026-11-09 15:00 — Modo compacto: vibración, un solo estado y optimizaciones
 
 ### Objetivo
